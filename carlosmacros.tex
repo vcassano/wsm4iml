@@ -1,0 +1,205 @@
+\DeclareMathSymbol{:}{\mathbin}{operators}{"3A}
+
+
+\usepackage{graphicx}
+\usepackage{amstext}
+\usepackage{wasysym}
+
+
+\newcommand*{\Cdot}[1][2.5]{%
+  \mathpalette{\CdotAux{#1}}\cdot%
+}
+\newdimen\CdotAxis
+\newcommand*{\CdotAux}[3]{%
+  {%
+    \settoheight\CdotAxis{$#2\vcenter{}$}%
+    \sbox0{%
+      \raisebox\CdotAxis{%
+        \scalebox{#1}{%
+          \raisebox{-\CdotAxis}{%
+            $\mathsurround=0pt #2#3$%
+          }%
+        }%
+      }%
+    }%
+    % Remove depth that arises from scaling.
+    \dp0=0pt %
+    % Decrease scaled height.
+    \sbox2{$#2\bullet$}%
+    \ifdim\ht2<\ht0 %
+      \ht0=\ht2 %
+    \fi
+    % Use the same width as the original \cdot.
+    \sbox2{$\mathsurround=0pt #2#3$}%
+    \hbox to \wd2{\hss\usebox{0}\hss}%
+  }%
+}
+
+
+\newcommand{\Vars}{\mathit{Vars}}
+
+\newcommand{\md}{\mathsf{md}}
+\newcommand{\dmd}{\mathsf{dmd}}
+
+% \renewcommand\merge[2]{%
+%   \ooalign{\hfil$\vcenter{\hbox{$#1$}}$\hfil\cr
+%     \hfil$\vcenter{\hbox{$#2$}}$\hfil}}
+
+%\newcommand{\dyndiamond}{\raisebox{.4mm}{\merge\lozenge\Cdot}}
+%\newcommand{\dynbox}{\raisebox{.4mm}{\merge\square\Cdot}}
+
+
+\newcommand{\dyndiamond}[1]{{\fontsize{7}{7}\selectfont\tup{\raisebox{.6pt}{\textsf{#1}}}}}
+\newcommand{\dynbox}[1]{{\fontsize{7}{7}\selectfont[\raisebox{.6pt}{\textsf{#1}}]}}
+
+\newcommand\dswap{\dyndiamond{lsw}}
+\newcommand\bswap{\dynbox{lsw}}
+\newcommand\msw{\dyndiamond{lsw}}
+\newcommand\mgsw{\dyndiamond{gsw}}
+
+\newcommand\sab{\dyndiamond{gsb}}
+\newcommand\sabbox{\dynbox{gsb}}
+\newcommand\msb{\dyndiamond{lsb}}
+\newcommand\mgsb{\dyndiamond{gsb}}
+
+\newcommand{\lsab}{\dyndiamond{lsb}}
+\newcommand{\lsabbox}{\dynbox{lsb}}
+
+\newcommand{\bridge}{\dyndiamond{lbr}}
+\newcommand{\bridgebox}{\dynbox{lbr}}
+\newcommand\mbr{\dyndiamond{lbr}}
+\newcommand\mgbr{\dyndiamond{gbr}}
+
+
+\newcommand\dgswap{\dyndiamond{gsw}}
+\newcommand\bgswap{\dynbox{gsw}}
+
+\newcommand{\gbridge}{\dyndiamond{gbr}}
+\newcommand{\gbridgebox}{\dynbox{gbr}}
+
+\newcommand{\trbr}{\Circle^+}
+\newcommand{\kn}{\textcircled{\small{k}}}
+\newcommand{\re}{\textcircled{r}}
+
+\newcommand{\qbfmodels}{\models_{\mathrm{qbf}}}
+
+\newcommand{\iml}{\ensuremath{\mathsf{IML}}\xspace}
+\newcommand{\bml}{\ensuremath{\mathcal{ML}}\xspace}
+\newcommand{\bhl}{\ensuremath{\mathcal{HL}}\xspace}
+\newcommand{\swl}{{\bml(\dswap)}}
+\newcommand{\gsl}{{\bml(\sab)}}
+\newcommand{\lsl}{{\bml(\lsab)}}
+\newcommand{\brl}{{\bml(\bridge)}}
+\newcommand{\gswl}{{\bml(\dgswap)}}
+\newcommand{\gbrl}{{\bml(\gbridge)}}
+
+% ---Memory Logics
+\newcommand{\mlo}{{\cal ML}(\re,\kn)}
+
+\newcommand{\trbrl}{{\bml(\trbr)}}
+
+\newcommand{\fol}{{\mathcal{FOL}}}
+%\newcommand{\sol}{{\mathcal{SOL}}}
+\newcommand{\pow}{{\mathcal{P}}}
+
+\newcommand{\down}{{\downarrow}}
+\newcommand{\Hl}{\mathcal{H}}
+\newcommand{\hlsd}{\Hl({:},\down)}
+\newcommand{\hlsde}{\Hl({:},\down,\E)}
+
+\newcommand{\A}{\textsf{A}}
+\newcommand{\E}{\textsf{E}}
+\newcommand{\PREF}{\mathsf{PREF}}
+\newcommand{\DYN}{{\rm \sf DYN}\xspace}
+\newcommand{\PROP}{{\rm \sf PROP}\xspace}
+\newcommand{\VAR}{{\rm \sf VAR}\xspace}
+\newcommand{\NOM}{{\rm \sf NOM}\xspace}
+\newcommand{\FORM}{{\rm \sf FORM}\xspace}
+\newcommand{\REL}{{\rm \sf REL}\xspace}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\lra}{\leftrightarrow}
+\newcommand{\Tr}{{\sf MTr}}
+%\newcommand{\bisim}{\leftrightarroweq}
+\renewcommand{\iff}{\mbox{iff}}
+\newcommand{\eqrel}{\leftrightsquigarrow}
+\renewcommand{\L}{{\cal L}}
+
+
+%%%% Aca empiezan las macros viejas
+
+\newcommand{\tup}[1]{\langle #1 \rangle}
+
+\newcommand{\ttup}[1]{\langle\!\langle #1 \rangle\!\rangle}
+
+\newcommand{\model}{\ensuremath{\mathcal{M}}\xspace}
+\newcommand{\nodel}{\ensuremath{\mathcal{N}}\xspace}
+\newcommand{\univ}{\ensuremath{\mathcal{U}}\xspace}
+\newcommand{\uset}{U}
+\newcommand{\img}{\textrm{im\ }}
+\newcommand{\bisim}{\mathrel{\,\raisebox{.3ex}{$\underline{\makebox[.7em]{$\leftrightarrow$}}$}\,}}
+\newcommand{\tbisim}{\bisim^T}
+
+\newcommand{\cset}[1]{\{#1\}}
+\newcommand{\csetsc}[2]{\{ #1 \mid #2\}}
+
+\newcommand{\gM}{\mathcal{M}}
+\newcommand{\gC}{\mathcal{C}}
+\newcommand{\gL}{\mathcal{L}}
+
+
+%%%%%%%%% de facu
+% \theoremstyle{definition}
+% \newtheorem{theorem}{Theorem}[section]
+% \newtheorem{lemma}[theorem]{Lemma}
+% \newtheorem{proposition}[theorem]{Proposition}
+% \newcounter{coro}
+% \newtheorem{corollary}[theorem]{Corollary}
+% \newtheorem{conjecture}[theorem]{Conjecture}
+% % \newtheorem{proof}{Proof}
+
+% \newtheorem{obs}[theorem]{Observation}
+% \newtheorem{definition}[theorem]{Definition}
+% \newtheorem{construction}[theorem]{Construction}
+% \newtheorem{nota}[theorem]{Notation}
+% \newtheorem{example}[theorem]{Example}
+
+%\newtheorem*{thm*}{Theorem} % sin numeracion
+%\newtheorem*{defn*}{Definition}
+
+
+\newcommand{\theq}[1]{\equiv_{#1}}
+
+\newcommand{\elementary}{\ensuremath{EC_{\Delta}}\xspace}
+\newcommand{\belementary}{\ensuremath{EC}\xspace}
+\newcommand{\setcomp}[2]{\{{#1} : {#2}\}}
+
+\newcommand{\diam}[1]{\langle #1 \rangle}
+\newcommand{\ddiam}[1]{\ttup{#1}}
+\newcommand{\ST}{\mathsf{STr}}
+
+\newcommand{\HT}{\mathsf{HTr}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%---------Complexity Classes---------%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ntime}{\textsc{NTime}\xspace}
+\newcommand{\ptime}{\textsc{P}\xspace}
+\newcommand{\nptime}{\textsc{NP}\xspace}
+\newcommand{\nlogspace}{\textsc{NLogSpace}\xspace}
+\newcommand{\pspace}{\textsc{PSpace}\xspace}
+\newcommand{\npspace}{\textsc{NPSpace}\xspace}
+\newcommand{\exptime}{\textsc{ExpTime}\xspace}
+\newcommand{\nexptime}{\textsc{NExpTime}\xspace}
+\newcommand{\expspace}{\textsc{ExpSpace}\xspace}
+\newcommand{\order}[1]{{\cal O} (#1)}
+\newcommand{\C}{{\cal C}}
+
+\newcommand{\wrv}{\tup{W,R,V}}
+\newcommand{\wrvp}{\tup{W',R',V'}}
+
+\newcommand{\EF}{\mathit{EF}}
+\newcommand{\sbt}{\,\begin{picture}(-1,1)(-1,-3)\circle*{3}\end{picture}\ }
+
+
+\newcommand{\sml}{\bml(\sdia)}
+\newcommand{\shl}{\bhl(\sdia)}

@@ -1,0 +1,85 @@
+\section{Furthering Filtrations}\label[section]{sec:ffiltrations}
+
+In this section we take filtrations on weaved models one step further. Rather than defining a single, canonical filtration of a weaved model $\wmodel$ through a set of formulas $\Sigma$, we specify when a weaved model \emph{counts as} a filtration of $\wmodel$. As it turns out, all (filtered) Kripke models in all such filtrations agree worlds and on valuations. What may vary between different filtrations is: how the accessibility relations on Kripke models are defined, and how the simulations linking (filtered) Kripke models are defined.
+In essence, to qualify as a filtration, the accessibility relation and the simulations components must satisfy a number of conditions ensuring that their interaction is adequately preserved. These conditions are chosen precisely to establish the key filtration theorem: for every formula $A \in \Sigma$, $A$ is satisfied in the original weaved model $\wmodel$ iff it is satisfied in the filtered weaved model $\fwmodel$.
+
+\begin{definition}
+    For any weaved model $\wmodel$, and any set of formulas $\Sigma$, closed under subformulas, we define a \defn{filtration} of $\wmodel$ through $\Sigma$ as a weaved model $\fwmodel = \tuple{\Kfwm, \Sfwm}$, where:
+    \begin{enumerate}[leftmargin=\parindent]
+        \setlength{\itemsep}{0pt}
+        \item $\Kfwm$ is the set of all Kripke models $\fmodel = \tuple{ \W, \R, \V} \in \Kfwm$ for which there is a Kripke model $\kmodel \in \Kwm$ such that:
+
+            \begin{enumerate}
+                \item $\W = \setof{\feqc{s}}{s \in \Wkm}$;
+                \item for any $s, t \in \Wkm$,
+                \begin{enumerate}
+                    \item if $s \Rkm t$, then, $\feqc{s} \R \feqc{t}$;
+                    \item if $\feqc{s} \R \feqc{t}$, then, for all $\Box A \in \Sigma$, $\wforces{\pair \kmodel s}{\Box A}$ implies $\wforces{\pair \kmodel t}{A}$;
+                    \item if $\feqc{s} \R \feqc{t}$, then, for all $\Diamond A \in \Sigma$, $\wforces{\pair \kmodel t}{A}$ implies $\wforces{\pair \kmodel t}{\Diamond A}$;
+                \end{enumerate}
+                % \carlos{One way of defining this, just to try.    We can later do the usual range of possible definitions for relations.}
+                \item $\V \colon \Wof{\fmodel} \to 2^{\props}$ is such that for all $\feqc{s} \in \W$, $\V(\feqc{s}) = \Vkm(s) \cap \Sigma$.
+            \end{enumerate}
+
+        \item $\Sfwm$ is the set of all simulations $\fSim\colon \fmodel[1] \fsim \fmodel[2]$ on the Kripke models in $\Kfwm$ for which there is a simulation $\Sim \colon \kmodel_1 \fsim \kmodel_2 \in \Swm$ such that: for all $s \in \Wkm[1]$ and $t \in \Wkm[2]$,
+            
+            \begin{enumerate}
+                \item if $s \Sim t$, then, $\feqc{s}[{\kmodel_1}] \fSim \feqc{t}[{\kmodel_2}]$;
+            \end{enumerate}
+    \end{enumerate}
+    When $\wmodel$ can be understood from the context, we refer to $\fwmodel$ as the $\Sigma$-filtered weaved model.
+\end{definition}
+
+\begin{proposition}\label[proposition]{prop:ffiltration}
+    Let $\wmodel$ be a weaved model, and $\Sigma$ be a set of formulas closed under subformulas.
+    Moreover, let $\fwmodel$ be any filtration of $\wmodel$ through $\Sigma$.
+    Then, for all formulas $A \in \Sigma$, and all ${\pair \kmodel s} \in \Qwm$, we have $\wforces {\pair \kmodel s} A$ iff
+    $\xforces {\fwmodel} {\pair {\fmodel} {\feqc{s}}} A$.
+\end{proposition}
+% \begin{proof}
+%     \setcounter{ieqnnum}{0}
+%     The proof is by induction on $A$.
+
+%     \medskip
+%     \noindent
+%     The base case is: for every $p \in \Sigma$, $\wforces {\pair \kmodel s} p$ iff $\xforces {\fwmodel} {\pair {\fmodel} {\feqc{s}}} p$. This follows directly from the definition of the filtration, since $\Vof{\fmodel}(\feqc{s}) = \Vkm(s) \cap \Sigma$.
+
+%     \medskip
+%     \noindent
+%     The inductive step proceeds with a case analysis.
+%     We prove the cases of $\Box B$ and $\Diamond B$ as representative of the kind of reasoning involved.
+
+%     \medskip
+%     \noindent
+%     For boxes, we must show that for all $\Box B \in \Sigma$, we have $\wforces {\pair {\kmodel_1} s} \Box B$ iff $\xforces {\fwmodel} {\pair {\fmodel[1]} {\feqc{s}[\kmodel_1]}} \Box B$.
+%     From left-to-right, suppose
+%         \ieqn{\wforces {\pair {\kmodel_1} s} \Box B}.
+%     Choose arbitrary ${\pair {\kmodel_2} t} \in~\Qwm$ and $u \in \Wkm[2]$ such that:
+%         \ieqn{{\pair {\kmodel_1} s} \Fwm {\pair {\kmodel_2} t}}, and
+%         \ieqn{t \Rkm[2] u}.
+%     By definition, \ieqnref{-1} and \ieqnref0 give us
+%         \ieqn{{\pair {\fmodel[1]} {\feqc{s}[\kmodel_1]}} \Fof{\fwmodel} {\pair {\fmodel[2]} {\feqc{t}[\kmodel_2]}}} and
+%         \ieqn{\feqc{t}{\kmodel_2} \Rof{\fmodel[2]} \feqc{u}[\kmodel_2]}.
+%     From \ieqnref{-4}--\ieqnref{-2}, we have $\wforces {\pair {\kmodel_2} u} B$.
+%     Since $\Sigma$ is closed under subformulas, $B \in \Sigma$.
+%     Using the inductive hypothesis, we obtain
+%         \ieqn{\xforces {\fwmodel} {\pair {\fmodel[2]} {\feqc{u}[\kmodel_2]}} B}.
+%     The last three steps together yield $\xforces {\fwmodel} {\pair {\fmodel[1]} {\feqc{s}[\kmodel_1]}} \Box B$ as required.
+%     The right-to-left implication uses a similar argument.
+
+%     \medskip
+%     \noindent
+%     For diamonds, we must show that for all $\Diamond B \in \Sigma$, we have $\wforces {\pair \kmodel s} \Diamond B$ iff $\xforces {\fwmodel} {\pair {\fmodel} {\feqc{s}}} \Diamond B$.
+%     From left-to-right, suppose
+%         \ieqn{\wforces {\pair \kmodel s} \Diamond B}.
+%     There is $t \in \Wkm$ such that:
+%         \ieqn{s \Rkm t}, and
+%         \ieqn{\wforces {\pair \kmodel t} B}.
+%     By definition, there is ${\feqc{t}} \in \Qof{\fmodel}$ such that
+%         \ieqn{\feqc{s} \Rof{\fmodel} \feqc{t}}.
+%     Since $\Sigma$ is closed under subformulas, $B \in \Sigma$.
+%     Using the inductive hypothesis on \ieqnref{-1}, we get
+%         \ieqn{\xforces {\fwmodel} {\pair {\fmodel} {\feqc{t}}} B}.
+%     The last two steps together yield $\xforces {\fwmodel} {\pair {\fmodel} {\feqc{s}}} \Diamond B$ as required.
+%     The right-to-left implication uses a similar argument.
+% \end{proof}

@@ -1,0 +1,153 @@
+\input{lutzmathmacros}
+\input{carlosmacros}
+\input{valentinmacros}
+
+\colorlet{ctxcolor}{gray!70!white}
+\colorlet{notgreen}{green!70!black}
+
+\newcommand{\lat}[1]{{\color{NavyBlue}@_{#1}}}
+\newcommand{\latr}[1]{@_{#1}}
+\newcommand{\lbox}{\Box}
+\newcommand{\ldia}{\Diamond}
+\newcommand{\sbbox}{[\mathsf{s}]}
+\newcommand{\sdia}{\langle\mathsf{s}\rangle}
+\newcommand{\sloc}[1]{{\color{BlueViolet}(\mkern-6mu\{\mkern0mu #1 \mkern0mu\}\mkern-6mu)}} %%{\bigcirc^{#1}}
+%\newcommand{\land}{\wedge}
+%\newcommand{\lor}{\vee}
+\renewcommand{\cimp}{\mathbin{\to}}
+
+%%%% Connectives
+\newcommand*{\NOT}{\neg}
+\newcommand*{\AND}{\mathbin{\wedge}}
+\newcommand*{\TOP}{\mathord{\top}}
+\newcommand*{\OR}{\mathbin{\vee}}
+\newcommand*{\BOT}{\mathord{\bot}}
+\newcommand*{\IMP}{\mathbin{\supset}}%%\scalebox{.9}{\raise.2ex\hbox{$\supset$}}}}
+\newcommand*{\BOX}{\mathord{\Box}}
+\newcommand*{\DIA}{\mathord{\Diamond}}
+
+
+\newcommand{\lats}[2]{\lat{#1}\sloc{#2}}
+\newcommand{\latd}[2]{\lat{#1}\ldia{#2}}
+\renewcommand{\cneg}[1]{\neg#1}
+%\newcommand{\ssqn}[2]{#1\vdash#2}
+\newcommand{\ssqnctx}[4]{\ssqn{{\color{ctxcolor} #1} #2}{#3 {\color{ctxcolor} #4}}}
+\newcommand{\ssqnGD}[2]{\ssqnctx{\Gamma}{#1}{#2}{\Delta}}
+
+\newcommand{\LR}[1]{{#1}_\mathsf{L}}
+\newcommand{\RR}[1]{{#1}_\mathsf{R}}
+  
+\newcommand{\edge}[2]{\overline{#1#2}}
+
+\newcommand{\proviso}[1]{\hbox{\small #1}}
+\newcommand{\axr}{\mathsf{ax}}
+\newcommand{\subar}{\mathsf{sub_1}}
+\newcommand{\subbr}{\mathsf{sub_2}}
+
+\newcommand{\lutz}[1]{{\color{notgreen}[[L: #1]]}} 
+\newcommand{\carlos}[1]{{\color{red}[[C: #1]]}}
+\newcommand{\todo}[1]{{\color{red}[[ToDo: #1]]}} 
+
+
+\newcommand{\Layerssym}{\mathfrak{U}} %%\mathcal{L}}
+\newcommand{\Layers}[1][]{\Layerssym_{#1}}
+\newcommand{\layersym}{\mathfrak{u}} %%{L}
+\newcommand{\layerasym}{\mathfrak{v}} %%{L}
+\newcommand{\layer}{\layersym}
+\newcommand{\layera}{\layerasym}
+\newcommand{\lay}[1]{\layersym_{#1}}
+\newcommand{\laya}[1]{\layerasym_{#1}}
+\newcommand{\Worldssym}{W}
+\newcommand{\Worlds}[1][\layer]{\Worldssym_{#1}}
+\newcommand{\worldsym}{w}
+\newcommand{\worldasym}{z}
+\newcommand{\world}{\worldsym}
+\newcommand{\worlda}{\worldasym}
+\newcommand{\wor}[1]{\worldsym_{#1}}
+\newcommand{\Relsym}{R}
+\newcommand{\Rel}[1][\layer]{\Relsym_{#1}}
+\newcommand{\Funsym}{F}
+\newcommand{\Fun}[2]{\Funsym_{#1 \mapsto #2}}
+\newcommand{\Funa}{\Fun{\layer}{\layera}}
+\newcommand{\Valsym}{V}
+\newcommand{\Val}[1][\layer]{\Valsym_{#1}}
+
+
+\newcommand{\relcomp}{\mathord{;}}
+%% \newcommand{\modelsym}{\mathcal{M}}
+%% \newcommand{\model}{\modelsym}
+\newcommand{\Framesym}{\mathcal{F}}
+\newcommand{\Frame}{\Framesym}
+
+\newcommand{\forcesym}{\Vdash}
+\newcommand{\nforcesym}{\not\Vdash}
+
+\newcommand{\forces}[2]{{#1}\forcesym{#2}}
+\newcommand{\nforces}[2]{{#1}\nforcesym{#2}}
+
+\newcommand{\xforces}[3]{\forces{#1,#2}{#3}}
+\newcommand{\nxforces}[3]{\nforces{#1,#2}{#3}}
+
+\newcommand{\bforces}[2]{\xforces{\bmodel}{#1}{#2}}
+\newcommand{\nbforces}[2]{\nxforces{\bmodel}{#1}{#2}}
+
+\newcommand{\hforces}[2]{\xforces{\hmodel}{#1}{#2}}
+\newcommand{\nhforces}[2]{\nxforces{\hmodel}{#1}{#2}}
+
+\newcommand{\wforces}[2]{\xforces{\wmodel}{#1}{#2}}
+\newcommand{\nwforces}[2]{\nxforces{\wmodel}{#1}{#2}}
+
+
+
+\newcommand{\sforce}[1]{\forcesym{#1}}
+\newcommand{\snforce}[1]{\nforcesym{#1}}
+
+\newcommand{\mforces}[2]{\forces{\model,#1}{#2}}
+\newcommand{\muforces}[2]{\forces{\model,\layer,#1}{#2}}
+\newcommand{\mwforces}[1]{\forces{\model,\world}{#1}}
+\newcommand{\muwforces}[1]{\forces{\model,\layer,\world}{#1}}
+\newcommand{\mnforces}[2]{\nforces{\model,#1}{#2}}
+\newcommand{\munforces}[2]{\nforces{\model,\layer,#1}{#2}}
+\newcommand{\mwnforces}[2]{\nforces{\model,\world,#1}{#2}}
+\newcommand{\muwnforces}[1]{\nforces{\model,\layer,\world}{#1}}
+
+
+\newcommand{\inrel}[3][\layer]{#2\Rel[#1]#3}
+
+\newcommand{\defn}[1]{{\textit{\textbf{#1}}\/}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%TIKZ stuff
+
+\tikzstyle{node}=[circle,draw]
+\tikzstyle{s-node}=[circle,draw,inner sep=2pt]
+\tikzstyle{nonode}=[inner sep=0pt]
+\tikzstyle{access}=[-stealth,blue]
+\tikzstyle{future}=[dashed,-stealth,thick]
+%%\tikzstyle{suricata}=[future,red]
+%%\tikzstyle{deleted}=[->,gray]
+%%\tikzstyle{loop}=[->,red]
+
+\newcommand{\forcebox}[2]{\parbox{1em}{\hbox to1em{\strut$#1$\hss} \hbox to1em{\strut$#2$\hss}}}
+\newcommand{\mforcebox}[2]{\forcebox{\sforce{#1}}{{\color{red!70}{\snforce{#2}}}}}
+\newcommand{\oforcebox}[2]{\forcebox{\sforce{#1}}{}}
+\newcommand{\nforcebox}[2]{\forcebox{}{{\color{red!70}{\snforce{#2}}}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\PROP}{\mathcal{V}}
+%\newcommand{\FORM}{\mathcal{F}}
+
+\newcommand{\formula}{\varphi}
+\newcommand{\formulb}{\psi}
+
+\newcommand{\IML}{\iml}
+\newcommand{\IK}{\mathsf{IK}}
+\newcommand{\IT}{\mathsf{IT}}
+
+
+\newcommand{\kripke}{\mathcal{K}_\layer}
+\newcommand{\kripkea}{\mathcal{K}_\layera}
+
+
+\endinput

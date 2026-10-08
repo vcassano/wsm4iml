@@ -1,0 +1,68 @@
+\documentclass[submission,copyright,creativecommons]{eptcs}
+\providecommand{\event}{AiML 2026} 
+
+% AiML macros (for writing theorems)
+\usepackage{aiml26}
+
+\usepackage{iftex}
+\ifpdf
+    \usepackage{underscore}                 % Only needed if you use pdflatex.
+    \usepackage[T1]{fontenc}                % Recommended with pdflatex
+\else
+    \usepackage{breakurl}                     % Not needed if you use pdflatex only.
+\fi
+
+\usepackage{tikz}
+\usepackage{xspace}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{standalone}
+\usepackage{bm}
+
+\input{finite-macros}
+
+\title{%
+    Weaving a Model Theory for Intuitionistic Modal Logic:\\
+    Unravelings, Filtrations, and Finite Models
+}
+
+\author{
+    Valentin Cassano
+    \institute{UNRC and CONICET, Argentina}%\thanks{A fine university.}}
+    \institute{GTIIT, China}
+    \email{valentin@dc.exa.unrc.edu.ar}
+    \and
+    Carlos Areces
+    \institute{UNC and CONICET, Argentina}%\thanks{A fine university.}}
+    \institute{GTIIT, China}
+    \email{carlos.areces@unc.edu.ar}
+    \and
+    Lutz Stra{\ss}burger
+    \institute{Inria Saclay, France}%\thanks{A fine university.}}
+    \email{lutz@lix.polytechnique.fr}
+}
+
+\newcommand{\titlerunning}{}
+\newcommand{\authorrunning}{Cassano, Areces, Stra{\ss}burger}
+
+\hypersetup{
+    bookmarksnumbered,
+    pdftitle        = {\titlerunning},
+    pdfauthor     = {\authorrunning},
+    pdfsubject    = {EPTCS},                             % Consider adding a more appropriate subject or description
+    pdfkeywords = {Intuitionistic Modal Logic, Model Theory, Finite Model Property} % Uncomment and enter keywords specific to your paper
+}
+
+\begin{document}
+\maketitle
+
+\input{introduction}
+\input{preliminaries}
+\input{weaved}
+\input{bisim}
+\input{filtration}
+\input{ffiltration}
+
+\bibliographystyle{eptcs}
+\bibliography{references}
+\end{document}

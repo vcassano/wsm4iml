@@ -1,0 +1,186 @@
+\section{Background}
+\label{sec:background}
+
+
+The syntax of the intuitionistic modal logic $\iml$ \lutz{I changed it because mathcal looks horrible when it's more than one letter} is defined
+as follows:
+
+\begin{definition}
+\todo{decide on notation here}
+  Let $\PROP$ be a countable, infinite set of propositional symbols.
+  The set of \defn{formulas} of \iml over $\PROP$ is defined as:
+$$
+\varphi, \psi ::= \bot \mid p 
+  \mid \varphi \to \psi 
+  \mid \Box \varphi
+  \mid \Diamond \varphi
+$$
+where $p\in \PROP$ and $\varphi, \psi$ are formulas of $\iml$.
+$\neg \varphi$ is defined as $\varphi \to \bot$.
+\end{definition}
+
+In the first semantics for $\IML$ that we discuss here, models are usually known in the literature as \emph{intuitionistic Kripke models}. This semantics can be seen as a collection of standard Kripke models for classical modal logics, which are arranged in a hierarchy by  an order relation $\le$ between models. The ``internal'' relation $\Rel$ in each Kripke model is used to give semantics to the $\Diamond$ modality, the order relation $\le$ is used to give semantics to the intuitionistic implication $\to$, while both $\le$ and $\Rel$ are needed to interpret $\Box$\footnote{This semantics was introduced in a tense-logical version in Ewald (1986) \todo{proper citation}.}
+
+\begin{definition}
+  A \defn{Kripke model} for $\IML$ is a tuple
+$$
+%\tup{\Layers, \le, \set{\Worlds}_{\layer\in\Layers}, \.set{\Rel}_{\layer\in\Layers}, \set{\Val}_{\layer\in\Layers} }
+ \model= \tup{\Layers, \le, \set{\kripke}_{\layer \in \Layers}} \text{ with } 
+ \kripke = \tup{\Worlds, \Rel, \Val}
+$$
+where
+\begin{enumerate}
+\item  $\Layers$ is a non-empty set of \emph{universes}, partially ordered by $\le$;
+\item  for each $\layer\in\Layers$, we have a non-empty set $\Worlds$ of worlds such that $\layer\le\layera$ implies
+  $\Worlds\subseteq\Worlds[\layera]$;
+\item for each $\layer\in\Layers$, we have a binary relation $\Rel$ on $\Worlds$ such that $\layer\le\layera$ implies
+  $\Rel\subseteq\Rel[\layera]$;
+\item for each $\layer\in\Layers$, a \defn{valuation function} $\Val$ that maps
+  each world $\world\in\Worlds$ to a subset of $\PROP$;
+  %% for each $w$, $V_w$ is a function that to each ordinary
+  %% propositional symbol $p$ assigns a subset of $D_w$ such that $w \le v$
+  %% implies $V_w(p) \subseteq V_v(p)$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}
+  Given a Kripke model
+  $\model = \tup{\Layers, \le, \set{\Worlds}_{\layer\in\Layers}, \set{\Rel}_{\layer\in\Layers}, \set{\Val}_{\layer\in\Layers} }$,
+  the \defn{forcing relation}
+  $\muwforces{\formula}$ is defined by induction, where $\layer\in\Layers$ is a universe, $\world\in\Worlds$ is a world, and $\formula$ is a formula.
+    $$
+    \begin{array}{l@{\quiff}l}
+      %%\model, w, d & \bot \text{ never}\\
+      \muwforces{a} & a  \in \Val(\world)\\
+      \muwforces{\formula\cimp\formulb} & \text{for all $\layera \ge \layer$, whenever
+        $\muwforces{\formula}$ then also $\muwforces{\formulb}$} \\
+      \muwforces{\lbox\formula} & \text{for all $\layera \ge \layer$ and $\worlda\in\Worlds[\layera]$ with
+        $\world\Rel[\layera]\worlda$, we have  $\mforces{\layera,\worlda}{\formula}$}\\
+      \muwforces{\ldia\formula} & \text{for some  $\worlda\in\Worlds$ with $\world\Rel\worlda$ we have
+        $\muforces{\worlda}{\formula}$}.
+          \end{array}
+    $$
+    
+    We say that a formula $\formula$ is \defn{satisfiable} if 
+    for some model $\model$, and some universe $\layer$ and world $w$ in $\model$ we have $\muwforces \formula$.
+    We write $\muwnforces{\formula}$ iff we do not have  $\muwforces{\formula}$. In particular, we always have $\muwnforces{\bot}$.   We say that a formula $\formula$ is \defn{valid}, 
+    if for any Kripke model $\model$, and any universe $\layer$ and world $w$ in $\model$ we have $\muwforces \formula$. 
+
+A Kripke model $\model = \tup{\Layers, \le, \set{\Worlds}_{\layer\in\Layers}, \set{\Rel}_{\layer\in\Layers}, \set{\Val}_{\layer\in\Layers} }$ is \defn{finite} iff the set $\Layers$ is finite and for every $\layer\in\Layers$, the set $\Worlds$ is also finite.
+\end{definition}
+
+These models naturally combine the model of Kripke models for intuitionistic logic with the model of Kripke models for classical modal logic. As expected, they are sound and complete for intuitionistic modal logics.
+
+\begin{theorem}
+\todo{theorem and citation, also define the logics $\IK$, $\IT$, etc}  
+\end{theorem}
+
+However, as observed by Simpson~\cite{simpson1994}, these models fail the finite model property (FMP), that stipulates that every satisfiable 
+formula is satisfied in a finite model.
+
+\begin{example}\label{exa:form}
+  Let $\formula$ be the formula $\lbox\neg\neg a \cimp \neg\neg \Box
+  a$. Then $\phi$ is not a theorem of any of the logics defined above,
+  as one can easily construct and infinite counter-model \lutz{should
+    we do that?}
+
+  However, as the following proposition shows, every finite Kripke model will validate $\formula$.
+\end{example}
+
+%% We give a simple example to show that the finite model property fails for
+%% Kripke models.
+
+\begin{proposition}
+The formula $\lbox\neg\neg a \cimp \neg\neg \Box
+  a$ is valid in any finite Kripke model. 
+\end{proposition}
+
+\begin{proof}\todo{fix notation in the proof}
+  Suppose $W$ is finite. Suppose that
+  $\model, w, d \models \Box \neg \neg A$ for some $w \in W$ and
+  $d \in D_w$ . Consider any maximal $\model, w' \ge w$ and
+  $d' \in D_{w'}$ such that $R_{w'} (d, d')$. Then
+  $\model, w', d' \models \neg\neg A$ and so
+  $\model, w', d' \models A$ as $w'$ is maximal. So
+  $\model, w', d \models \Box A$ (again as $w'$ is maximal). But then
+  $\model, w', d \models \Box A$ for all maximal $w' \ge w$ and, as $W$ is
+  finite, for every $w'' \ge w$ there is some maximal $w' \ge w''$. So
+  indeed $\model, w, d \models \neg \neg \Box A$.
+\end{proof}
+
+There is another kind of semantics for $\IML$, which drops the separation between the intuitionistic model (given by the partial order $\le$) and the modal model (given by the accessibility relations $\Rel$) in Kripke models. The two relations are merged in a single model. These models are called \emph{birelational models}, and they do have the FMP.
+
+
+\begin{definition}
+  A \defn{birelational model} for intuitionistic modal logic is a tuple
+  $$
+  \tup{W, R, \le, V}
+  $$
+where
+\begin{itemize}
+  \item $W$ is a nonempty set;
+  \item $\le$ is a partial order on $W$;
+  \item $R$ is a  binary relation on $W$; and
+  \item $V : W \mapsto 2^\PROP$ is a function such that
+    if $w \le w'$ then $V(w) \subseteq V(w')$.
+\end{itemize}
+    
+Moreover, the following two conditions are required
+  \begin{itemize}
+  \item[(F1)] For all $u, v, v' \in W$, if $uRv$ and $v \le v'$, there
+    exists $u'$ s.t.\ $u \le u'$ and $u'Rv'$.
+
+\item[(F2)] For all $u', u, v \in W$, if $uRv$ and $u \le u'$, there exists $v'$ s.t.\ $u'Rv'$ and $v \le v'$.
+\end{itemize}
+
+The tuple $\tup{W,R,\le}$ is called a \emph{birelational frame} for
+intuitionistic modal logic and the model is said to be based on this
+frame.  The semantic conditions for the modalities are defined as follows:\todo{use macros, fix typography}
+   $$
+    \begin{array}{rcl}
+      \model, w & \models & \varphi \to \psi
+       \text{ iff for all } w' \text{ with } w \le w', \text{ if } \model, w' \models \varphi \text{ then } \model, w' \models \psi\\
+      \model, w & \models & \Box \varphi \text{ iff for all } w' \text{ and } u \text{ with } w \le w' \text{ and } w'Ru, \text{ we have } \model, u \models \varphi\\
+      \model, w & \models & \Diamond \varphi \text{ iff there exists } u \text{such that } wRu \text{ and } \model, u \models \varphi.
+    \end{array}
+    $$
+\end{definition}
+
+%% \newcommand{\hmod}{\tup{W,\le,\{D_w\}_{w\in W},\{R_w\}_{w\in W},\{V_w\}_{w\in W}}}
+
+%% However, for any $L \in \{$IK, IKD, IKB, IT, IKDB, IKTB, IS5$\}$ the
+%% formula $\Box \neg \neg A \to \neg \neg \Box A$ is not a theorem of
+%% $L$. A finite birelation model invalidating the formula is given by
+%% the two point model:
+
+We can now give a finite countermodel for our formula $\formula$ in Example~\ref{exa:form}
+
+\begin{center}
+\todo{same notation as other picture}
+  \begin{tikzpicture}
+  % Define the nodes
+  \node (w') at (0,2) {$w'$};
+  \node (alpha) at (0.5,2) {$\{\alpha\}$};
+  \node (w) at (0,0) {$w$};
+
+  % Draw the arrows
+  \draw[->] (w') -- (w);
+  \draw[->] (w) -- (w');
+\end{tikzpicture}
+\end{center}
+
+\noindent
+where $w \le w'$. This is clearly a birelation model of any $L$ in
+$\{$IK, IKD, IKB, IT, IKDB, IKTB, IS5$\}$. Furthermore,
+$w \models \Box\neg\neg \alpha$ and
+$w \not \models \neg\neg \Box\alpha$ so indeed
+$w \not\models \Box\neg\neg\alpha \to \neg\neg \Box\alpha$. It is also
+easy to find infinite Kripke models invalidating the formula. This
+simple counterexample to the finite model property for Kripke models
+was observed (in the case of IS5) by Ono and Suzuki~\cite{ono1988}.
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

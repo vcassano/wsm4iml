@@ -1,0 +1,285 @@
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{xargs}
+\usepackage{tikz-cd}
+\usepackage{amssymb}
+\usepackage{vwcol}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,calc,patterns,positioning,shapes}
+\usetikzlibrary{decorations.pathmorphing}
+\tikzset{
+    modal/.style={>=stealth',shorten >=1pt,shorten <=1pt,auto,
+    node distance=1.5cm,semithick},
+    world/.style={circle,draw,minimum size=.8cm,fill=gray!15},
+    point/.style={circle,draw,fill=black,inner sep=0.5mm},
+    reflexive/.style={->,in=120,out=60,loop,looseness=#1},
+    reflexive/.default={5},
+    reflexive point/.style={->,in=135,out=45,loop,looseness=#1},
+    reflexive point/.default={25},
+}
+
+\newcommand{\valentin}[1]{{\color{violet}[[V: #1]]}}
+
+%%% Math Euler (fonts) %%%
+
+% \DeclareMathAlphabet\EuRoman{U}{eur}{m}{n}
+% \SetMathAlphabet\EuRoman{bold}{U}{eur}{b}{n}
+% \newcommand{\matheu}{\EuRoman}
+
+%%% Kripke Models
+
+\newcommand{\props}{\mathsf{Prop}}
+
+\newcommand{\W}{\mathrm{Q}}
+\newcommand{\R}{\mathbin{\mathrm{R}}}
+\newcommand{\V}{\mathrm{V}}
+
+\newcommand{\Q}{\mathrm{Q}}
+
+\newcommand{\Wof}[1]{\mathrm{Q}_{#1}}
+\newcommand{\Qof}[1]{\mathrm{Q}_{#1}}
+\newcommand{\Rof}[1]{\mathbin{\mathrm{R}_{#1}}}
+\newcommand{\iRof}[1]{\mathbin{\mathrm{R}^{-1}_{#1}}}
+\newcommand{\Vof}[1]{\mathrm{V}_{#1}}
+
+\newcommand{\kmodel}{\mathfrak{K}}
+\newcommand{\ikmodel}{\mathfrak{K}^{-1}}
+
+\newcommand{\Wkm}[1][]{\Wof{\kmodel_{#1}}}
+\newcommand{\Qkm}[1][]{\Qof{\kmodel_{#1}}}
+\newcommand{\Rkm}[1][]{\Rof{\kmodel_{#1}}}
+\newcommand{\iRkm}[1][]{\iRof{\kmodel_{#1}}}
+\newcommand{\Vkm}[1][]{\Vof{\kmodel_{#1}}}
+
+%%%% Frames
+
+% \newcommand{\kframe}{\matheu{F}}
+
+% \newcommand{\Wfm}[1][]{\Wof{\kframe_{#1}}}
+% \newcommand{\Rfm}[1][]{\Rof{\kframe_{#1}}}
+% \newcommand{\Vfm}[1][]{\Vof{\kframe_{#1}}}
+
+% \newcommand{\fmofkm}{\kframe(\kmodel)}
+% \newcommandx{\kmoffmv}[2][1={\kframe},2={\V}]{\kmodel(\npair {#1} {#2})}
+
+%%%% Filtrations
+
+\newcommand{\fset}{\Sigma}
+\newcommandx{\fksym}[2][1=\fset,2=\kmodel]{^{#1}_{#2}}
+\newcommandx{\feqr}[2][1=\kmodel,2=\fset]{\mathrel{{\equiv}{\fksym[#1][#2]}}}
+\newcommandx{\feqc}[3][2=\kmodel,3=\fset]{[#1]\fksym[{#3}][{#2}]}
+
+\newcommand{\fmodel}[1][]{\kmodel_{#1}^{\fset}}
+
+\newcommand{\Wfm}[1][]{\Wof{\kmodel_{#1}}^{\fset}}
+\newcommand{\Qfm}[1][]{\Qof{\kmodel_{#1}}^{\fset}}
+\newcommand{\Rfm}[1][]{\R_{\kmodel_{#1}}^{\fset}}
+\newcommand{\Vfm}[1][]{\Vof{\kmodel_{#1}}^{\fset}}
+
+
+%%%% Bi-relational Models
+
+\usepackage{xargs}
+\newcommandx{\bmodel}[1][1={B}]{\mathfrak{#1}}
+
+\newcommand{\bmsymb}{\mathfrak{B}}
+
+\newcommand{\Wbm}[1][]{\Wof{\bmsymb_{#1}}}
+\newcommand{\Qbm}[1][]{\Wof{\bmsymb_{#1}}}
+\newcommand{\Rbm}[1][]{\Rof{\bmsymb_{#1}}}
+\newcommand{\Vbm}[1][]{\Vof{\bmsymb_{#1}}}
+
+\newcommand{\Fsymb}{\preccurlyeq}
+\newcommand{\Fbm}{{\Fsymb_\bmsymb}}
+
+\newcommand{\kmofbm}{\kmodel(\bmodel)}
+\newcommand{\bmofhm}{\bmodel(\hmodel)}
+\newcommand{\bmofwm}{\bmodel(\wmodel)}
+
+\newcommand{\bsat}{\mathrm{b}}
+
+%%% Hierarchical Kripke Models
+
+\newcommand{\Kof}[1]{\mathcal{K}_{#1}}
+\newcommand{\Kmodels}{\Kof{}}
+
+\newcommand{\Fof}[1]{\Fsymb_{#1}}
+
+\newcommand{\imodel}{\mathfrak{I}}
+\newcommand{\hmodel}{\mathfrak{H}}
+
+\newcommand{\Hleqsym}{\preccurlyeq}
+
+\newcommand{\Hleqof}[1][]{\Hleqsym_{#1}}
+\newcommand{\Hleq}{\Hleqof[\hmodel]}
+\newcommand{\Fhm}[1][]{\Fof{\hmodel_{#1}}}
+
+\newcommand{\Khm}[1][]{\Kof{\hmodel_{#1}}}
+
+%%% Weaved Kripke Models
+
+\newcommand{\wmodel}{\mathfrak{W}}
+\newcommand{\tmodel}{\mathfrak{T}}
+
+\newcommand{\fsim}{\rightsquigarrow}
+\newcommand{\BSim}{\leftrightarroweq}
+
+\newcommand{\Sim}{\mathbin{\mathsf{S}}}
+\newcommand{\Tim}{\mathbin{\mathsf{T}}}
+
+% \usepackage{mathrsfs}
+% \newcommand{\G}{\mathcal{S}}
+\newcommand{\Sof}[1]{\mathcal{S}_{#1}}
+\newcommand{\Sims}{\Sof{}}
+
+\newcommand{\Kwm}[1][]{\Kof{\wmodel_{#1}}}
+\newcommand{\Swm}[1][]{\Sof{\wmodel_{#1}}}
+\newcommand{\Fwm}[1][]{{\Fsymb_{\wmodel_{#1}}}}
+\newcommand{\Qwm}[1][]{\Qof{\wmodel_{#1}}}
+
+\newcommand{\Ktm}[1][]{\Kof{\tmodel_{#1}}}
+\newcommand{\Stm}[1][]{\Sof{\tmodel_{#1}}}
+\newcommand{\Ftm}[1][]{{\Fsymb_{\tmodel_{#1}}}}
+\newcommand{\Qtm}[1][]{\Qof{\tmodel_{#1}}}
+
+\newcommand{\fwmodel}{\wmodel^{\fset}}
+\newcommand{\Kfwm}{\Kmodels^{\fset}}
+\newcommand{\Sfwm}{\Sims^{\fset}}
+\newcommand{\fSim}{\Sim^{\fset}}
+
+\newcommand{\rwmodel}{\restr{\wmodel}{\kmodel}}
+\newcommand{\Krwm}{\restr{\Kmodels}{\kmodel}}
+\newcommand{\Srwm}{\restr{\Sims}{\kmodel}}
+
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\uwmodel}{\restr{\wmodel}{\kmodel^{*}}}
+\newcommand{\Kuwm}{\restr{\Kmodels}{\kmodel^{*}}}
+\newcommand{\Suwm}{\restr{\Sims}{\kmodel^{*}}}
+
+\newcommand{\pwmodel}{\restr{\wmodel}{\kmodel^{n}}}
+\newcommand{\Kpwm}{\restr{\Kmodels}{\kmodel^{n}}}
+\newcommand{\Spwm}{\restr{\Sims}{\kmodel^{n}}}
+
+
+\newcommand{\branches}{\mathcal{C}}
+\newcommand{\bwmodel}{\mathfrak{C}}
+\newcommand{\Kbwm}[1][]{\Kof{\bwmodel_{#1}}}
+\newcommand{\Sbwm}[1][]{\Sof{\bwmodel_{#1}}}
+
+\newcommand{\twmodel}{\mathfrak{T}}
+\newcommand{\Ktwm}{\Kof{\twmodel}}
+\newcommand{\Stwm}{\Sof{\twmodel}}
+
+\newcommand{\iwmodel}{\wmodel^{\cong}}
+\newcommand{\Kiwm}{\Kmodels^{\cong}}
+\newcommand{\Siwm}{\Sims^{\cong}}
+\newcommand{\iSim}{\Sim^{\cong}}
+\newcommand{\IsoKiwm}{\mathcal{I}^{\cong}}
+
+\newcommand{\cwmodel}{\wmodel^{\Downarrow}}
+\newcommand{\Kcwm}{\Kmodels^{\Downarrow}}
+\newcommand{\Scwm}{\Sims^{\Downarrow}}
+
+%%% Weaved Frames
+
+% \newcommand{\wframe}{\matheu{W}}
+
+% \newcommand{\Kwf}[1][]{\mathbb{F}_{\wframe_{#1}}}
+% \newcommand{\Swf}[1][]{\Sof{\wframe_{#1}}}
+% \newcommand{\Vwf}[1][]{\V_{#1}}
+
+% \newcommand{\Qwf}[1][]{\Qof{\wframe_{#1}}}
+% \newcommand{\Fwf}{{\Fsymb_\wframe}}
+% \newcommand{\nFwf}{{{\not\Fsymb}_\wframe}}
+
+%%%% From ... 2 Weaved ...
+
+\newcommand{\QQs}[1][]{\mathcal{Q}_{#1}}
+\newcommand{\Ind}{I}
+\newcommand{\bigq}[1][]{\bm{Q_{#1}}}
+
+\newcommand{\wmofhm}{\wmodel(\hmodel)}
+\newcommand{\wmofbm}[1]{\wmodel_{#1}(\bmodel)}
+\newcommand{\wmofwfv}{\wmodel(\wframe, \Vwf)}
+\newcommand{\wfofwm}{\wmodel(\Vwf)}
+
+%%% MISC
+
+\usepackage{mathtools}
+\DeclarePairedDelimiterX\setof[2]{\{}{\}}{\,#1 \;\delimsize\vert\; #2\,}
+
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\cod}{cod}
+
+\newcommand{\last}[1]{#1_{{-1}}}
+
+\newcommand{\imap}{\iota}
+\newcommand{\isym}{\hookrightarrow}  % inclusion function
+\newcommand{\bsym}{%
+    % \hookrightarrow\mathrel{\mspace{-15mu}}\rightarrow
+    % \mathbin{\tikz{\draw[>->>] (0,0) -- (0.4,0);}}
+    \cong
+} % bijection function
+
+\DeclareMathOperator{\ideg}{deg}
+\DeclareMathOperator{\size}{size}
+
+\newcommand{\restr}[2]{#1\vert_{#2}}
+
+% \DeclareMathOperator{\id}{id}
+
+\newcommand{\bb}[1]{\mathbf{#1}}
+
+%%% REFERENCING
+
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+\Crefname{definition}{Def.}{Defs.}
+\Crefname{figure}{Fig.}{Figs.}
+\Crefname{proposition}{Prop.}{Props.}
+\Crefname{equation}{Eq.}{Eqs.}
+\Crefname{property}{Prop.}{Props.}
+\Crefname{theorem}{Thm.}{Thms.}
+\Crefname{thm}{Thm.}{Thms.}
+\Crefname{example}{Ex.}{Exs.}
+\Crefname{section}{Sec.}{Secs.}
+\Crefname{fact}{Fact}{Facts}
+\Crefname{appendix}{App.}{App.}
+\Crefname{table}{Tab.}{Tabs.}
+
+%%% INLINE EQUATIONS %%%
+\newcounter{ieqnnum}
+\makeatletter
+\newcommand*{\ieqn}[2][]{%
+    \begingroup
+        % Put \refstepcounter at the beginning, because
+        % package `hyperref' sets the anchor here.
+        \refstepcounter{ieqnnum}%
+        (\roman{ieqnnum})\xspace%
+        \ifx\\#1\\%
+            % \label[ieqn]{\theieqnnum}
+        \else
+            \label[ieqn]{#1}
+        \fi
+        % prevent line breaks inside equation
+        \relpenalty=10000 %
+        \binoppenalty=10000 %
+        \ensuremath{%
+            % \displaystyle % larger fractions, ...
+            #2%
+        }%
+    \endgroup
+}
+\makeatother
+
+\newcounter{rieqnnum}%
+\newcommand{\ieqnref}[1]{%
+    \setcounter{rieqnnum}{#1}%
+    \setcounter{rieqnnum}{%
+        \numexpr\value{ieqnnum}+\value{rieqnnum}%
+    }%
+    (\roman{rieqnnum})%
+}

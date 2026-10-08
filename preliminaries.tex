@@ -1,0 +1,224 @@
+\section{Preliminaries}
+
+In this section we recall the basic semantic frameworks that have been used to interpret the intuitionistic modal language. We begin by fixing the language of $\IK$, which extends intuitionistic propositional logic with the modal operators $\Box$ and $\Diamond$. We then present the hierarchical semantics, in which modalities are interpreted over families of Kripke models organised into layers reflecting the intuitionistic growth of information. Finally, we introduce the bi-relational semantics, which equips a single Kripke model with both an intuitionistic epistemic relation and a modal accessibility relation, together with suitable interaction conditions. These definitions have as their main purpose to introduce some notation and terminology that will be used throughout.
+
+\begin{definition}
+    Let $\props$ be a countably infinite set of propositional symbols.
+    The set of \defn{formulas} of \iml over $\props$ is defined by the following grammar:
+    \[
+        \varphi, \psi \Coloneqq
+            \bot \mid
+            p \mid
+            \varphi \land \psi \mid
+            \varphi \lor \psi \mid
+            \varphi \to \psi    \mid
+            \Diamond \varphi \mid
+            \Box \varphi. 
+    \]
+    In this grammar, $p$ is any proposition symbol in $\props$.
+    We use $\lnot \varphi$ as an abbreviation for $\varphi \to \bot$.
+\end{definition}
+
+Having introduced the language of $\IK$, we proceed to introduce its hierarchical semantics.
+
+\begin{definition}\label[definition]{def:kmodel}
+    A \defn{(relational) Kripke model} is a triple $\kmodel = \tuple{\Wkm, {\Rkm}, \Vkm}$ where:
+        \begin{enumerate}
+            \setlength{\itemsep}{0pt}
+            \item $\Wkm$ is a non-empty set of \defn{worlds};
+            \item $\Rkm$ is a binary \defn{accessibility relation} on $\Wkm$;
+            \item $\Vkm\colon \Wkm \to 2^{\props}$ is a \defn{valuation function}.
+        \end{enumerate}
+        We omit the index $\kmodel$ from $\Wkm$, $\Rkm$, and $\Vkm$, when it is clear from the context.
+        By a \defn{pointed Kripke model}, we mean a pair $\pair \kmodel s$ where $\kmodel$ is a Kripke model and $s \in \Wkm$. We often omit the parentheses and write simply $\npair\kmodel s$ when there is no ambiguity.
+\end{definition}
+
+% \lutz{I think the order is weird. 2.3 and 2.4 should come after 2.6}
+
+\begin{figure}[t]
+    \centering
+    \footnotesize
+    \begin{tikzpicture}[modal,node distance = 10mm]
+        \node (c) {(b)};
+        \node[point] (a) [above left=of c,label=left:$t$] {};
+        \node[point] (b) [above right=of c,label=right:$v$] {};
+        \node[point] (d) [below left=of c,label=left:$s$] {};
+        \node[point] (e) [below right=of c,label=right:$u$] {};
+        \path[->] (a) edge[dotted] node[above] {$\R$} (b);
+        \path[->] (d) edge node[above] {$\R$} (e);
+        \path[->] (d) edge node[left] {$\preccurlyeq$} (a);
+        \path[->] (e) edge[dotted] node[right] {$\preccurlyeq$} (b);
+    \end{tikzpicture}
+    \hspace{1.5cm}
+    \begin{tikzpicture}[modal,node distance = 10mm]
+        \node (c) {(c)};
+        \node[point] (a) [above left=of c,label=left:$v$] {};
+        \node[point] (b) [above right=of c,label=right:$u$] {};
+        \node[point] (d) [below left=of c,label=left:$s$] {};
+        \node[point] (e) [below right=of c,label=right:$t$] {};
+        \path[->] (a) edge[dotted] node[above] {$\R$} (b);
+        \path[->] (d) edge node[above] {$\R$} (e);
+        \path[->] (d) edge[dotted] node[left] {$\preccurlyeq$} (a);
+        \path[->] (e) edge node[right] {$\preccurlyeq$} (b);
+    \end{tikzpicture}
+    \caption{Frame Conditions on Bi-relational Kripke models}
+    \label{fig:bframe}
+\end{figure}
+
+\begin{definition}\label[definition]{def:imodel}
+    A \defn{hierarchical model} is a pair $\hmodel = \tuple{\Khm, \Hleq}$ where:
+    % \begin{enumerate}
+    %     \setlength{\itemsep}{0pt}
+    %     \item $\Khm$ is a non-empty set of Kripke models;
+    %     \item $\Hleq$ is a preorder on $\Khm$.
+    % \end{enumerate}
+    $\Khm$ is a non-empty set of Kripke models; and $\Hleq$ is a preorder on $\Khm$ such that for all $\kmodel_1,\kmodel_2\in\Khm$ with $\kmodel_1 \Hleq \kmodel_2$:
+        (a) ${\Wkm[1] \subseteq \Wkm[2]}$;
+        (b) ${\Rkm[1] \subseteq \Rkm[2]}$; and
+        (c) for all $s \in \Wkm[1]$, $\Vkm[1](s) \subseteq \Vkm[2](w)$.
+    % \begin{enumerate}[label=(\alph*)]
+    %     \setlength{\itemsep}{0pt}
+    %     \item ${\Wkm[1] \subseteq \Wkm[2]}$;
+    %     \item ${\Rkm[1] \subseteq \Rkm[2]}$;
+    %     \item for all $s \in \Wkm[1]$, $\Vkm[1](s) \subseteq \Vkm[2](w)$.
+    % \end{enumerate}
+    %%We use $\kmodels_{\hmodel}$, and $\preccurlyeq_{\hmodel}$, to indicate $\kmodels$, and $\preccurlyeq$, respectively.
+\end{definition}
+
+% \begin{proposition}
+%     If $\bmodel$ is a hierarchical model, then, $\preccurlyeq_{\bmodel}$ is a partial order.
+% \end{proposition}
+% \begin{proof}
+%     We only need to prove that $\preccurlyeq_{\bmodel}$ is antisymmetric, i.e., if $\kmodel_1 \preccurlyeq_{\bmodel} \kmodel_2$ and $\kmodel_2 \preccurlyeq_{\bmodel} \kmodel_1$, then, $\kmodel_1 = \kmodel_2$.
+%     The result is immediate from conditions (a)--(c).
+% \end{proof}
+
+\begin{definition}\label[definition]{def:sat:imodel}
+    Let $\hmodel$ be a hierarchical model, $\kmodel \in \Khm$, and $s \in \Wkm$.
+    Moreover, let $A$ be a formula.
+    The \defn{forcing relation} $\hforces {\pair \kmodel s} A$ is defined inductively as:
+    \[\begin{array}{lcl}
+        \hforces {\pair \kmodel s} \bot
+            & \text{iff} & \text{false} \\
+        \hforces {\pair \kmodel s} p
+            & \text{iff} & p \in \Vkm(s) \\
+        \hforces {\pair \kmodel s} {B \land C}
+            & \text{iff} & \hforces {\pair \kmodel s} B \text{ and } \hforces {\pair \kmodel s} C \\
+        \hforces {\pair \kmodel s} {B \lor C}
+            & \text{iff} & \hforces {\pair \kmodel s} B \text{ or } \hforces {\pair \kmodel s} C \\
+        \hforces {\pair \kmodel s} {B \to C}
+            & \text{iff} & \text{for all } \kmodel' \in \Khm,~
+                \text{if } \kmodel \Hleq \kmodel' \text{ and } \hforces {\pair {\kmodel'} s} B
+                    \text{, then, } \hforces {\pair {\kmodel'} s} C \\
+        \hforces {\pair \kmodel s} \Diamond B & \text{iff}
+            & \text{exists } t \in \Wkm \text{ such that } s \Rkm t \text{ and } \hforces {\pair \kmodel t} B \\
+        \hforces {\pair \kmodel s} \Box B & \text{iff}
+            & \text{for all } \kmodel' \in \Khm,~
+                \text{if } \kmodel \Hleq \kmodel' \text{, then, }
+                    \text{for all } t \in \Wof{\kmodel'},
+                        \text{ if } s \Rof{\kmodel'} t \text{, then, } \hforces {\pair {\kmodel'} t} B.
+    \end{array}\]
+    We use $\nhforces {\pair \kmodel s} A$ to indicate the negation of $\hforces {\pair \kmodel s} A$.
+    Immediately, $\hforces {\pair \kmodel s} \lnot B$ iff for all $\kmodel' \in \Khm$, if $\kmodel \Hleq \kmodel'$, then, $\nhforces {\pair {\kmodel'} s} B$.
+    % We write $\forces\hmodel A$ iff $\hforces{\pair \kmodel s} A$ for all $\kmodel\in\Khm$ and $s\in \Wkm$.
+    % Finally, we write $\Vdash A$, and call $A$ a tautology, iff $\Vdash^{\hmodel} A$ for all hierarchical models $\hmodel$.\lutz{we can't define tautology twice!}
+\end{definition}
+
+The hierarchical semantics aligns closely with the standard semantic treatment of intuitionistic propositional and first-order logic, where models are organised into layers ordered by inclusion, reflecting the monotonic growth of information \cite{Troelstra1988}. This conceptual proximity is one of its main attractions. This same feature, however, also leads to a significant limitation: the hierarchical semantics fails to enjoy the finite model property. A classical counterexample, originating in the work of Ono and Suzuki~\cite{ono1988}, is the formula $\Box \neg \neg \varphi \to \neg \neg \Box \varphi$. This formula can be falsified only in infinite hierarchical models.
+
+Alternative to the hierarchical semantics for $\IK$ is the bi-relational semantics. We introduce this alternative semantics next.
+
+\begin{definition}\label[definition]{def:bmodel}
+    A \defn{birelational Kripke model} is a cuadruple of the form $\bmodel = \tuple{\Wbm, \Fbm, \Rbm, \Vbm}$ where:
+    % \begin{enumerate}
+    %     \setlength{\itemsep}{0pt}
+    %     \item $\Wbm$ is a non-empty set of \defn{worlds};
+    %     \item $\Fbm$, the \defn{future relation},    is a preorder (reflexive and transitive) on $\Wbm$;
+    %     \item $\Rbm$ is a binary \defn{accessibility relation} on $\Wbm$;
+    %     \item $\Vbm\colon \props \to 2^{\Wbm}$ is a \defn{valuation function}.
+    % \end{enumerate}
+    $\tuple{\Wbm, \Rbm, \Vbm}$ is a Kripke model, and 
+    $\Fbm$, the \defn{future relation}, is a preorder on $\Wbm$
+    such that
+%%    Bi-relational Kripke models further satisfy the following conditions:
+    \begin{enumerate}[label=(\alph*)]
+        \setlength{\itemsep}{0pt}
+        \item for all $s,t\in\Wbm$, if $s \Fbm t$ and $p \in \Vbm(s)$, then, $p \in \Vbm(t)$.
+        \item for all $s,t,u\in\Wbm$, if $s \Fbm t$ and $s \Rbm u$, then, there is $v \in \Wbm$ such that $t \Rbm v$ and $u \Fbm v$;
+        \item for all $s,t,u\in\Wbm$, if $s \Rbm t$ and $t \Fbm u$, then, there is $v \in \Wbm$ such that $s \Fbm v$ and $v \Rbm u$;
+    \end{enumerate}
+    The condition (a) above is referred to as \emph{monotonicity of valuations}.
+    The conditions (b) and (c) above, depicted in \Cref{fig:bframe}, are commutativity conditions on future and accessibility relations.
+    The conditions (b) and (c) are discussed in \cite[p.~51]{simpson1994}, under the names (F1) and (F2), respectively.
+    % By a \defn{pointed birelational Kripke model}, we mean a pair $\pair \bmodel s$ where $\bmodel$ is a birelational Kripke model and $s \in \Wbm$.
+    % We often omit the parentheses and write simply $\npair \bmodel s$ when there is no ambiguity.
+    % If $v$ in (a) and (b) is unique, $\bmodel$ is called \defn{universal}.
+    % We write $\preccurlyeq^{\equiv}$ and $\R^{\equiv}$ for the equivalence closure of $\preccurlyeq$ and $\R$, respectively.\lutz{what does that mean?}
+    % We call $\bmodel$ \defn{cartesian} iff whenever $s \preccurlyeq^{\equiv} t$ and $t \R^{\equiv} u$, then, $s = u$.\todo{add index}
+    % We use $\W_{\bmodel}$, $\preccurlyeq_{\bmodel}$, $\R_{\bmodel}$, and $\V_{\bmodel}$, to indicate $\W$, $\preccurlyeq$, $\R$, and $\V$, respectively.\lutz{We omit the index $\bmsymb$ ...}
+\end{definition}
+
+\begin{definition}\label[definition]{def:bsat}
+    Let $\bmodel$ be a bi-relational model, $s \in \W_{\bmodel}$, and $A$ be a formula.
+    The \defn{forcing relation} $\bforces s A$ is defined inductively as:
+    \[\begin{array}{lcl}
+            \bforces s \bot & \text{iff} & \text{false} \\
+            \bforces s p & \text{iff} & p \in \V_{\bmodel}(s) \\
+            %\bforces s \lnot B & \text{iff} & \text{for all } s \preccurlyeq_{\bmodel} t,~ \bmodel, t \nVdash B \\
+            \bforces s {B \land C} & \text{iff} & \bforces s B \text{ and } \bforces s C \\
+            \bforces s {B \lor C} & \text{iff} & \bforces s B \text{ or } \bforces s C \\
+            \bforces s {B \to C} & \text{iff} & \text{for all } t \in \Wbm, \text{ if } s \Fbm t \text{ and } \bforces t B, \text{ then, } \bforces t C \\
+            \bforces s {\Diamond B} & \text{iff} & \text{exists } s \in \Wbm \text{ such that } s \Rbm t \text{ and } \bforces t B \\
+            \bforces s {\Box B} & \text{iff} & \text{for all } t,u \in \Wbm, \text{ if } s \Fbm t \text{ and } t \Rbm u, \text{ then, } \bforces u B.
+    \end{array}\]
+    We use $\nbforces s A$ to indicate the negation of $\bforces s A$.
+    Immediately, $\bforces s \lnot B$ iff for all $t \in \Wbm$, if $s \Fbm t$, then, $\nbforces t B$.
+    %We write $\forces \bmodel A$ iff $\bforces s A$ for all $s \in \Wbm$.
+    % Moreover, we write $\sforce A$, and call $A$ a \defn{tautology}, iff $\bmodel \Vdash A$ for all bi-relational Kripke models $\bmodel$.
+\end{definition}
+
+We are now in position to comment on two key features of the bi-relational semantics for intuitionistic modal logic.
+First, the clauses for $\Diamond$ and $\Box$ in \Cref{def:bsat} closely parallel those for the hierarchical semantics, and so for the existential and universal quantifiers in intuitionistic predicate logic~\cite{Troelstra1988}. This parallel reflects the constructive nature of the logic. Second,    conditions (b) and (c) in \Cref{def:bmodel} are traced back to the work of Plotkin in~\cite{PlotkinS86}, where they play a foundational role. Formally, condition (b) ensures the monotonicity of $\Diamond$: if $\bforces s {\Diamond A}$ and $s \Fbm t$, then $\bforces t {\Diamond A}$. In turn, condition (c) is motivated by the intuition that the formula $\lnot \Diamond A \to \Box \lnot A$ should hold---and by the fact that this implication fails if the condition is omitted.
+While condition (b) can easily be regarded as natural, condition (c) is more debatable. This is also mentioned in~\cite{PlotkinS86,simpson1994}, where the authors themselves express greater confidence in the necessity of (b), acknowledging that (c) may be less well-justified.
+In any case, condition (c) is nowadays accepted as inherent in a bi-relational model.
+
+The following two propositions indicate the close semantic correspondence between the hierarchical and bi-relational models.
+
+\begin{proposition}[{\cite[Lemma~8.1.2]{simpson1994}}]\label[proposition]{prop:hs2bks}
+    Let $\hmodel$ be a hierarchical model.
+    Define $\bmofhm = \tuple{\W, \Fsymb, \R, \V}$ where:
+    \begin{enumerate}
+        \setlength{\itemsep}{0pt}
+        \item $\W = \setof{\pair\kmodel s}{ \kmodel \in \Khm \text{ and } s \in \Wkm}$;
+        \item ${\Fsymb} = \setof{ (\pair{\kmodel_1}s, \pair{\kmodel_2} s) }{ \kmodel_1 \Hleq\kmodel_2 \text{ and } s\in    \Wkm[1]}$;
+        \item $\R    = \setof{ (\pair{\kmodel}{s}, \pair{\kmodel}{t}) }{ \kmodel\in \Khm \text{ and } s \Rkm t}$;
+        \item %$\V_{\hmodel}: \props \to 2^{\S_{\hmodel}}$ is s.t.\
+            for all ${\pair \kmodel s} \in \W$, $\V(\npair \kmodel s) = \Vkm(s)$.
+    \end{enumerate}
+    It follows that:
+        (a) $\bmofhm$ is a birelational Kripke model; and
+        (b) for all formulas $A$, it follows that $\hforces{\pair\kmodel s} A$ ~iff~ $\xforces{\bmofhm}{\pair\kmodel s} A$.
+    % \begin{enumerate}[label=(\alph*)]
+    %     \setlength{\itemsep}{0pt}
+    %     \item $\bmofhm$ is a birelational Kripke model;
+    %     \item $\hforces{\pair\kmodel s} A$ ~iff~ $\xforces{\bmofhm}{\pair\kmodel s} A$; and
+    %     % \item if $\hmodel$ is finite, then, $\bmodel_{\hmodel}$ is finite.
+    % \end{enumerate}
+\end{proposition}
+
+\begin{proposition}\label[proposition]{prop:iml}
+    Let $A$ be any formula.
+    The following are equivalent:
+    \begin{enumerate}[label=(\alph*)]
+        \setlength{\itemsep}{0pt}
+        \item for all hierarchical models $\hmodel$, $\kmodel \in \Khm$, and $s \in \Wkm$, it follows that $\hforces{\pair \kmodel s}{A}$;
+        \item for all bi-relational models $\bmodel$, and $s \in \Wbm$, it follows that $\bforces{s}{A}$.
+    \end{enumerate}
+\end{proposition}
+
+% In \cite[$\S$~8.1.2]{brauner11}, it is claimed that, in general, bi-relational Kripke models cannot be translated into hierarchical models.
+% The stated reason is that there are more bi-relational Kripke models than intuitionistic modal models, though no formal justification for this claim is provided.
+% At the same time, in \cite[p.~152]{simpson1994}, it is shown that cartesian bi-relational Kripke models can be translated into hierarchical models in a semantic preserving way.
+% \valentin{When we started to look into this problem Carlos messaged Torben about the claim he makes in his book. \lutz{what claim?} He replied, but did not provide a good justification for what he says. From the result in Simpson's PhD thesis, I think it should be clear that the translation from cartesian bi-relational Kripke models to hierarchical models cannot preserve finiteness, or cartesian bi-relational Kripke models cannot be used to characterize $\IK$.}\lutz{I think finiteness is easily preserved. but cartesian models are too restriced to have the FMP}
+
+The result in~\Cref{prop:hs2bks} establishes that every hierarchical model can be translated into a bi-relational Kripke model in a truth-preserving way. In turn, the result in \Cref{prop:iml} establishes that the two frameworks validate the same formulas. As pointed out in \cite{simpson1994}, the latter result is surprising given the structural different between the frameworks. At the same time, the model-theoretic behaviour of the two frameworks differs in a crucial respect. Bi-relational models enjoy the finite model property, whereas hierarchical models do not. This asymmetry provides a clear indication that, although hierarchical models can be faithfully encoded into bi-relational ones, the converse translation cannot in general be done in finiteness-preserving way. In this sense, the bi-relational semantics offers a strictly more robust model-theoretic setting, even though both frameworks validate the same intuitionistic modal formulas.

@@ -1,0 +1,35 @@
+\section{Introduction}
+\label{sec:intro}
+
+Intuitionistic modal logic extends intuitionistic propositional logic with the modal operators $\Box$ and $\Diamond$.
+This seemingly modest enrichment of the language leads to a central challenge. Intuitionistic truth is governed by a monotonic growth of information, and this growth must be reconciled with the behaviour of modal accessibility. How should the interaction between the intuitionistic epistemic relation and the modal accessibility relation be captured?
+Two model-theoretic approaches have traditionally been used to address this question. The first is the \emph{bi-relational} semantics, which equips Kripke models with both an intuitionistic epistemic preorder and a modal accessibility relation.
+The second is the \emph{hierarchical} semantics, which interprets modalities over families of Kripke models organised by inclusion into layers; encoding the intuitionistic epistemic preorder directly into the indexing of the models.
+%
+The study of the birelational and the hierarchichal semantics for the intuitionistic box and diamond modalities has its origins in the work of Ewald in~\cite{ewald1986intuitionistic} and Plotkin in~\cite{PlotkinS86}, and it is developed further in Simpson's doctoral thesis~\cite{simpson1994} (see also~\cite{Wolter1999,gabbay2003many} for a lengthier discussion).
+
+Both the bi-relational and the hierarchical semantics are designed to capture the interaction between monotonic information growth and modal accessibility. Surprisingly, despite their distinct formulations, they validate exactly the same set of intuitionistic modal formulas (see, for instance, \cite{simpson1994,gabbay2003many}).
+%Even more, every hierarchical model can be encoded in a truth-preserving way into a bi-relational model \cite{simpson1994}.
+This means that as far as capturing the intuitionistic behaviour of the box and diamond modalities is concerned, the two approaches are fundamentally equivalent.
+%
+A closer look, however, reveals that each framework has its own strengths and weaknesses.
+%
+On the one hand, the hierarchical semantics aligns more naturally with the standard treatment of intuitionistic propositional and first-order logic, where models are arranged in layers ordered by inclusion~\cite{Troelstra1988}. By contrast, the bi-relational semantics requires additional compatibility constraints between the intuitionistic and modal accessibility relations in order to validate the accepted intuitionistic modal principles $\Diamond p \to \lnot \Box \lnot p$ and $\lnot \Diamond p \to \Box\lnot p$~\cite{PlotkinS86}.
+%
+On the other hand, the bi-relational semantics enjoys the finite model property: every falsifiable formula has a finite countermodel~\cite{simpson1994}. Interestingly, this property fails for hierarchical semantics. A classical counterexample, originating in the work of Ono and Suzuki~\cite{ono1988}, is the formula $\Box \neg \neg \varphi \to \neg \neg \Box \varphi$. This formula is falsified only by infinite models in the hierarchical semantics, thereby witnessing the failure of its finite model property.
+
+The finite model property gives the bi-relational semantics a technical advantage over the hierarchical semantics, as it paves the way to decidability proofs. This property is used in~\cite{simpson1994}, for instance, to establish the decidability of intuitionistic $K$, intuitionistic $S5$, and several other intuitionistic modal systems.
+Nevertheless, the proof of the finite model property in the bi-relational setting is far from straightforward. As noted in~\cite{simpson1994}, an early attempt by Ewald to adapt the standard filtration method of classical modal logic to bi-relational models was later shown to be incorrect, and required substantial revision. A correct proof is ultimately provided in Simpson's thesis. That said, the strategy on which this proof relies is rather intricate: instead of a direct adaptation of classical filtrations, it involves a technically delicate construction that departs significantly from the familiar modal-logic toolbox. A related, though distinct, approach to the finite model property is developed in~\cite{gabbay2003many}, and it likewise depends on a carefully designed proof strategy rather than a straightforward filtration argument.
+
+In this paper, we introduce \emph{weaved models} as a new semantic framework for interpreting the intuitionistic box and diamond modalities. Weaved models combine central features of both hierarchical and bi-relational semantics. Like hierarchical models, they organise Kripke models into layers, making the stratified nature of intuitionistic reasoning explicit. Like bi-relational models, they respect the flexible monotonic growth of information at worlds within each Kripke model, which lies at the heart of intuitionistic truth.
+
+The key technical ingredient of weaved models is the notion of a \emph{seesaw simulation}, which serves as the structural glue of the framework. Seesaw simulations provide a principled way of relating worlds across different Kripke models. They are conceptually inspired by classical bisimulations from modal logic~\cite{blac:hand06}, but with an essential relaxation: instead of requiring exact agreement on the formulas satisfied at related worlds, seesaw simulations enforce only the forward preservation of truth. This reflects the intuitionistic idea that information may increase as one moves through epistemic links. Together, these ideas yield a uniform and flexible account of the interaction between intuitionistic accessibility and modal transitions.
+
+Beyond its conceptual appeal, the weaved semantics for intuitionistic modal logic enjoys a well-behaved model theory. In particular, it satisfies the finite model property. What is especially striking is that this property is established using the standard toolkit of classical modal semantics---unraveling, pruning, bisimulations, and filtrations---without resorting to \emph{ad hoc} constructions. In this sense, weaved models provide a unified and modular semantic perspective on intuitionistic modality, while also recovering the desirable algorithmic behaviour that hierarchical semantics lacks.
+
+\lutz{the intro also needs to introduce IML, and motivate the work better}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

@@ -1,0 +1,286 @@
+\section{From Intuitionistic to Classical Modal Logic}
+
+A hallmark of intuitionistic logic is that, adding the Law of the Excluded Middle (LEM), i.e., $p \lor \lnot p$, as an axiom, one obtains the corresponding classical logic.
+This is similarly expected in the modal setting: the addition of LEM as an axiom to intuitionistic modal logic should yield a classical modal logic. We show how this correspondence can be understood semantically by restricting the class of weaved models accordingly. Specifically, we recover the semantics of classical modal logic from weaved models by replacing seesaw simulations with classical bisimulations. This shift also illuminates how the flexibility of weaved models to support both intuitionistic and classical interpretations.
+
+\begin{definition}\label[definition]{def:bisimulation}
+    A \defn{bisimulation} from a Kripke model $\kmodel_1$ to a Kripke model $\kmodel_2$ is a non-empty binary relation ${\BSim} \subseteq (\Wkm[1] \times \Wkm[2])$ such that, for all $s_1 \in \Wkm[1]$ and $s_2 \in \Wkm[2]$, if $s_1 \BSim s_2$, then:
+    \begin{description}
+        \setlength{\itemsep}{0pt}
+        \item[\textnormal{(harmony)}] $p \in \Vkm[1](s_1)$ ~iff~ $p \in \Vkm[2](s_2)$;
+        \item[\textnormal{(zig)}] for all $s_3 \in \Wkm[1]$, if $s_1 \Rkm[1] s_3$, then, there is $s_4 \in \Wkm[2]$ such that $s_2 \Rkm[2] s_4$ and $s_3 \BSim s_4$;
+        \item[\textnormal{(zag)}] for all $s_4 \in \Wkm[2]$, if $s_2 \Rkm[2] s_4$, then, there is $s_3 \in \Wkm[1]$ such that $s_1 \Rkm[1] s_3$ and $s_3 \BSim s_4$.
+    \end{description}
+    % A bisimulation is total iff its underlying relation is total.
+\end{definition}
+
+\begin{definition}\label[definition]{def:wmodel:classical}
+    We say that a weaved model $\wmodel$ is \defn{classical} iff for all $\Sim \in \Swm$, $\Sim$ is a bisimulation.
+    % We use $\CWM$ to indicate the set of all classical weaved models.
+\end{definition}
+
+\begin{lemma}\label[proposition]{prop:backwards:monotonicity}
+    Let $\wmodel$ be a classical weaved model, and $A$ be a formula.
+    Moreover, let ${\pair {\kmodel_1} s}, {\pair {\kmodel_2} t} \in \Qwm$ with ${\pair {\kmodel_1} s} \Fwm {\pair {\kmodel_2} t}$.
+    If $\nwforces {\pair {\kmodel_1} s} A$, then, $\nwforces {\pair {\kmodel_2} t} A$.
+\end{lemma}
+\begin{proof}
+    \setcounter{ieqnnum}{0}
+    The proof is by induction on $A$.
+
+    \medskip
+    \noindent
+    The base case is: $\nwforces {\pair {\kmodel_1} s} p$ implies $\nwforces {\pair {\kmodel_2} t} p$.
+    Suppose ${\nwforces {\pair {\kmodel_1} s} p}$.
+    By definition, \ieqn{p \notin \Vkm[1](s)}.
+    Since ${\pair {\kmodel_1} s} \Fwm {\pair {\kmodel_2} t}$, there is a bisimulation $\Sim \in \Swm$ such that $s \Sim t$.
+    This implies, $\Vkm[1](s) = \Vkm[2](t)$.
+    From \ieqnref0, $p \notin \Vkm[2](t)$.
+    This last step yields the desired result, i.e., $\nwforces {\pair {\kmodel_2} t} p$.
+
+    \medskip
+    \noindent
+    The inductive hypothesis is: $\nwforces {\pair {\kmodel_1} s} B$ implies $\nwforces {\pair {\kmodel_2} t} B$.
+
+    \medskip
+    \noindent
+    The inductive step proceeds with a case analysis.
+    We prove some representative cases of the kind of reasoning involved.
+
+    \medskip
+    \noindent
+    For disjunctions, we prove $\nwforces {\pair {\kmodel_1} s} {B \lor C}$ implies $\nwforces {\pair {\kmodel_2} t} {B \lor C}$.
+    Suppose $\nwforces {\pair {\kmodel_1} s} {B \lor C}$.
+    By definition, $\nwforces {\pair {\kmodel_1} s} B$ and $\nwforces {\pair {\kmodel_1} s} C$.
+    From the inductive hypothesis, we get $\nwforces {\pair {\kmodel_2} t} B$ and ${\nwforces {\pair {\kmodel_2} t} C}$.
+    This last step yields the desired result, i.e., $\nwforces {\pair {\kmodel_2} t} {B \lor C}$.
+
+    \medskip
+    \noindent
+    For implications, we prove $\nwforces {\pair {\kmodel_1} s} {B \to C}$ implies $\nwforces {\pair {\kmodel_2} t} {B \to C}$.
+    Suppose
+        \ieqn{\nwforces {\pair {\kmodel_1} s} {B \to C}}.
+    There is ${\pair {\kmodel_3} u} \in \Qwm$ with ${\pair {\kmodel_1} s} \Fwm {\pair {\kmodel_3} u}$ such that
+        $\wforces {\pair {\kmodel_3} u} B$ and $\nwforces {\pair {\kmodel_3} u} C$.
+    By (the contrapositive of) the inductive hypothesis, $\wforces {\pair {\kmodel_1} s} B$; and so, by monotonicity, ${\wforces {\pair {\kmodel_2} t} B}$.
+    The proof is concluded if $\nwforces {\pair {\kmodel_2} t} C$.
+    We proceed by contradiction.
+    Let $\wforces {\pair {\kmodel_2} t} C$.
+    By (the contrapositive of) the inductive hypothesis, we obtain ${\wforces {\pair {\kmodel_1} s} C}$.
+    From monotonicity, we know that: for all ${{\pair {\kmodel_4} v} \in \Qwm}$ with ${\pair {\kmodel_1} s} \Fwm {\pair {\kmodel_4} v}$, $\wforces {\pair {\kmodel_4} v} C$.
+    But this contradicts the original supposition in \ieqnref0, i.e., $\nwforces {\pair {\kmodel_1} s} {B \to C}$.
+
+    \medskip
+    \noindent
+    For boxes, we prove $\nwforces {\pair {\kmodel_1} s} {\Box B}$ implies $\nwforces {\pair {\kmodel_2} t} {\Box B}$.
+    Suppose $\nwforces {\pair {\kmodel_1} s} {\Box B}$.
+    There is ${\pair {\kmodel_3} u} \in \Qwm$ and $v \in \Wkm[3]$ with
+        \ieqn{{\pair {\kmodel_1} s} \Fwm {\pair {\kmodel_3} u}} and
+        \ieqn{u \Rkm[3] v} such that \ieqn{\nwforces {\pair {\kmodel_3} v} B}.
+    The (zag) condition of the bisimulation in \ieqnref{-2}, together with \ieqnref{-1}, guarantee there is $w \in \Wkm[1]$ with
+        \ieqn{{\pair {\kmodel_1} w} \Fwm {\pair {\kmodel_3} v}} and
+        \ieqn{s \Rkm[1] w}.
+    From \ieqnref{-2} and \ieqnref{-1}, by the contrapositive of monotonicity,
+        \ieqn{\nwforces {\pair {\kmodel_1} w} B}.
+    The (zig) condition of the bisimulation in ${\pair {\kmodel_1} s} \Fwm {\pair {\kmodel_2} t}$, together with \ieqnref{-1}, guarantee there is $x \in \Wkm[2]$ with
+        \ieqn{{\pair {\kmodel_1} w} \Fwm {\pair {\kmodel_2} x}} and
+        \ieqn{t \Rkm[2] x}.
+    Given \ieqnref{-2} and \ieqnref{-1}, by the inductive hypothesis,
+        \ieqn{\nwforces {\pair {\kmodel_2} x} B}.
+    From \ieqnref{-1} and \ieqnref0, we obtain there is $t \Rkm[2] x$ with $\nwforces {\pair {\kmodel_2} x} B$.
+    This establishes $\nwforces {\pair {\kmodel_2} t} {\Box B}$ as required.
+
+    \medskip
+    \noindent
+    For diamonds, we prove $\nwforces {\pair {\kmodel_1} s} {\Diamond B}$ implies $\nwforces {\pair {\kmodel_2} t} {\Diamond B}$.
+    Suppose $\nwforces {\pair {\kmodel_1} s} {\Diamond B}$.
+    For all $u \in \Wkm[1]$, if \ieqn{s \Rkm[1] u}, then, \ieqn{\nwforces {\pair {\kmodel_1} u} B}.
+    Now, choose an arbitrary $v \in \Wkm[2]$ with \ieqn{t \Rkm[2] v}.
+    The proof is concluded if $\nwforces {\pair {\kmodel_2} v} B$.
+    The (zag) condition of the bisimulation in ${\pair {\kmodel_1} s} \Fwm {\pair {\kmodel_2} t}$, together with \ieqnref{-1}, guarantee there is $w \in \Wkm[1]$ with
+        \ieqn{{\pair {\kmodel_1} w} \Fwm {\pair {\kmodel_2} v}} and
+        \ieqn{s \Rkm[1] w}.
+    From \ieqnref{-4} and \ieqnref{-3}, we know:
+        \ieqn{\nwforces {\pair {\kmodel_1} w} B}.
+    Given \ieqnref{-2} and \ieqnref0, by the inductive hypothesis, $\nwforces {\pair {\kmodel_2} v} B$.
+    This concludes the proof.
+\end{proof}
+
+\begin{corollary}\label[corollary]{prop:wmodel:not}
+    Let $\wmodel$ be a classical weaved model, and ${\pair \kmodel s} \in \Qwm$.
+    For every formula $A$, if $\nwforces {\pair \kmodel s} A$, then, $\wforces {\pair \kmodel s} {\lnot A}$.
+\end{corollary}
+\begin{proof}
+    Suppose $\nwforces {\pair {\kmodel_1} s} A$.
+    The proof is concluded if $\nwforces {\pair {\kmodel_2} t} A$, for an arbitrary ${\pair {\kmodel_2} t} \in \Qwm$ with ${\pair {\kmodel_1} s} \Fwm {\pair {\kmodel_2} t}$.
+    This is direct from \Cref{prop:backwards:monotonicity}.
+\end{proof}
+
+\begin{theorem}\label[theorem]{prop:pem4cwm}
+    Let $\wmodel$ be a classical weaved model, and ${\pair \kmodel s} \in \Qwm$.
+    For every formula $A$, $\wforces {\pair \kmodel s} {A \lor \lnot A}$.
+\end{theorem}
+\begin{proof}
+    We proceed with a case analysis.
+    If $\wforces {\pair \kmodel s} A$, then, the result is immediate.
+    If $\nwforces {\pair \kmodel s} A$, then, by \Cref{prop:wmodel:not}, $\wforces {\pair \kmodel s} {\lnot A}$.
+    This yields the desired result.
+\end{proof}
+
+To better understand how the Law of the Excluded Middle behaves structurally in the setting of weaved models, we abstract away from the specific details of valuations and focus on the underlying relational architecture of weaved models. This mirrors the familiar distinction in classical modal logic between Kripke models---which include valuations---and Kripke frames, which capture only the accessibility relation. Building on this analogy, we view a weaved model as composed of: a collection of Kripke frames connected via seesaw relations, and a set of valuations assigning truth values to propositional variables within each frame. In this enriched framework, we say that a formula is valid on a weaved frame if it is true at every world in every possible valuation over that frame. This allows us to study the logical behavior that emerges purely from the hierarchical and relational organization of weaved models, independently of how proposition symbols are distributed in these models. We make these ideas precise below.
+
+\begin{definition}\label[definition]{def:frame}
+    A \defn{Kripke frame} is a pair $\kframe = \tuple{\Wfm, \Rfm}$ where:
+    \begin{enumerate}
+      \setlength{\itemsep}{0pt}
+      \item $\Wfm$ is a non-empty set of \defn{worlds};
+      \item $\Rfm$ is a binary \defn{accessibility relation} on $\Wkm$.
+    \end{enumerate}
+    The \defn{underlying frame} of a Kripke model $\kmodel$ is the pair $\fmofkm = \tuple{\Wkm, \Rkm}$.
+    Moreover, given a Kripke frame $\kframe$ and a function $\V \colon \Wfm \to 2^{\props}$, we use $\kmoffmv = \tuple{\Wfm, \Rfm, \V}$ to indicate the Kripke model with underlying frame $\kframe$ and valuation function $\V$.
+\end{definition}
+
+\begin{definition}\label[definition]{def:wframe}
+    A \defn{weaved frame} is a pair $\wframe = \tuple{\Kwf, \Swf}$ where:
+    \begin{enumerate}[leftmargin=\parindent]
+        \setlength{\itemsep}{0pt}
+        \item $\Kwf$ is a non-empty set of Kripke frames;
+        \item $\Swf$ is a set of binary relations on $\Wfm[1] \times \Wfm[2]$ with $\kframe_1,\kframe_2 \in \Kwf$ such that:
+            \begin{enumerate}[leftmargin=\parindent]
+                \setlength{\itemsep}{0pt}
+                \item for all $\kframe \in \Kwf$, $\Delta_{\Wfm} \in \Swf$;
+                \item for all $\Sim,\Tim \in \Swf$, $\Sim\relcomp\Tim \in \Swf$;
+                \item for all $\Sim \in \Swf$, $\Sim$ satisfies conditions (see) and (saw) of seesaw simulations.
+            \end{enumerate}
+    \end{enumerate}
+    The \defn{underlying frame} of a weaved model $\wmodel$ as the pair
+    \[
+        \wfofwm = \tuple{\setof{\fmofkm}{\kmodel \in \Kwm}, \Swm}
+    \]
+\end{definition}
+
+\begin{proposition}
+    Let $\wframe$ be a weaved frame.
+    Define the set
+    \begin{equation}
+        \Qwf=\setof{\pair \kframe s}{ {\kframe \in \Kwf} \mbox{ and } {s \in \Wfm} }
+    \end{equation}
+    and on this set we define the binary relation
+    \begin{equation}
+        \Fwf=\setof{({\pair {\kframe_1} s}, {\pair {\kframe_2} t })}{\mbox{there is ${\Sim \colon {\Wfm[1] \times \Wfm[2]}} \in \Swf$ with $s \Sim t$}}.
+    \end{equation}
+    Then, $\Fwf$ is a preorder on $\Qwf$.
+\end{proposition}
+
+\begin{definition}\label[definition]{def:wvaluation}
+    Let $\wframe$ be a weaved frame.
+    A \defn{valuation} for $\wframe$ is a monotonic function $\Vwf \colon \Qwf \to 2^{\props}$, i.e., $\Vwf$ satisfies
+    \begin{equation}
+        {\pair {\kframe_1} s} \Fwf {\pair {\kframe_2} t} \mbox{ implies } \Vwf(\npair {\kframe_1} s) \subseteq \Vwf(\npair {\kframe_2} t)
+    \end{equation}
+    For every $\kframe \in \Kwf$, define $\Vfm \colon \Wfm \to 2^{\props}$ as $\Vfm(s) = \Vwf(\npair \kframe s)$.
+    % A valuation for $\wframe$ is \defn{classical} iff it satisfies
+    % \begin{equation}
+    %     {\pair {\kframe_1} s} \Fwf {\pair {\kframe_2} t} \mbox{ implies } \Vwf(\npair {\kframe_1} s) = \Vwf(\npair {\kframe_2} t)
+    % \end{equation}
+\end{definition}
+
+\begin{proposition}
+    Let $\wframe$ be a weaved frame and $\Vwf\colon \Qwf \to 2^{\props}$ be a valuation for it.
+    Then, the pair
+    \begin{equation}
+        \wmofwfv = \tuple{ \setof{\kmoffmv[\kframe][\Vfm]}{\kframe \in \Kwf}, \Swf}
+    \end{equation}
+    is a weaved model.
+\end{proposition}
+\begin{proof}
+    Direct from the monotonicity of $\V$.
+\end{proof}
+
+\begin{definition}\label[definition]{def:wframe:validity}
+    We say that a weaved frame $\wframe$ \defn{validates} a formula $A$ iff for all valuations $\Vwf \colon \Qwf \to 2^{\props}$ and all ${\pair {\kframe} s} \in \Qwf$,
+    \[
+        \xforces {\wmofwfv} {\pair {\kmoffmv[\kframe][\Vfm]} s} {A}
+    \]
+    We say that $\wframe$ validates a set of formulas iff it validates all formulas in the set.
+\end{definition}
+
+\begin{definition}\label[definition]{def:wframe:classical}
+    We say that a weaved frame $\wframe$ is \defn{classical} iff $\Fwf$ is symmetric.
+    % \begin{enumerate}[leftmargin=\parindent]
+        % \setlength{\itemsep}{0pt}
+        % \item $\Fwf$ is symmetric;
+        % \item $\Swf$ is closed under inverses, i.e., $\Sim \in \Swf$ iff $\Sim^{-1} \in \Swf$;
+        % \item all $\Sim \in \Swf$ satisfy the condition (zag) of bisimulations.
+    % \end{enumerate}
+\end{definition}
+
+\begin{lemma}\label[lemma]{prop:wframe:harmony}
+    Let $\wframe$ be a classical weaved frame, and $\V \colon \Qwf \to 2^{\props}$ be a valuation for it.
+    Then, $\Vwf$ is such that for all ${\pair {\kframe_1} s},{\pair {\kframe_2} t} \in \Qwf$
+    \begin{equation}
+        {\pair {\kframe_1} s} \Fwf {\pair {\kframe_2} t} \mbox{ implies } \Vwf(\npair {\kframe_1} s) = \Vwf(\npair {\kframe_2} t)
+    \end{equation}
+\end{lemma}
+\begin{proof}
+    \setcounter{ieqnnum}{0}
+    Suppose that
+        \ieqn{{\pair {\kframe_1} s} \Fwf {\pair {\kframe_2} t}}.
+    From condition (1) in \Cref{def:wframe:classical}, we know
+        \ieqn{{\pair {\kframe_2} t} \Fwf {\pair {\kframe_1} s}}.
+    Then, from the monotonicity of $\Vwf$, we know
+        \ieqn{\Vwf(\npair {\kframe_1} s) \subseteq \Vwf(\npair {\kframe_2} t)}, and
+        \ieqn{\Vwf(\npair {\kframe_2} t) \subseteq \Vwf(\npair {\kframe_1} s)}.
+    Taken together, \ieqnref{-1} and \ieqnref0 imply $\Vwf(\npair {\kframe_1} s) = \Vwf(\npair {\kframe_2} t)$.
+\end{proof}
+
+\begin{corollary}\label[corollary]{prop:wframe:bisimulation}
+    Let $\wframe$ be a classical weaved frame, and $\V \colon \Qwf \to 2^{\props}$ be a valuation for it.
+    If all $\Sim \in \Swf$ satisfy the condition (zag) of bisimulations, then, $\wmofwfv$ is a classical weaved model.
+\end{corollary}
+\begin{proof}
+    We need to prove that for every $\kframe_1, \kframe_2 \in \Kwf$ and $\Sim \colon {\Wfm[1] \times \Wfm[2]} \in \Swf$, we have $\Sim$ is a bisimulation from $\kmoffmv[\kframe_1][{\Vfm[1]}]$ to $\kmoffmv[\kframe_2][{\Vfm[2]}]$.
+    We know that the (zig) condition of a bisimulation is built into the definition of a classical frame.
+    In turn, the (zag) condition is guaranteed by assumes.
+    Finally, from \Cref{prop:wframe:harmony}, we know that $\Sim$ ensures (harmony).
+    Taken together, these conditions yield the desired result.
+\end{proof}
+
+\begin{theorem}\label[theorem]{prop:wframe:pem}
+    Let $\wframe$ be weaved frame. The following are equivalent:
+    \begin{enumerate}[leftmargin=\parindent]
+        \setlength{\itemsep}{0pt}
+        \item $\wframe$ is classical.
+        \item $\wframe$ validates LEM, i.e., it validates $p \lor \lnot p$ (where $p$ is a proposition symbol).
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    \setcounter{ieqnnum}{0}
+    To show that (1) implies (2), assume that $\wframe$ is classical.
+    We need to prove that for any valuation $\V \colon \Qwf \to 2^{\props}$, and any ${\pair \kmodel s} \in \Qwf$, we have $\wforces {\pair \kmodel s} {p \lor \lnot p}$.
+    We proceed with a case analysis.
+    If $p \in \V(\npair {\kmodel} s)$, then, the result is obtained immediately.
+    If $p \notin \V(\npair {\kmodel} s)$, then, from \Cref{prop:wframe:harmony}, $p \notin \V(\npair {\kmodel'} t)$ for all ${\pair {\kmodel'} t} \in \Qwf$ with ${\pair \kmodel s} \Fwf {\pair {\kmodel'} t}$.
+    In this case, we have $\wforces {\pair \kmodel s} {\lnot p}$; which, again, yields the desired result.
+    
+    \medskip
+    \noindent
+    To show that (2) implies (1), assume that $\wframe$ validates LEM.
+    We argue by contradiction.
+    Suppose $\wframe$ is not classical, i.e., $\Fwf$ is not symmetric.
+    Then, there are ${\pair {\kframe_1} s},{\pair {\kframe_2} t} \in \Qwf$ such that ${\pair {\kframe_1} s} \Fwf {\pair {\kframe_2} t}$ and ${\pair {\kframe_2} t} \nFwf {\pair {\kframe_1} s}$.
+    Consider the valuation ${\V \colon \Qwf \to 2^{\props}}$ defined as
+    \[
+        \V(\npair \kframe w) =
+        \begin{cases}
+            \set{p} & \mbox{if } {\pair {\kframe_2} t} \Fwf {\pair \kframe w} \\
+            \emptyset & \mbox{otherwise}
+        \end{cases}
+    \]
+    We aim to use $\V$ to contradict that $\wframe$ validates LEM.
+    To simplify notation, let $\wmodel = \wmofwfv$, $\kmodel_1 = \kmoffmv[\kframe_1][{\Vfm[1]}]$, and $\kmodel_2 = \kmoffmv[\kframe_2][{\Vfm[2]}]$.
+    We claim that $\nwforces {\pair {\kmodel_1} s} {p \lor \lnot p}$.
+    To see why, note that from the definition of $\V$, \ieqn{p \notin \Vkm[1](s)} and \ieqn{p \in \Vkm[2](t)}.
+    Then, from \ieqnref{-1}, we obtain $\nwforces {\pair {\kmodel_1} s} p$; and, from \ieqnref0, we obtain $\nwforces {\pair {\kmodel_1} s} {\lnot p}$.
+    But \ieqnref{-1} and \ieqnref0 imply $\nwforces {\pair {\kmodel_1} s} {p \lor \lnot p}$; which contradicts the assumption that $\wframe$ validates LEM.
+\end{proof}

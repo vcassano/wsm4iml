@@ -1,0 +1,688 @@
+
+%\input{derivmacros}
+%% Letters %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\tA{\tilde{A}}
+\def\tB{\tilde{B}}
+\def\tC{\tilde{C}}
+\def\tP{\tilde{P}}
+\def\tQ{\tilde{Q}}
+\def\tR{\tilde{R}}
+\def\tS{\tilde{S}}
+\def\tT{\tilde{T}}
+\def\tU{\tilde{U}}
+\def\tW{\tilde{W}}
+\def\tDelta{\tilde{\Delta}}
+\def\tGamma{\tilde{\Gamma}}
+\def\tPi{\tilde{\Pi}}
+\def\tpi{\tilde{\pi}}
+\def\tsigma{\tilde{\sigma}}
+\def\ts{\tilde{s}}
+
+\def\ha{\hat{a}}
+
+\def\hA{\hat{A}}
+\def\hB{\hat{B}}
+\def\hP{\hat{P}}
+\def\hQ{\hat{Q}}
+\def\hR{\hat{R}}
+\def\hS{\hat{S}}
+\def\hT{\hat{T}}
+\def\hW{\hat{W}}
+\def\hDelta{\hat{\Delta}}
+\def\hGamma{\hat{\Gamma}}
+\def\hrho{\hat{\rho}}
+\def\hphi{\hat{\phi}}
+\def\hpsi{\hat{\psi}}
+\def\vphi{\check{\phi}}
+
+\def\cA{{\mathcal A}}
+\def\cB{{\mathcal B}}
+\def\cC{{\mathcal C}}
+\def\cD{{\mathcal D}}
+\def\cE{{\mathcal E}}
+\def\cF{{\mathcal F}}
+\def\cG{{\mathcal G}}
+\def\cH{{\mathcal H}}
+\def\cI{{\mathcal I}}
+\def\cJ{{\mathcal J}}
+\def\cK{{\mathcal K}}
+\def\cL{{\mathcal L}}
+\def\cM{{\mathcal M}}
+\def\cN{{\mathcal N}}
+\def\cO{{\mathcal O}}
+\def\cP{{\mathcal P}}
+\def\cQ{{\mathcal Q}}
+\def\cR{{\mathcal R}}
+\def\cS{{\mathcal S}}
+\def\cT{{\mathcal T}}
+\def\cU{{\mathcal U}}
+\def\cV{{\mathcal V}}
+\def\cW{{\mathcal W}}
+\def\cX{{\mathcal X}}
+\def\cY{{\mathcal Y}}
+\def\cZ{{\mathcal Z}}
+
+\newcommand{\fA}{{\mathfrak A}}
+\newcommand{\fB}{{\mathfrak B}}
+\newcommand{\fC}{{\mathfrak C}}
+\newcommand{\fD}{{\mathfrak D}}
+\newcommand{\fE}{{\mathfrak E}}
+\newcommand{\fF}{{\mathfrak F}}
+\newcommand{\fG}{{\mathfrak G}}
+\newcommand{\fH}{{\mathfrak H}}
+\newcommand{\fI}{{\mathfrak I}}
+\newcommand{\fJ}{{\mathfrak J}}
+\newcommand{\fK}{{\mathfrak K}}
+\newcommand{\fL}{{\mathfrak L}}
+\newcommand{\fM}{{\mathfrak M}}
+\newcommand{\fN}{{\mathfrak N}}
+\newcommand{\fO}{{\mathfrak O}}
+\newcommand{\fP}{{\mathfrak P}}
+\newcommand{\fQ}{{\mathfrak Q}}
+\newcommand{\fR}{{\mathfrak R}}
+\newcommand{\fS}{{\mathfrak S}}
+\newcommand{\fT}{{\mathfrak T}}
+\newcommand{\fU}{{\mathfrak U}}
+\newcommand{\fV}{{\mathfrak V}}
+\newcommand{\fW}{{\mathfrak W}}
+\newcommand{\fX}{{\mathfrak X}}
+\newcommand{\fY}{{\mathfrak Y}}
+\newcommand{\fZ}{{\mathfrak Z}}
+\newcommand{\fa}{{\mathfrak a}}
+\newcommand{\fb}{{\mathfrak b}}
+\newcommand{\fc}{{\mathfrak c}}
+\newcommand{\fd}{{\mathfrak d}}
+\newcommand{\fe}{{\mathfrak e}}
+\newcommand{\ff}{{\mathfrak f}}
+\newcommand{\fg}{{\mathfrak g}}
+\newcommand{\fh}{{\mathfrak h}}
+%\newcommand{\fi}{{\mathfrak i}}
+\newcommand{\fj}{{\mathfrak j}}
+\newcommand{\fk}{{\mathfrak k}}
+\newcommand{\fl}{{\mathfrak l}}
+\newcommand{\fm}{{\mathfrak m}}
+\newcommand{\fn}{{\mathfrak n}}
+\newcommand{\fo}{{\mathfrak o}}
+\newcommand{\fp}{{\mathfrak p}}
+\newcommand{\fq}{{\mathfrak q}}
+\newcommand{\fr}{{\mathfrak r}}
+\newcommand{\fs}{{\mathfrak s}}
+\newcommand{\ft}{{\mathfrak t}}
+\newcommand{\fu}{{\mathfrak u}}
+\newcommand{\fv}{{\mathfrak v}}
+\newcommand{\fw}{{\mathfrak w}}
+\newcommand{\fx}{{\mathfrak x}}
+\newcommand{\fy}{{\mathfrak y}}
+\newcommand{\fz}{{\mathfrak z}}
+
+\def\Bool{\mathbb{B}}
+\def\Nat{\mathbb{N}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% names of systems                    %%
+
+\def\SKS{\mathsf{SKS}}
+\def\eSKS{\mathsf{eSKS}}
+\def\sSKS{\mathsf{sSKS}}
+\def\SKSd{\mathsf{SKS}\mathord{\downarrow}}
+\def\SKSu{\mathsf{SKS}\mathord{\uparrow}}
+\def\KS{\mathsf{KS}}
+\def\SKSg{\mathsf{SKSg}}
+\def\SKSgd{\mathsf{SKSg}\mathord{\downarrow}}
+\def\SKSgu{\mathsf{SKSg}\mathord{\uparrow}}
+\def\KSg{\mathsf{KSg}}
+\def\K{\mathsf{K}}
+\def\MLL{\mathsf{MLL}}
+\def\MALL{\mathsf{MALL}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\set#1{\{#1\}}
+\def\bigset#1{\big\{#1\big\}}
+\def\dset#1{\left\{#1\right\}}
+\def\mset#1{\{#1\}}
+\def\cons#1{\{#1\}}
+\def\conhole      {\cons{\enspace}}%
+
+\def\disunion{\mathbin{\uplus}}
+\def\directsum{\mathbin{\oplus}}
+
+\def\fcomp{\mathbin{\circ}}
+
+\def\scope{\mathrel{.}}
+
+\def\tuple#1{\langle#1\rangle}
+
+\def\pair#1#2{(#1,#2)}
+\def\npair#1#2{#1,#2}
+
+%% relations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\grammareq {\mathrel{\raise.4pt\hbox{::}{=}}}%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% category theory
+
+\def\id{{\mathrm{1}}}
+\def\idh{{\hat{\id}}}
+\def\idch{{\check{\id}}}
+%\def\mix{{\mathrm{mix}}}
+%\def\twist{{\mathrm{twist}}}
+
+\def\codiag{\nabla}
+\def\diag{\Delta}
+\def\proj{\Pi}
+\def\coproj{\amalg}
+
+\newcommand{\sto}[1][]{\stackrel{#1}{\to}}
+\newcommand{\lsto}[1][]{\stackrel{#1}{\longrightarrow}}
+\newcommand{\lsfrom}[1][]{\stackrel{#1}{\longleftarrow}}
+
+\newcommand{\dotto}[1][]{\mathrel{\!\xy\ar@{.>}^-{#1}(5,0)\endxy\!}}
+\newcommand{\solto}[1][]{\mathrel{\!\xy\ar@{->}^-{#1}(5,0)\endxy\!}}
+\newcommand{\longsolto}[1][]{\mathrel{\!\xy\ar@{->}^-{#1}(11,0)\endxy\!}}
+\newcommand{\longdotto}[1][]{\mathrel{\!\xy\ar@{.>}^-{#1}(11,0)\endxy\!}}
+\newcommand{\xldotto}[2][]{\mathrel{\!\xy\ar@{.>}^-{#1}(#2,0)\endxy\!}}
+
+\newcommand{\downmap}[1]{\begin{array}{c}#1\end{array}}
+\newcommand{\vcdownmap}[1]{\vcenter{\begin{array}{c}#1\end{array}}}
+\newcommand{\ldownto}[1][]{
+  \\
+  \llap{$\scriptstyle #1\;$}\clapm{\Big\downarrow}
+  \\%[.2pt]
+  }
+\newcommand{\rdownto}[1][]{
+  \\
+  \clapm{\Big\downarrow}\rlap{$\scriptstyle\;#1$}
+  \\%[.2pt]
+  }
+
+\def\biproj{p}
+\def\bicoproj{i}
+\def\bidiag{\blacktriangle}
+\def\bicodiag{\blacktriangledown}
+%\def\bidsum{\oplus}
+
+%\def\runit{\varrho}
+%\def\runitast{\varrho^\ast}
+
+\def\Hom{}
+\renewcommand{\Hom}[1][]{\mathrm{Hom}_{#1}}
+%\def\Pom{}
+%\renewcommand{\Pom}[1][]{\mathrm{Pom}_{#1}}
+%\def\Mop{}
+%\renewcommand{\Mop}[1][]{\mathrm{Mop}_{#1}}
+\def\Obj{{\mathrm{Obj}}}
+\def\isom{\cong}
+
+\def\name#1{\hat{#1}}
+\def\coname#1{\check{#1}}
+\def\widename#1{\widehat{#1}}
+\def\wideconame#1{\widecheck{#1}}
+
+\def\Set{{\mathbf{Set}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% proof theory
+
+\def\sqn  #1{{\;\turnstile #1\;}}%
+\def\ssqn#1#2{{\;#1\turnstile #2\;}}%
+
+\def\cutr{\mathsf{cut}}
+\def\idr{\mathsf{id}}
+\def\mixr{\mathsf{mix}}
+\def\mixzr{\mathsf{mix_0}}
+\def\weakr{\mathsf{weak}}
+\def\conr{\mathsf{cont}}
+\def\exr{\mathsf{exch}}
+\def\cyclr{\mathsf{cycl}}
+\def\rr{\mathsf{r}}
+\def\swir{\mathsf{s}}
+\def\medr{\mathsf{m}}
+
+\def\MLL{\mathsf{MLL}}
+\def\LK{\mathsf{LK}}
+\def\Gthree{\mathsf{G3}}
+\def\LC{\mathsf{LC}}
+\def\LLP{\mathsf{LLP}}
+
+% rule names
+
+\newcommand{\ird}{\mathsf{i}\mathord{\downarrow}}
+\newcommand{\iru}{\mathsf{i}\mathord{\uparrow}}
+\newcommand{\atird}{\mathsf{ai}\mathord{\downarrow}}
+\newcommand{\atiru}{\mathsf{ai}\mathord{\uparrow}}
+\newcommand{\seqrd}{\mathsf{q}\mathord{\downarrow}}
+\newcommand{\seqru}{\mathsf{q}\mathord{\uparrow}}
+\newcommand{\conrd}{\mathsf{c}\mathord{\downarrow}}
+\newcommand{\conru}{\mathsf{c}\mathord{\uparrow}}
+\newcommand{\weakrd}{\mathsf{w}\mathord{\downarrow}}
+\newcommand{\weakru}{\mathsf{w}\mathord{\uparrow}}
+%\renewcommand{\swir}[1][]{\mathsf{s}_{#1}}
+\newcommand{\assrd}[1][]{\alpha\mathord{\downarrow}_{#1}}
+\newcommand{\assru}[1][]{\alpha\mathord{\uparrow}_{#1}}
+\newcommand{\sassrd}[1][]{\alpha^\triangleleft\mathord{\downarrow}_{#1}}
+\newcommand{\sassru}[1][]{\alpha^\triangleleft\mathord{\uparrow}_{#1}}
+\newcommand{\comrd}[1][]{\sigma\mathord{\downarrow}_{#1}}
+\newcommand{\comru}[1][]{\sigma\mathord{\uparrow}_{#1}}
+\newcommand{\assoc}[1][]{\alpha_{#1}}
+\newcommand{\twist}[1][]{\sigma_{#1}}
+
+\def\ltensl{\mathord{\ltens}\mathsf{L}}
+\def\ltensr{\mathord{\ltens}\mathsf{R}}
+\def\lparl{\mathord{\lpar}\mathsf{L}}
+\def\lparr{\mathord{\lpar}\mathsf{R}}
+\def\limpl{\mathord{\limp}\mathsf{L}}
+\def\limpr{\mathord{\limp}\mathsf{R}}
+\def\lnegl{\mathord{\cdot^\lbot}\mathsf{L}}
+\def\lnegr{\mathord{\cdot^\lbot}\mathsf{R}}
+\def\exrl{\mathsf{exchL}}
+\def\exrr{\mathsf{exchR}}
+\def\markl{\mathord{\mathsf{:}}\mathsf{L}}
+\def\markr{\mathord{\mathsf{:}}\mathsf{R}}
+
+\def\poll{\bullet}
+\def\polr{\circ}
+\def\markpl{^\poll}
+\def\markpr{^\polr}
+\def\lnegpl{^{\lbot\poll}}
+\def\lnegpr{^{\lbot\polr}}
+
+
+\def\wlpar{\;\lpar\;}
+\def\wltens{\;\ltens\;}
+
+\def\un{\circ}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% classical logic %%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\wvskipvi{\mathchoice{\hskip-2ex}{\hskip-1.5ex}{\hskip-1ex}{\hskip-.8ex}}
+\def\wvskipx{\mathchoice{\hskip-2.5ex}{\hskip-2ex}{\hskip-1.5ex}{\hskip-1ex}}
+\def\wvskipxii{\mathchoice{\hskip-2.9ex}{\hskip-2.25ex}{\hskip-2ex}{\hskip-1.5ex}}
+\let\wvskip\wvskipx
+\def\dbigand#1{\displaystyle\mathop{\bigwedge\wvskip\bigwedge}_{#1}}
+\def\dbigor#1{\displaystyle\mathop{\bigvee\wvskip\bigvee}_{#1}}
+\def\bigand#1{\mathop{\bigwedge\wvskip\bigwedge}_{\smash{#1}}}
+\def\bigor#1{\mathop{\bigvee\wvskip\bigvee}_{\smash{#1}}}
+\def\ctrue{{\mathbf t}}
+\def\cfalse{{\mathbf f}}
+\def\cand{\wedge}
+\def\cor{\vee}
+\def\candor{\mathchoice%
+  {\mathbin{\rlap{$\vee$}\wedge}}
+  {\mathbin{\rlap{$\vee$}\wedge}}
+  {\mathbin{\rlap{$\scriptstyle\vee$}\wedge}}
+  {\mathbin{\rlap{$\scriptscriptstyle\vee$}\wedge}}
+}
+\def\cplus{\oplus}
+%\def\ccut{\varobar}
+\def\ccon{\blacktriangledown}
+\def\cneg#1{\bar{#1}}
+\def\widecneg#1{\overline{#1}}
+\def\wcneg#1{\overline{#1}}
+\def\cimp{\mathop{\Rightarrow}}
+\def\ciff{\mathop{\Leftrightarrow}}
+\def\fneg{\widecneg{(-)}}
+
+\newbox\cutbox
+\newdimen\cutwd
+\newdimen\cutht
+\newdimen\cutdp
+\def\ccut{%
+  \setbox\cutbox\hbox{$\lozenge$}
+  \cutwd=\wd\cutbox
+  \cutht=\ht\cutbox
+  \cutdp=\dp\cutbox
+  \setbox\cutbox\hbox to\cutwd{\hss\vrule width.3pt height\cutht depth\cutdp\hss}
+  %%%%%\mathbin{\rlap{$\lozenge$}\copy\cutbox}}
+  \mathbin{\lozenge\hskip-\cutwd\copy\cutbox}}
+\def\scriptcut{%
+  \setbox\cutbox\hbox{$\scriptstyle\lozenge$}
+  \cutwd=\wd\cutbox
+  \cutht=\ht\cutbox
+  \cutdp=\dp\cutbox
+  \setbox\cutbox\hbox to\cutwd{\hss\vrule width.3pt height\cutht depth\cutdp\hss}
+  \mathord{\lozenge\hskip-\cutwd\copy\cutbox}}
+
+\def\vccut{%
+  \setbox\cutbox\hbox{$\lozenge$}
+  \cutwd=\wd\cutbox
+  \cutht=\ht\cutbox
+  \cutdp=\dp\cutbox
+  \setbox\cutbox\hbox to\cutwd{\hss\hskip.3pt\vrule width.3pt height\cutht depth\cutdp\hss}
+  %%%%%\mathbin{\rlap{$\lozenge$}\copy\cutbox}}
+  \mathbin{\lozenge\hskip-\cutwd\copy\cutbox}}
+
+
+%% CoS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\conldel {\{}%
+\def\conrdel {\}}%
+\def\lrgldel {\mathchoice{(}{(}{\langle}{\langle}}%
+\def\lrgrdel {\mathchoice{)}{)}{\rangle}{\rangle}}%
+\def\aprldel {\mathchoice
+    {\mathopen {\setbox0=\hbox{$\displaystyle     \lrgldel$}\hbox to\wd0
+                         {\hfil$\displaystyle     (       $\hfil}}}%
+    {\mathopen {\setbox0=\hbox{$\textstyle        \lrgldel$}\hbox to\wd0
+                         {\hfil$\textstyle        (        $\hfil}}}%
+    {\mathopen {\setbox0=\hbox{$\scriptstyle      \lrgldel$}\hbox to\wd0
+                         {\hfil$\scriptstyle      (        $\hfil}}}%
+    {\mathopen {\setbox0=\hbox{$\scriptscriptstyle\lrgldel$}\hbox to\wd0
+                         {\hfil$\scriptscriptstyle(        $\hfil}}}}%
+\def\aprrdel {\mathchoice
+    {\mathclose{\setbox0=\hbox{$\displaystyle     \lrgrdel$}\hbox to\wd0
+                         {\hfil$\displaystyle     )       $\hfil}}}%
+    {\mathclose{\setbox0=\hbox{$\textstyle        \lrgrdel$}\hbox to\wd0
+                         {\hfil$\textstyle        )        $\hfil}}}%
+    {\mathclose{\setbox0=\hbox{$\scriptstyle      \lrgrdel$}\hbox to\wd0
+                         {\hfil$\scriptstyle      )        $\hfil}}}%
+    {\mathclose{\setbox0=\hbox{$\scriptscriptstyle\lrgrdel$}\hbox to\wd0
+                         {\hfil$\scriptscriptstyle)        $\hfil}}}}%
+\def\seqldel {\mathchoice
+    {\mathopen {\setbox0=\hbox{$\displaystyle     \lrgldel$}\hbox to\wd0
+                         {\hfil$\displaystyle     \langle  $\hfil}}}%
+    {\mathopen {\setbox0=\hbox{$\textstyle        \lrgldel$}\hbox to\wd0
+                         {\hfil$\textstyle        \langle  $\hfil}}}%
+    {\mathopen {\setbox0=\hbox{$\scriptstyle      \lrgldel$}\hbox to\wd0
+                         {\hfil$\scriptstyle      \langle  $\hfil}}}%
+    {\mathopen {\setbox0=\hbox{$\scriptscriptstyle\lrgldel$}\hbox to\wd0
+                         {\hfil$\scriptscriptstyle\langle  $\hfil}}}}%
+\def\seqrdel {\mathchoice
+    {\mathclose{\setbox0=\hbox{$\displaystyle     \lrgrdel$}\hbox to\wd0
+                         {\hfil$\displaystyle     \rangle  $\hfil}}}%
+    {\mathclose{\setbox0=\hbox{$\textstyle        \lrgrdel$}\hbox to\wd0
+                         {\hfil$\textstyle        \rangle  $\hfil}}}%
+    {\mathclose{\setbox0=\hbox{$\scriptstyle      \lrgrdel$}\hbox to\wd0
+                         {\hfil$\scriptstyle      \rangle  $\hfil}}}%
+    {\mathclose{\setbox0=\hbox{$\scriptscriptstyle\lrgrdel$}\hbox to\wd0
+                         {\hfil$\scriptscriptstyle\rangle  $\hfil}}}}%
+\def\parldel {\mathchoice
+    {\mathopen {\setbox0=\hbox{$\displaystyle     \lrgldel$}\hbox to\wd0
+                         {\hfil$\displaystyle     [       $\hfil}}}%
+    {\mathopen {\setbox0=\hbox{$\textstyle        \lrgldel$}\hbox to\wd0
+                         {\hfil$\textstyle        [        $\hfil}}}%
+    {\mathopen {\setbox0=\hbox{$\scriptstyle      \lrgldel$}\hbox to\wd0
+                         {\hfil$\scriptstyle      [        $\hfil}}}%
+    {\mathopen {\setbox0=\hbox{$\scriptscriptstyle\lrgldel$}\hbox to\wd0
+                         {\hfil$\scriptscriptstyle[        $\hfil}}}}%
+\def\parrdel {\mathchoice
+    {\mathclose{\setbox0=\hbox{$\displaystyle     \lrgrdel$}\hbox to\wd0
+                         {\hfil$\displaystyle     ]       $\hfil}}}%
+    {\mathclose{\setbox0=\hbox{$\textstyle        \lrgrdel$}\hbox to\wd0
+                         {\hfil$\textstyle        ]        $\hfil}}}%
+    {\mathclose{\setbox0=\hbox{$\scriptstyle      \lrgrdel$}\hbox to\wd0
+                         {\hfil$\scriptstyle      ]        $\hfil}}}%
+    {\mathclose{\setbox0=\hbox{$\scriptscriptstyle\lrgrdel$}\hbox to\wd0
+                         {\hfil$\scriptscriptstyle]        $\hfil}}}}%
+
+\def\eightpoint{\small}                         
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\pluldel {\mathchoice
+   {\mathopen {\setbox0=\hbox{$\displaystyle     \lrgldel$}\hbox to\wd0
+                        {\hfil$\displaystyle     [       $\hfil}%
+                        \kern-\wd0\hbox to\wd0
+                        {\hss$\vcenter{\hbox{\eightpoint$\scriptscriptstyle\bullet$}}$\hss}}}%
+   {\mathopen {\setbox0=\hbox{$\textstyle        \lrgldel$}\hbox to\wd0
+                        {\hfil$\textstyle        [       $\hfil}%
+                        \kern-\wd0\hbox to\wd0
+                        {\hss$\vcenter{\hbox{\eightpoint$\scriptscriptstyle\bullet$}}$\hss}}}%
+   {\mathopen {\setbox0=\hbox{$\scriptstyle      \lrgldel$}\hbox to\wd0
+                        {\hfil$\scriptstyle      [       $\hfil}%
+                        \kern-\wd0\hbox to\wd0
+                        {\hss$\raise.1ex\hbox{\eightpoint$\scriptscriptstyle\bullet$}$\hss}}}%
+   {\mathopen {\setbox0=\hbox{$\scriptscriptstyle\lrgldel$}\hbox to\wd0
+                        {\hfil$\scriptscriptstyle[       $\hfil}%
+                        \kern-\wd0\hbox to\wd0
+                        {\hss$\raise.03ex\hbox{\eightpoint$\scriptscriptstyle\bullet$}$\hss}}}}%
+\def\plurdel {\mathchoice
+   {\mathclose{\setbox0=\hbox{$\displaystyle     \lrgldel$}\hbox to\wd0
+                        {\hfil$\displaystyle     ]       $\hfil}%
+                        \kern-\wd0\hbox to\wd0
+                        {\hss$\vcenter{\hbox{\eightpoint$\scriptscriptstyle\bullet$}}$\hss}}}%
+   {\mathclose{\setbox0=\hbox{$\textstyle        \lrgldel$}\hbox to\wd0
+                        {\hfil$\textstyle        ]       $\hfil}%
+                        \kern-\wd0\hbox to\wd0
+                        {\hss$\vcenter{\hbox{\eightpoint$\scriptscriptstyle\bullet$}}$\hss}}}%
+   {\mathclose{\setbox0=\hbox{$\scriptstyle      \lrgldel$}\hbox to\wd0
+                        {\hfil$\scriptstyle      ]       $\hfil}%
+                        \kern-\wd0\hbox to\wd0
+                        {\hss$\raise.1ex\hbox{\eightpoint$\scriptscriptstyle\bullet$}$\hss}}}%
+   {\mathclose{\setbox0=\hbox{$\scriptscriptstyle\lrgldel$}\hbox to\wd0
+                        {\hfil$\scriptscriptstyle]       $\hfil}%
+                        \kern-\wd0\hbox to\wd0
+                        {\hss$\raise.03ex\hbox{\eightpoint$\scriptscriptstyle\bullet$}$\hss}}}}%
+\def\witldel {\mathchoice
+   {\mathopen {\setbox0=\hbox{$\displaystyle     \lrgldel$}\hbox to\wd0
+                        {\hfil$\displaystyle     (       $\hfil}%
+                        \kern-\wd0\hbox to\wd0
+                        {\hss$\vcenter{\hbox{\eightpoint$\scriptscriptstyle\bullet\mkern3.2mu$}}$\hss}}}%
+   {\mathopen {\setbox0=\hbox{$\textstyle        \lrgldel$}\hbox to\wd0
+                        {\hfil$\textstyle        (       $\hfil}%
+                        \kern-\wd0\hbox to\wd0
+                        {\hss$\vcenter{\hbox{\eightpoint$\scriptscriptstyle\bullet\mkern3.2mu$}}$\hss}}}%
+   {\mathopen {\setbox0=\hbox{$\scriptstyle      \lrgldel$}\hbox to\wd0
+                        {\hfil$\scriptstyle      (       $\hfil}%
+                        \kern-\wd0\hbox to\wd0
+                        {\hss$\raise.1ex\hbox{\eightpoint$\scriptscriptstyle\bullet\mkern3.2mu$}$\hss}}}%
+   {\mathopen {\setbox0=\hbox{$\scriptscriptstyle\lrgldel$}\hbox to\wd0
+                        {\hfil$\scriptscriptstyle(       $\hfil}%
+                        \kern-\wd0\hbox to\wd0
+                        {\hss$\raise.03ex\hbox{\eightpoint$\scriptscriptstyle\bullet\mkern3.2mu$}$\hss}}}}%
+\def\witrdel {\mathchoice
+   {\mathclose{\setbox0=\hbox{$\displaystyle     \lrgldel$}\hbox to\wd0
+                        {\hfil$\displaystyle     )       $\hfil}%
+                        \kern-\wd0\hbox to\wd0
+                        {\hss$\vcenter{\hbox{\eightpoint$\scriptscriptstyle\mkern3.2mu\bullet$}}$\hss}}}%
+   {\mathclose{\setbox0=\hbox{$\textstyle        \lrgldel$}\hbox to\wd0
+                        {\hfil$\textstyle        )       $\hfil}%
+                        \kern-\wd0\hbox to\wd0
+                        {\hss$\vcenter{\hbox{\eightpoint$\scriptscriptstyle\mkern3.2mu\bullet$}}$\hss}}}%
+   {\mathclose{\setbox0=\hbox{$\scriptstyle      \lrgldel$}\hbox to\wd0
+                        {\hfil$\scriptstyle      )       $\hfil}%
+                        \kern-\wd0\hbox to\wd0
+                        {\hss$\raise.1ex\hbox{\eightpoint$\scriptscriptstyle\mkern3.2mu\bullet$}$\hss}}}%
+   {\mathclose{\setbox0=\hbox{$\scriptscriptstyle\lrgldel$}\hbox to\wd0
+                        {\hfil$\scriptscriptstyle)       $\hfil}%
+                        \kern-\wd0\hbox to\wd0
+                        {\hss$\raise.03ex\hbox{\eightpoint$\scriptscriptstyle\mkern3.2mu\bullet$}$\hss}}}}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newbox\ldelbox
+\setbox\ldelbox=\hbox{$\lrgldel$}
+\def\ldelskip{\hskip\wd\ldelbox}
+\newbox\rdelbox
+\setbox\rdelbox=\hbox{$\lrgrdel$}
+\def\rdelskip{\hskip\wd\rdelbox}
+
+\def\wits #1{\witldel #1\witrdel}%                         
+\def\plus #1{\pluldel #1\plurdel}%
+                         
+\def\aprs #1{\aprldel #1\aprrdel}%
+\def\pars #1{\parldel #1\parrdel}%
+\def\seqs #1{\seqldel #1\seqrdel}%
+\def\cons #1{\conldel #1\conrdel}%
+\def\copt #1{#1}%
+
+
+
+%% linear logic %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\let\turnstile=\vdash
+\def\lone{1}
+\def\lbot{\bot}
+\def\lzero{0}
+\def\ltop{\top}
+\def\ltens{\mathop{\varotimes}}
+\def\lcut{\mathop\varobar}
+\def\lpar{\mathop\bindnasrepma}
+\def\lplus{\mathop\varoplus}
+\def\lwith{\mathop\binampersand}
+\def\lwn{\mathord{?}}
+\def\loc{\mathord{!}}
+\def\lneg{^\bot}
+\def\lnegneg{^{\bot\bot}}
+\def\limp{\multimap}
+\def\lseq{\mathop\vartriangleleft}
+\def\lcoseq{\mathop\vartriangleright}
+
+\def\lweakr{\mathord{\lwn}\mathsf{w}}
+\def\lconr{\mathord{\lwn}\mathsf{c}}
+\def\lderr{\mathord{\lwn}\mathsf{d}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% sonstiges
+ 
+%% \newcommand{\ie}{i.e.,\ }
+%% \newcommand{\eg}{e.g.,\ }
+%% \newcommand{\cf}{cf.\ }
+%% \newcommand{\etc}{etc.\ }
+%% \newcommand{\etal}{et al.\ }
+%% \newcommand{\Wolg}{Without loss of generality}
+%% \newcommand{\wolg}{without loss of generality}
+%% \newcommand{\bwoc}{by way of contradiction}
+%% \newcommand{\Bwoc}{By way of contradiction}
+
+\def\quadfs {\rlap{\rm\quad.}}%
+\def\quadcm {\rlap{\rm\quad,}}%
+\def\quadsc {\rlap{\rm\quad;}}%
+\def\quadcl {\rlap{\rm\quad:}}%
+\def\quadqm {\rlap{\rm\quad?}}%
+\def\quand {\quad\mbox{and}\quad}%
+\def\qquand {\qquad\mbox{and}\qquad}%
+\def\qqquand {\quad\qquad\mbox{and}\qquad\quad}%
+\def\qqqquand {\qquad\qquad\mbox{and}\qquad\qquad}%
+\def\quor {\quad\mbox{or}\quad}%
+\def\qquor {\qquad\mbox{or}\qquad}%
+\def\qqquor {\quad\qquad\mbox{or}\qquad\quad}%
+\def\qqqquor {\qquad\qquad\mbox{or}\qquad\qquad}%
+
+\def\quby {\quad\mbox{by}\quad}%
+\def\qquby {\qquad\mbox{by}\qquad}%
+\def\qqquby {\quad\qquad\mbox{by}\qquad\quad}%
+\def\qqqquby {\qquad\qquad\mbox{by}\qquad\qquad}%
+
+\def\quato {\quad\to\quad}%
+\def\qquato {\qquad\to\qquad}%
+\def\qqquato {\quad\qquad\to\qquad\quad}%
+\def\qqqquato {\qquad\qquad\to\qquad\qquad}%
+
+\def\dqualto {\hskip.5em\leadsto\hskip.5em}%
+\def\qualto {\quad\leadsto\quad}%
+\def\qqualto {\qquad\leadsto\qquad}%
+\def\qqqualto {\quad\qquad\leadsto\qquad\quad}%
+\def\qqqqualto {\qquad\qquad\leadsto\qquad\qquad}%
+
+\def\quand {\quad\mbox{and}\quad}%
+\def\qquand {\qquad\mbox{and}\qquad}%
+\def\qqquand {\quad\qquad\mbox{and}\qquad\quad}%
+\def\qqqquand {\qquad\qquad\mbox{and}\qquad\qquad}%
+
+\def\nquand {\quad\mbox{\normalsize and}\quad}%
+\def\nqquand {\qquad\mbox{\normalsize and}\qquad}%
+\def\nqqquand {\quad\qquad\mbox{\normalsize and}\qquad\quad}%
+\def\nqqqquand {\qquad\qquad\mbox{\normalsize and}\qquad\qquad}%
+
+\def\quor {\quad\mbox{or}\quad}%
+\def\qquor {\qquad\mbox{or}\qquad}%
+\def\qqquor {\quad\qquad\mbox{or}\qquad\quad}%
+\def\qqqquor {\qquad\qquad\mbox{or}\qquad\qquad}%
+
+\def\quwith {\quad\mbox{with}\quad}%
+\def\qquwith {\qquad\mbox{with}\qquad}%
+\def\qqquwith {\quad\qquad\mbox{with}\qquad\quad}%
+\def\qqqquwith {\qquad\qquad\mbox{with}\qquad\qquad}%
+
+\def\quiff {\quad\mbox{iff}\quad}%
+\def\qquiff {\qquad\mbox{iff}\qquad}%
+\def\qqquiff {\quad\qquad\mbox{iff}\qquad\quad}%
+\def\qqqquiff {\qquad\qquad\mbox{iff}\qquad\qquad}%
+
+\def\quifof {\quad\mbox{if and only if}\quad}%
+\def\qquifof {\qquad\mbox{if and only if}\qquad}%
+\def\qqquifof {\quad\qquad\mbox{if and only if}\qquad\quad}%
+\def\qqqquifof {\qquad\qquad\mbox{if and only if}\qquad\qquad}%
+
+\def\queq {\quad=\quad}%
+\def\qqueq {\qquad=\qquad}%
+
+\def\qquadfs {\rlap{\rm\qquad.}}%
+\def\qquadcm {\rlap{\rm\qquad,}}%
+
+\def\yields{\quad\mbox{yields}\quad}
+
+\def\mydisplaybreak{\hspace*{\fill} \cr \hspace*{\fill}}
+
+\def\vcvdots{\vbox{\baselineskip=4pt \lineskiplimit=0pt
+    \hbox{.}\hbox{.}\hbox{.}}}
+
+
+%  \clap and \proofadjust ------------------------
+
+\def\nlap#1{#1}
+\def\clap#1{\hbox to 0pt{\hss#1\hss}}
+\def\sqlap#1{\hbox to .5em{\hss#1\hss}}
+\def\qlap#1{\hbox to 1em{\hss#1\hss}}
+\def\qqlap#1{\hbox to 2em{\hss#1\hss}}
+\def\qqqlap#1{\hbox to 3em{\hss#1\hss}}
+\def\qqqqlap#1{\hbox to 4em{\hss#1\hss}}
+\def\qqqqqlap#1{\hbox to 5em{\hss#1\hss}}
+\def\qqqqqqlap#1{\hbox to 6em{\hss#1\hss}}
+\def\qqqqqqqlap#1{\hbox to 7em{\hss#1\hss}}
+\def\qqqqqqqqlap#1{\hbox to 8em{\hss#1\hss}}
+\def\qqqqqqqqqlap#1{\hbox to 9em{\hss#1\hss}}
+\newcommand{\wlap}[2][10ex]{\hbox to#1{\hss#2\hss}}
+\def\nlapm#1{#1}
+\def\clapm#1{\clap{$#1$}}
+\def\sqlapm#1{\sqlap{$#1$}}
+\def\qlapm#1{\qlap{$#1$}}
+\def\qqlapm#1{\qqlap{$#1$}}
+\def\qqqlapm#1{\qqqlap{$#1$}}
+\def\qqqqlapm#1{\qqqqlap{$#1$}}
+\def\qqqqqlapm#1{\qqqqqlap{$#1$}}
+\def\qqqqqqlapm#1{\qqqqqqlap{$#1$}}
+\def\qqqqqqqlapm#1{\qqqqqqqlap{$#1$}}
+\def\qqqqqqqqlapm#1{\qqqqqqqqlap{$#1$}}
+\def\qqqqqqqqqlapm#1{\qqqqqqqqqlap{$#1$}}
+\newcommand{\wlapm}[2][10ex]{\hbox to#1{\hss$#2$\hss}}
+\def\rlapm#1{\hbox to 0pt{$#1$\hss}}
+\def\llapm#1{\hbox to 0pt{\hss$#1$}}
+
+\def\squad{\hskip.5em}
+\def\qqquad{\quad\qquad}
+\def\qqqquad{\qquad\qquad}
+\def\qqqqquad{\qqquad\qquad}
+\def\qqqqqquad{\qqquad\qqquad}
+
+\newcommand{\vclap}[2][0pt]{\hbox to #1{\hss#2\hss}}
+\newcommand{\vclapm}[2][0pt]{\hbox to #1{\hss$#2$\hss}}
+
+
+
+\def\proofadjust{\vadjust{\nobreak\vskip-2.7ex\nobreak}}
+\def\semiproofadjust{\vadjust{\nobreak\vskip-1.3ex\nobreak}}
+\def\doubleproofadjust{\vadjust{\nobreak\vskip-4ex\nobreak}}
+\def\tripleproofadjust{\vadjust{\nobreak\vskip-5.3ex\nobreak}}
+
+
+\def\interdisplayskip{.5ex}
+\newskip\mydisplaywidth
+\newcommand{\twolinedisplay}[3][10pt]{%
+  \mydisplaywidth=\displaywidth
+  \advance\mydisplaywidth-#1
+  \begin{array}{c}
+    \clap{\hbox to\mydisplaywidth{$\displaystyle#2$\hss}}\\[\interdisplayskip]
+    \clap{\hbox to\mydisplaywidth{\hss$\displaystyle#3$}}
+  \end{array}
+}
+
+\def\interarrayskip{.5ex}
+
+\def\nosmash#1{#1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\endinput
+

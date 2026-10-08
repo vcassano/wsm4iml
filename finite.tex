@@ -1,0 +1,126 @@
+\newcommand{\kripkeplus}{layered\xspace}
+
+
+\section{New Semantics}
+\label{sec:background}
+
+The birelational semantics regains the FMP by dropping the layered model of the Kripke semantics. We will now investigate the question how we can have the FMP without having to make that sacrifice. We will introduce a new kind of semantics that keeps the layered model of the Kripke semantics, such that each layer is a classical Kripke model. The only properties we have to drop are (i) that $\le$ is a partial order, and (ii) that $\Worlds\subseteq\Worlds[\layera]$ whenever $\layer\le\layera$. But we still maintain ``monotonicity'' as it is expected in the intuitionistic setting.
+
+
+\begin{definition}
+  A \defn{\kripkeplus model} for intuitionistic modal logic is a tuple
+$$
+ \model= \tup{\Layers, \le, \set{\Worlds}_{\layer\in\Layers},
+    \set{\Rel}_{\layer\in\Layers},
+    \set{\Val}_{\layer\in\Layers},
+    \set{\Fun{\layer}{\layera}}_{\layer\le\layera}
+}
+$$
+%% $$
+%% \tup{W, \le, \{D_w \}_{w\in W}, \{f_{wv}\}_{w < v}, \{R_w \}_{w\in W}, \{V_w\}_{w\in W} }
+%% $$
+consisting of
+\begin{enumerate}
+\item a non-empty set $\Layers$ of \defn{universes}; %%\defn{layers} \lutz{or \defn{universes}};
+
+\item a preorder $\le$ on $\Layers$ (and we define $<$ as
+  $\layer < \layera$ iff $\layer \le \layera$ and $\layer \neq \layera$);
+
+\item  for each $\layer\in\Layers$, a non-empty set $\Worlds$ of \defn{worlds};
+\item  for each $\layer\in\Layers$, a binary \defn{accessibility relation} $\Rel$ on $\Worlds$;
+\item  for each $\layer\in\Layers$, a \defn{valuation function} $\Val$ that maps
+  each world $\world\in\Worlds$ to a subset of $\PROP$;
+  %%ordinary propositional symbol $p$ to a subset of $\Worlds$;
+\item for all $\layer,\layera\in\Layers$ with $\layer\le\layera$,  a
+  \defn{future function} $\Funa\colon\Worlds\to\Worlds[\layera]$, such that
+  \begin{itemize}
+  \item   for all worlds $\world\in\Worlds$ we have $\Val(\world)\subseteq\Val[\layera](\Funa(\world))$, 
+  \item for all worlds $w_1,w_2\in\Worlds$ we have
+  $\inrel {w_1}{w_2}$ implies $\inrel{\Funa(w_1)}{\Funa(w_2)}$,
+  \item for all $\layer\in\Layers$, the function $\Fun{\layer}{\layer}$ is the identity, and 
+  \item whenever $\layer_1 \le \layer_2 \le \layer_3$ then
+  $\Fun{\layer_1}{\layer_3}$ is the composition of
+  $\Fun{\layer_1}{\layer_2}$ and $\Fun{\layer_2}{\layer_3}$.
+  \end{itemize}
+\end{enumerate}
+The tuple
+$\Frame= \tup{\Layers, \le, \set{\Worlds}_{\layer\in\Layers},
+    \set{\Rel}_{\layer\in\Layers},
+ %%   \set{\Val}_{\layer\in\Layers},
+    \set{\Fun{\layer}{\layera}}_{\layer\le\layera\in\Layers}
+}$
+%%$\tup{W, \le, \{D_w\}_{w\in W}, \{f_{wv}\}_{w < v}, \{R_w\}_{w\in W}}$
+is called a \defn{\kripkeplus frame} for intuitionistic modal logic
+and the model~$\model$ is said to be based on this frame~$\Frame$.  We
+say that $\model$ (or $\Frame$) is \defn{finite} if the set $\Layers$
+is finite, and for each $\layer\in\Layers$, the set $\Worlds$ is
+finite.
+\end{definition}
+
+
+%\carlos{Do we need that if $\layer_1 \le \layer_2 \le \layer_2$ then
+%  $\Fun{\layer_1}{\layer_3}$ is necesarily the composition of
+%  $\Fun{\layer_1}{\layer_2}$ and $\Fun{\layer_2}{\layer_3}$.}
+%\lutz{yes, of course. I fixed it}
+
+\lutz{we have to discuss the $\Fun{\layer_1}{\layer_2}$ macro}
+
+Semantics is defined on \kripkeplus models as on Kripke models. \lutz{it is literally the same. do we need to write it again?}
+
+\begin{definition}
+  Given a model
+  $\model = \tup{W, \le, \{D_w \}_{w\in W}, \{R_w\}_{w\in W},
+    \{V_w\}_{w\in W}}$ and an element $w$ of $W$, the relation
+    $M, w, d \models \varphi$ is defined by induction, where $w$ is an
+    element of $W$, $d$ is an element of $D_w$, and
+    $\varphi$ is a formula.
+    $$
+    \begin{array}{rcl}
+\model, w, d & \models & \bot \text{ never}\\
+\model, w, d & \models & p \text{ iff } d \in V_w(p)\\
+\model, w, d & \models & \varphi \to \psi \text{ iff  for all } v \ge w,
+\model, v, d  \models  \varphi \text{ implies } M, v, d \models \psi \\
+\model, w, d & \models & \Box \varphi \text{ iff for all } v \ge w, \text{ for all } e \in D_v ,
+dR_v e \text{ implies } \model, v, e \models \varphi\\
+\model, w, d & \models & \Diamond\varphi \text{ iff for some }  e \in D_w , dR_w e \text{ and } \model, w, e \models \varphi
+    \end{array}
+    $$
+\end{definition}
+
+\begin{proposition}
+  Every Kripke model has an equivalent \kripkeplus model. (I.e., a
+  model with the same modal theory).
+\end{proposition}
+
+\begin{proof}
+  Given a Kripke model
+  $\model = \tup{W, \le, \{D_w \}_{w\in W}, \{R_w\}_{w\in W},
+    \{V_w\}_{w\in W}}$ the associated \kripkeplus model can be defined
+  as $\model' = \langle W, \le, \{D_w \}_{w\in W},$
+  $\{I_{wv}\}_{w < v}, \{R_w\}_{w\in W}, \{V_w\}_{w\in W}\rangle$,
+  where $I_{wv}:D_w \mapsto D_v$ is the identity function.  These
+  functions are total as $D_w \subseteq D_v$.  The model satisfies all
+  required properties.
+\end{proof}
+
+\begin{proposition}
+  The formula $\Box\neg\neg a \to \neg\neg \Box a$ can be falsified on
+  a \kripkeplus model with a finite domain.
+\end{proposition}
+
+\begin{proof}
+  The model is shown in Figure~\ref{fig:example1}. The valuation function assigns the atom $a$ to the worlds $u_3$ in layer $\layer$ and worlds $v_2$ and $v_3$ in layer $\layera$. This means that $a$ is forced in $u_3$, $v_2$ and $v_3$, and not forced in $u_2$ and $v_4$. However, $\neg\neg a$ is forced in all of $u_2$, $u_3$, $v_2$, $v_3$, $v_4$. Consequently, $\BOX\NOT\NOT a$ is forced in $u_1$ and $v_1$, and $\BOX a$ is not forced in  $u_1$ and $v_1$. Since $u_1$ and $v_1$ have no other futures, it follows that $\NOT\BOX a$ is forced in $u_1$ and $v_1$, and $\NOT\NOT\BOX a$ is not forced in $u_1$ and $v_1$. Hence $\Box\neg\neg a \to \neg\neg \Box a$ is not forced in $u_1$ and $v_1$.
+\end{proof}
+
+\begin{figure}[!t]
+  $$
+  \includestandalone[scale=.6]{figures/example1}
+  $$
+  \caption{example1}
+  \label{fig:example1}
+\end{figure}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

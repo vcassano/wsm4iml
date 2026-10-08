@@ -1,0 +1,242 @@
+\section{Filtrations on Weaved models}\label[section]{sec:filtrations}
+
+In this section, we establish the \emph{finite model property} for \IML by exploiting the layered architecture of weaved models. This result is of immediate significance since it yields \emph{decidability}. Equally important, however, is the proof method we adopt. Our argument is based on \emph{filtrations}, a classical technique from modal logic that constructs finite models by identifying worlds that agree on the truth of a fixed, subformula-closed set of formulas. Adapting filtrations to intuitionistic modal semantics has long been known to be challenging. In particular, as discussed in \cite{simpson1994}, an early attempt by Ewald to extend the classical filtration method to bi-relational models was later shown to be flawed. Here, We show that weaved models provide a natural and robust setting in which intuitionistic filtrations can be carried out successfully. Their layered, simulation-based architecture supports a direct and technically well-behaved filtration construction, avoiding earlier difficulties and yielding a streamlined proof of the finite model property---and hence decidability---for \IML.
+
+We begin by precisely defining what we mean by a finite weaved model.
+
+\begin{definition}
+    We say that a Kripke model $\kmodel$ is \defn{finite} iff $\Wkm$ is finite.
+    We say that a weaved model is \defn{finite} iff all Kripke models in $\Kwm$ are finite.
+\end{definition}
+
+Finiteness in weaved models reflects their layered architecture. In brief, two requirements must be satisfied: each individual Kripke model must contain only finitely many worlds, and the collection of Kripke models making up the weaved model must itself be finite. These conditions capture two complementary aspects of finiteness: horizontally, each slice is a finite collection of finite Kripke model; vertically, the number of slices, i.e., the layers of the weave model, is bounded in size. Paying attention to both directions of finiteness is crucial for establishing the finite model property in this framework.
+Having clarified the two-dimensional notion of finiteness, we introduce the filtration construction for weaved models, and prove how it provides a mechanism for controlling both dimensions simultaneously.
+
+\begin{proposition}
+    Let $\wmodel$ be a weaved model, and $\fset$ be a set of formulas closed under subformulas.
+    For any Kripke model $\kmodel \in \Kwm$, we define a binary relation $\feqr$ on $\Wkm$ such that $s \feqr t$ iff for all $A \in \fset$, $\wforces {\pair \kmodel s} A$ iff $\wforces {\pair \kmodel t} A$.
+    It follows that every $\feqr$ is an equivalence relation.
+\end{proposition}
+
+\begin{proposition}
+    Let $\wmodel$ be a weaved model, and $\fset$ be a set of formulas closed under subformulas.
+    For any Kripke model $\kmodel \in \Kwm$, and any $s \in \Wkm$, let $\feqc{s}$ be the equivalence class of $s$ under $\feqr$.
+    Then, we define $\fmodel = \tuple{\Wfm, \Rfm, \Vfm}$ where:
+
+        \begin{enumerate}
+            \item $\Wfm = \setof{\feqc{s}}{s \in \Wkm}$.
+            \item $\Rfm = \setof{\pair {\feqc{s}} {\feqc{t}}}{ \mbox{there are $s' \in \feqc{s}$ and $t' \in \feqc{t}$ such that $s' \Rkm t'$}}$.
+            % \carlos{One way of defining this, just to try.    We can later do the usual range of possible definitions for relations.}
+            \item $\Vfm \colon \Wfm \to 2^{\props}$ is such that for all $\feqc{s} \in \W$, $\V(\feqc{s}) = \Vkm(s) \cap \Sigma$.
+        \end{enumerate}
+    
+    \noindent
+    It follows that $\fmodel$ is a Kripke model.
+\end{proposition}
+\begin{proof}
+    We only need to check that the function $\Vfm$ is well-defined, that is, that the selection of the representative for $\feqc{s}$ has no impact in the definition of $\Vfm(\feqc{s})$.
+    But this is immediate from the fact that any such a representative agrees on $\fset$.
+\end{proof}
+
+\begin{definition}
+    For any weaved model $\wmodel$, and any set of formulas $\Sigma$, closed under subformulas, we define the \defn{filtration} of $\wmodel$ through $\Sigma$ to be the weaved model $\fwmodel = \tuple{\Kfwm, \Sfwm}$, where:
+    \begin{enumerate}[leftmargin=\parindent]
+        \setlength{\itemsep}{0pt}
+        \item $\Kfwm = \setof{\fmodel}{\kmodel \in \Kwm}$;
+        
+        \item $\Sfwm$ is the smallest set such that for all $\Sim \colon \kmodel_1 \fsim \kmodel_2 \in \Swm$,
+            $\fSim \in \Sfwm$.
+    \end{enumerate}
+    When $\wmodel$ can be understood from the context, we refer to $\fwmodel$ as the $\Sigma$-filtered weaved model.
+\end{definition}
+
+The next two results establish that weaved models are well-suited for applying the filtration method.
+
+\begin{proposition}\label[proposition]{prop:filtration}
+    $\Sigma$-filtrations are weaved models.
+    % The filtration $\fwmodel$ of a weaved model $\wmodel$ with respect to a set of formulas $\Sigma$ closed under subformulas is itself a weaved model.
+\end{proposition}
+\begin{proof}
+    \setcounter{ieqnnum}{0}
+    We need to check:
+        (a) every $\fmodel \in \Kfwm$ is a Kripke model,
+        (b) every $\fSim \in \Sfwm$ is a seesaw simulation, and
+        (c) $\Sfwm$ is closed under identities and composition.
+    Item (a) is direct by construction.
+    
+    \medskip
+    \noindent
+    For item (b), we need to prove that every $\fSim \colon \fmodel[1] \times \fmodel[2] \in \Sfwm$ satisfies the (add), (forth), and (back) conditions in \Cref{def:simulation}.
+
+    \medskip
+    \noindent
+    We begin with the (add) condition.
+    Suppose $p \in \Vfm[1](\feqc{s}[\kmodel_1])$ and $\feqc{s}[\kmodel_1] \fSim \feqc{t}[\kmodel_2]$.
+    We know there is $s' \in \feqc{s}[\kmodel_1]$ such that $p \in \Vkm[1](s') \cap \fset$.
+    In addition, we know there are $s'' \in \feqc{s}[\kmodel_1]$ and $t'' \in \feqc{t}[\kmodel_2]$ such that $s'' \Sim t''$.
+    From the fact that $s'$ and $s''$ are both in $\feqc{s}[\kmodel_1]$, and $\wforces{\pair {\kmodel_1} {s'}}{p}$, we obtain $\wforces{\pair {\kmodel_1} {s''}}{p}$.
+    Moreover, from the fact that $s'' \Sim t''$ and that $\Sim\colon \kmodel_1 \fsim \kmodel_2$, we obtain $p \in \Vkm[2](t'') \cap \fset$.
+    But this means that $p \in \Vfm[2](\feqc{t}[\kmodel_2])$.
+
+    \medskip
+    \noindent
+    For (forth), suppose that $\feqc{s}[\kmodel_1] \fSim \feqc{t}[\kmodel_2]$ and $\feqc{s}[\kmodel_1] \Rfm[1] \feqc{u}[\kmodel_1]$.
+    We know there are $s' \in \feqc{s}[\kmodel_1]$ and $t' \in \feqc{t}[\kmodel_2]$ such that $s' \Sim t'$.
+    In addition, we know there are $s'' \in \feqc{s}[\kmodel_1]$ and $u' \in \feqc{u}[\kmodel_1]$ such that $s'' \Rkm[1] u'$.
+\end{proof}
+
+\begin{proposition}\label[proposition]{prop:filtration:eq}
+    Let $\wmodel$ be a weaved model, and $\Sigma$ be a set of formulas closed under subformulas.
+    For all formulas $A \in \Sigma$, and all ${\pair \kmodel s} \in \Qwm$, we have $\wforces {\pair \kmodel s} A$ iff
+    $\xforces {\fwmodel} {\pair {\fmodel} {\feqc{s}}} A$.
+\end{proposition}
+\begin{proof}
+    \setcounter{ieqnnum}{0}
+    The proof is by induction on $A$.
+
+    \medskip
+    \noindent
+    The base case is: for every $p \in \Sigma$, $\wforces {\pair \kmodel s} p$ iff $\xforces {\fwmodel} {\pair {\fmodel} {\feqc{s}}} p$. This follows directly from the definition of the filtration, since $\Vof{\fmodel}(\feqc{s}) = \Vkm(s) \cap \Sigma$.
+
+    \medskip
+    \noindent
+    The inductive step proceeds with a case analysis.
+    We prove the cases of $\Box B$ and $\Diamond B$ as representative of the kind of reasoning involved.
+
+    \medskip
+    \noindent
+    For boxes, we must show that for all $\Box B \in \Sigma$, we have $\wforces {\pair {\kmodel_1} s} \Box B$ iff $\xforces {\fwmodel} {\pair {\fmodel[1]} {\feqc{s}[\kmodel_1]}} \Box B$.
+    From left-to-right, suppose
+        \ieqn{\wforces {\pair {\kmodel_1} s} \Box B}.
+    Choose arbitrary ${\pair {\kmodel_2} t} \in~\Qwm$ and $u \in \Wkm[2]$ such that:
+        \ieqn{{\pair {\kmodel_1} s} \Fwm {\pair {\kmodel_2} t}}, and
+        \ieqn{t \Rkm[2] u}.
+    By definition, \ieqnref{-1} and \ieqnref0 give us
+        \ieqn{{\pair {\fmodel[1]} {\feqc{s}[\kmodel_1]}} \Fof{\fwmodel} {\pair {\fmodel[2]} {\feqc{t}[\kmodel_2]}}} and
+        \ieqn{\feqc{t}{\kmodel_2} \Rof{\fmodel[2]} \feqc{u}[\kmodel_2]}.
+    From \ieqnref{-4}--\ieqnref{-2}, we have $\wforces {\pair {\kmodel_2} u} B$.
+    Since $\Sigma$ is closed under subformulas, $B \in \Sigma$.
+    Using the inductive hypothesis, we obtain
+        \ieqn{\xforces {\fwmodel} {\pair {\fmodel[2]} {\feqc{u}[\kmodel_2]}} B}.
+    The last three steps together yield $\xforces {\fwmodel} {\pair {\fmodel[1]} {\feqc{s}[\kmodel_1]}} \Box B$ as required.
+    The right-to-left implication uses a similar argument.
+
+    \medskip
+    \noindent
+    For diamonds, we must show that for all $\Diamond B \in \Sigma$, we have $\wforces {\pair \kmodel s} \Diamond B$ iff $\xforces {\fwmodel} {\pair {\fmodel} {\feqc{s}}} \Diamond B$.
+    From left-to-right, suppose
+        \ieqn{\wforces {\pair \kmodel s} \Diamond B}.
+    There is $t \in \Wkm$ such that:
+        \ieqn{s \Rkm t}, and
+        \ieqn{\wforces {\pair \kmodel t} B}.
+    By definition, there is ${\feqc{t}} \in \Qof{\fmodel}$ such that
+        \ieqn{\feqc{s} \Rof{\fmodel} \feqc{t}}.
+    Since $\Sigma$ is closed under subformulas, $B \in \Sigma$.
+    Using the inductive hypothesis on \ieqnref{-1}, we get
+        \ieqn{\xforces {\fwmodel} {\pair {\fmodel} {\feqc{t}}} B}.
+    The last two steps together yield $\xforces {\fwmodel} {\pair {\fmodel} {\feqc{s}}} \Diamond B$ as required.
+    The right-to-left implication uses a similar argument.
+\end{proof}
+
+To summarize, \Cref{prop:filtration} shows that filtrations of weaved models produce valid weaved models, while \Cref{prop:filtration:eq} guarantees that these filtrations preserve the truth of all relevant subformulas. Together, these results represent a key step toward establishing the finite model property. However, they are not yet sufficient. In particular, \Cref{prop:filtration} ensures that each Kripke model within the filtration is finite, but it does not prevent infinitely many distinct Kripke models from appearing in the filtration as a whole. To overcome this obstacle, we control and limit the number of Kripke models that can occur in a filtered weaved model by grouping them according to branch isomorphisms, collapsing infinitely many branches into finitely many isomorphic branches.
+
+\begin{definition}\label[definition]{def:collapse}
+    Let $A$ be a formula of degree $n$, i.e., $\ideg(A) = n$, and let $\Sigma$ denote the set of subformulas of $A$.
+    For ease of notation, we will assume that $\wmodel$ is already given as a $\Sigma$-filtered weaved model.
+    By a \defn{branch} we mean a weaved model $\bwmodel = \tuple{\Kbwm, \Sbwm} \subseteq \pwmodel$ such that:
+	\begin{enumerate}[leftmargin=\parindent]
+		\setlength{\itemsep}{0pt}
+		\item For all $\kmodel_{\pi}, \kmodel_{\pi'} \in \Kbwm$, either $\pi'$ extends $\pi$, or $\pi$ extends $\pi'$.
+		\item For all $\kmodel_{\pi} \in \Kpwm$, if $\kmodel_{\pi} \notin \Kbwm$, then, there is $\kmodel_{\pi'} \in \Kbwm$ such that $\pi$ is not an extension of $\pi'$ and $\pi'$ is not an extension of $\pi$.
+		\item For all $\Sim\colon\kmodel_{\pi}\fsim\kmodel_{\pi'} \in \Spwm$, if $\kmodel_{\pi},\kmodel_{\pi'} \in \Kbwm$, then $\Sim \in \Sbwm$.
+	\end{enumerate}
+    We use $|\bwmodel|$ to indicate the number of Kripke models in $\Kbwm$.
+    It is clear that each branch $\bwmodel$ is finitely bounded by $n$, i.e., $|\bwmodel| \leq n$.
+    Note also that every branch has $\kmodel_\varepsilon$ as one of its Kripke models.
+    
+    \medskip
+    \noindent
+    We say that a simulation thread $\pi'$ \defn{generates} a branch $\bwmodel$ iff $|\pi'| = |\bwmodel|$ and, for all $\kmodel_{\pi} \in \Kbwm$, we have $\pi'$ is an extension of $\pi$.
+    Then, let $\pi'$ and $\pi''$ be simulation threads generating branches $\bwmodel'$ and $\bwmodel''$, respectively.
+    Moreover, let $\pi' = \Sim'_1 \dots \Sim'_n$ and $\pi'' = \Sim''_1 \dots \Sim''_m$. We write $\bwmodel' \cong \bwmodel''$, and say that $\bwmodel'$ and $\bwmodel''$ are \defn{isomorphic}, iff
+    \begin{enumerate}[leftmargin=\parindent]
+        \setlength{\itemsep}{0pt}
+        \item $|\pi'| = |\pi''|$; and
+        \item for each $i \in [1{:}|\pi'|]$, there is a bijection $g_i\colon \Qof{\pi[{:}i]} \cong \Qof{\pi'[{:}i]}$ such that:
+        \begin{enumerate}[leftmargin=\parindent]
+            \setlength{\itemsep}{0pt}
+            \item $\kmodel_{\pi'[{:}i]}$ is the isomorphic copy of $\kmodel_{\pi[:{i}]}$ induced by $g_i$; and
+            \item $\Sim''_i$ is equal to $g_{(i-1)}^{-1} \Sim'_i g_i$, with the convention $g_0 = \id_{\kmodel_\varepsilon}$.
+        \end{enumerate}
+    \end{enumerate}
+    The intution is that two branches are isomorphic precisely when they have the same length, their corresponding Kripke models are pairwise isomorphic, and the simulations linking those models are likewise pairwise isomorphic. In other words, the two branches unfold in exactly the same way, step by step, both at the level of Kripke strucutres and at the level of simulations between them.
+
+    \medskip
+    \noindent
+    It is straightforward to verify that branch isomorphism is an equivalence relation.
+    Intuitively, this means that isomorphic branches can be treated as indistinguishable, since they have the same model up to renaming.
+    Fix, once and for all, a representative from each equivalence class $[\bwmodel]_{\cong}$.
+    
+    \medskip
+    \noindent
+    With this choice of representatives fixed, we can now define the \defn{isomorphism collapse} of $\pwmodel$ as
+    the weaved model $\iwmodel$ obtained by merging all isomorphic branches of $\pwmodel$ into a single canonical representative.
+    Precisely, $\iwmodel = \tuple{\Kiwm, \Siwm}$ is constructed as follows:
+    \begin{enumerate}[leftmargin=\parindent]
+        \setlength{\itemsep}{0pt}
+        \item $\Kiwm = \bigcup \setof{\Kbwm}{\bwmodel \mbox{ is the fixed representative for } [\bwmodel]_{\cong}}$; and 
+        \item $\Siwm = \bigcup \setof{\Sbwm}{\bwmodel \mbox{ is the fixed representative for } [\bwmodel]_{\cong}}$;
+    \end{enumerate}
+    In other words, $\iwmodel$ is obtained by collecting together the Kripke models and simulations from each chosen representative branch.
+\end{definition}
+
+\begin{lemma}\label[lemma]{prop:iwmodel:finite}
+    Let $A$ be a formula of degree $n$, i.e., $\ideg(A) = n$, and let $\Sigma$ denote the set of subformulas of $A$.
+    For ease of notation, let $\wmodel$ be already given as a $\Sigma$-filtered weaved model.
+    The isomorphism collapse of $\pwmodel$ is a finite weaved model.
+\end{lemma}
+\begin{proof}
+    Let $\branches = \setof{[\bwmodel]_{\cong}}{\bwmodel \text{ is a branch}}$.
+    By a direct cardinality argument, $\branches$ contains only finitely many equivalence classes.
+    To see why, note that every Kripke model in $\pwmodel$ is $\Sigma$-filtered, so its size is bounded by $2^{|\Sigma|}$, i.e., the number of possible different subformulas. This immediately implies that, up to isomorphism, only finitely many such Kripke models can arise. Likewise, since simulations are defined between these bounded models, there can be only finitely many of them up to isomorphism. Consequently, $\iwmodel$ contains only finitely many branches, and is therefore finite.
+\end{proof}
+
+\begin{lemma}\label[lemma]{prop:iwmodel:bisim}
+    Let $\wmodel$ be a $\Sigma$-filtered weaved model.
+	Then, define the relation $Z \subseteq \Qof{\pwmodel} \times \Qof{\iwmodel}$ as follows.
+    For every branch $\bwmodel_1 \subset \pwmodel$, choose its corresponding representative branch $\bwmodel_2 \subseteq \iwmodel$.
+    Then, for every ${\pair {\kmodel_1} s} \in \Qof{\bwmodel_1}$, choose its corresponding representative ${\pair {\kmodel_2} t} \in \Qof{\bwmodel_2}$ and set ${\pair {\kmodel_1} s} Z {\pair {\kmodel_2} t}$.
+    It follows that $Z \colon \bwmodel_1 \bisim \bwmodel_2$.
+\end{lemma}
+\begin{proof}
+	The key observation is that $Z$ provides a pointwise correspondence between the Kripke models in the branches in $\pwmodel$ and their isomorphic representative branches in $\iwmodel$. This correspondence immediately guarantees all conditions of a bisimulation.
+\end{proof}
+
+\begin{corollary}
+    For all formulas $A \in \Sigma$, we have $\xforces{\fwmodel}{\pair {\fmodel} {\feqc{s}}}{A}$ iff $\xforces{\pwmodel}{\pair {\kmodel_{\varepsilon}} {s_{\varepsilon}}}{A}$.
+\end{corollary}
+
+\begin{theorem}[Finite Model Property]
+    Every satisfiable formula is satisfiable in a finite weaved model.
+\end{theorem}
+\begin{proof}
+    Let $A$ be any satisfiable formula.
+    Then there exists a weaved model $\wmodel$ and a pointed Kripke model $\pair \kmodel s \in \Qwm$ such that $\wforces {\pair \kmodel s} {A}$.
+    Without loss of generality, suppose that $\ideg(A) = n$, and let $\Sigma$ be the set of all subformulas of $A$.
+    Our goal is to progressively simplify $\wmodel$ while preserving the truth of $A$. To do this, we build a sequence of bisimilar models, each obtained by applying one of the constructions developed above.
+    Precisely, we build a sequence
+    \[\wmodel \bisim {\fwmodel} \bisim {\restr{\fwmodel}{\fmodel}} \bisim {\restr{\fwmodel}{{\fmodel}^{*}}} \bisim^{n} {\restr{\fwmodel}{{\fmodel}^{n}}} \bisim \iwmodel\]
+    Then, the passage from $\wmodel$ to $\fwmodel$ applies filtration with respect to $\Sigma$.
+    We then unfold this filtration and prune it at height $n$.
+    Finally, the isomorphism collapse yields $\iwmodel$, which is finite.
+    Since bisimulation preserves satisfaction of formulas, and every weaved model in the chain is bisimilar to the previous one, we conclude that $\iwmodel$ satisfies $A$.
+\end{proof}
+
+\begin{corollary}
+    The satisfiability problem of \iml is decidable.
+\end{corollary}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

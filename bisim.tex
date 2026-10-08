@@ -1,0 +1,433 @@
+\section{Bisimulation for Weaved models}
+
+% \begin{definition}[\IML-bisimulation]
+% 	Let $\wmodel_1 = \tuple{\Kwm[1], \Swm[1]}$ and $\wmodel_2 = \tuple{\Kwm[2], \Swm[2]}$ be two weaved models. Assume that for any $\kmodel_1,\kmodel_2 \in \Kwm[i]$ we have $Q_{\kmodel_1}$ disjoint $Q_{\kmodel_2}$. Define $\bigq[i] = \bigcup_{\kmodel \in \Kwm[i]}Q_{\kmodel}$, and then for $s \in \bigq[i]$ let 
+% 	$\kmodel_s$ be the unique model in $\Kwm[i]$ that has $s$ in its domain. An \emph{\IML-bisimulation} between $\wmodel_1$ and $\wmodel_2$ is a non-empty relation $Z \subseteq \bigq[1] \times \bigq[2]$ satisfying the following properties.  Whenever $s Z s'$ then
+% 	\begin{description}
+%         \setlength{\itemsep}{0pt}
+%         \item[\textnormal{(harmony)}] $V_{\kmodel_s}(s) = V_{\kmodel_{s'}}(s')$.
+% 		\item[\textnormal{(zig)}] If $s R_{\kmodel_s} t$ then there is $t'$ such that $s' R_{\kmodel_{s'}} t'$ and $t Z t'$.
+% 		\item[\textnormal{(zag)}] If $s' R_{\kmodel_{s'}} t'$ then there is $t$ such that $s R_{\kmodel_s} t$ and $t Z t'$.
+% 		\item[\textnormal{(s-zig)}] If for some $\Sim$, $s \Sim t$ then there is $t'$ such that 
+% 		from some $\Tim$, $s' \Tim t'$ and $t Z t'$.
+% 		\item[\textnormal{(s-zag)}] If for some $\Sim$, $s' \Sim t'$ then there is $t$ such that 
+% 		from some $\Tim$, $s \Tim t$ and $t Z t'$.
+% 	\end{description}
+% 	We write $\wmodel_1, s \bisim \wmodel_2, s'$ if there is a bisimulation $Z$ between 
+% 	$\wmodel_1$ and $\wmodel_2$ such that $sZs'$.
+% \end{definition}
+
+\begin{definition}\label[definition]{def:wbisim}
+	A \defn{bisimulation} between weaved models $\wmodel_1$ and $\wmodel_2$, written $Z \colon \wmodel_1 \bisim \wmodel_2$, is a
+		non-empty relation $Z \subseteq \Qwm[1] \times \Qwm[2]$ such that,
+			for all ${\pair {\kmodel_1} s} \in \Qwm[1]$ and all ${\pair {\kmodel_2} t} \in \Qwm[2]$
+				with ${\pair {\kmodel_1} s} Z {\pair {\kmodel_2} t}$:
+	\begin{description}
+        \setlength{\itemsep}{0pt}
+        \item[\textnormal{(harmony)}] $\Vkm[1](s) = \Vkm[2](t)$.
+		\item[\textnormal{($\R$-zig)}]
+			If there is $u \in \Wkm[1]$ with $s \Rkm[1] u$, then,
+				there is $v \in \Wkm[2]$ such that $t \Rkm[2] u$ and ${\pair {\kmodel_1} u} Z {\pair {\kmodel_2} v}$.
+		\item[\textnormal{($\R$-zag)}]
+			If there is $v \in \Wkm[2]$ with $t \Rkm[2] v$, then,
+				there is $u \in \Wkm[1]$ such that $s \Rkm[1] u$ and ${\pair {\kmodel_1} u} Z {\pair {\kmodel_2} v}$.
+		\item[\textnormal{($\Fsymb$-zig)}]
+			If there are ${\pair {\kmodel_3} u} \in \Qwm[1]$ and ${\Sim\colon \kmodel_1 \fsim \kmodel_3} \in \Swm[1]$ with $s \Sim u$, then,
+				there are ${\pair {\kmodel_4} v} \in \Qwm[2]$ and ${\Tim\colon \kmodel_2 \fsim \kmodel_4} \in \Swm[2]$ with $t \Tim v$ and ${\pair {\kmodel_3} u} Z {\pair {\kmodel_4} v}$.
+		\item[\textnormal{($\Fsymb$-zag)}]
+			If there are ${\pair {\kmodel_4} v} \in \Qwm[2]$ and ${\Tim\colon \kmodel_2 \fsim \kmodel_4} \in \Swm[2]$ with $t \Tim v$, then,
+				there are ${\pair {\kmodel_2} u} \in \Qwm[1]$ and ${\Sim\colon \kmodel_1 \fsim \kmodel_3} \in \Swm[1]$ with $s \Sim u$ and ${\pair {\kmodel_3} u} Z {\pair {\kmodel_4} v}$.
+	\end{description}
+	% We write $Z \colon {\pair {\wmodel_1} {\pair {\kmodel_1} s}} \bisim {\pair {\wmodel_2} {\pair {\kmodel_2} t}}$ if $Z$ is a bisimulation between $\wmodel_1$ and $\wmodel_2$ and ${\pair {\kmodel_1} s} Z {\pair {\kmodel_2} t}$.
+\end{definition}
+
+\begin{theorem}[Invariance]
+	If $Z \colon \wmodel_1 \bisim \wmodel_2$ and ${\pair {\kmodel_1} s} Z {\pair {\kmodel_2} t}$, then, for all formulas $A$, we have $\xforces {\wmodel_1} {\pair {\kmodel_1} s} A$ iff $\xforces {\wmodel_2} {\pair {\kmodel_1} s} A$.
+\end{theorem}
+\begin{proof}
+    \setcounter{ieqnnum}{0}
+    The proof is by induction on $A$.
+
+    \medskip
+    \noindent
+    The base case is: $\xforces {\wmodel_1} {\pair {\kmodel_1} s} p$ iff $\xforces {\wmodel_2} {\pair {\kmodel_2} t} p$.
+	This follows immediately from the (harmony) condition, which guarantees that $\Vkm[1](s) = \Vkm[2](t)$, meaning $s$ and $t$ assign the same truth values to all proposition symbols.
+
+    \medskip
+    \noindent
+    The inductive step proceeds with a case analysis.
+    We prove some representative cases of the kind of reasoning involved.
+
+	\medskip
+    \noindent
+    For diamonds, we prove $\xforces {\wmodel_1} {\pair {\kmodel_1} s} {\Diamond B}$ implies $\xforces {\wmodel_2} {\pair {\kmodel_2} t} {\Diamond B}$.
+    Suppose $\xforces {\wmodel_1} {\pair {\kmodel_1} s} {\Diamond B}$.
+    There is $u \in \Wkm[1]$ with \ieqn{s \Rkm[1] u} such that \ieqn{\xforces {\wmodel_1} {\pair {\kmodel_1} u} B}.
+	Given \ieqnref{-1}, using the ($\R$-zig) condition, we know that there is \ieqn{v \in \Wkm[2]} with \ieqn{t \Rkm[2] v} such that ${\pair {\kmodel_1} u} Z {\pair {\kmodel_2} v}$.
+	By the induction hypothesis, \ieqn{\xforces {\wmodel_2} {\pair {\kmodel_2} v} B}.
+	Taken together, \ieqnref{-2}--\ieqnref0 imply $\xforces {\wmodel_2} {\pair {\kmodel_2} t} {\Diamond B}$ as required.
+	The converse direction, $\xforces{\wmodel_2}{\pair{\kmodel_2}{t}}{\Diamond B}$ implies $\xforces{\wmodel_1}{\pair{\kmodel_1}{s}}{\Diamond B}$, is established by an analogous argument, this time applying the ($\R$-zag) condition in place of ($\R$-zig).
+
+    \medskip
+    \noindent
+    For boxes, instead of proving $\xforces {\wmodel_1} {\pair {\kmodel_1} s} {\Box B}$ implies $\xforces {\wmodel_2} {\pair {\kmodel_2} t} {\Box B}$, we prove the contrapositive $\nxforces {\wmodel_2} {\pair {\kmodel_2} t} {\Box B}$ implies $\nxforces {\wmodel_1} {\pair {\kmodel_1} s} {\Box B}$.
+    Suppose $\nxforces {\wmodel_2} {\pair {\kmodel_2} t} {\Box B}$.
+    There are
+		${\pair {\kmodel_4} u} \in \Qwm[2]$
+			with \ieqn{{\pair {\kmodel_2} t} \Fwm[2] {\pair {\kmodel_4} u}}, and
+		$v \in \Wkm[4]$
+			with \ieqn{u \Rkm[4] v} 
+	such that
+		\ieqn{\nxforces {\wmodel_2} {\pair {\kmodel_4} v} B}.
+	From \ieqnref{-2}, we know there is $\Tim\colon\kmodel_2 \fsim \kmodel_4 \in \wmodel_2$ such that $t \Tim u$.
+	Given ${\pair {\kmodel_1} s} Z {\pair {\kmodel_2} t}$, the ($\Fsymb$-zag) condition ensures there are ${\pair {\kmodel_3} w} \in \Qwm[1]$ and $\Sim\colon\kmodel_1 \fsim \kmodel_3 \in \wmodel_1$ such that \ieqn{s \Sim w} and \ieqn{{\pair {\kmodel_3} w} Z {\pair {\kmodel_4} u}}.
+	Having established \ieqnref{-3} and \ieqnref0, the ($\R$-zag) condition ensures there is $x \in \Wkm[3]$ with \ieqn{w \Rkm[3] x} such that \ieqn{{\pair {\kmodel_3} x} Z {\pair {\kmodel_4} v}}.
+	By the inductive hypothesis, \ieqn{\nxforces {\wmodel_1} {\pair {\kmodel_3} x} {B}}.
+	Taken together, \ieqnref{-4}, \ieqnref{-2}, and \ieqnref0, imply $\nxforces {\wmodel_1} {\pair {\kmodel_1} s} {\Box B}$ as required.
+    The converse direction, $\xforces{\wmodel_2}{\pair{\kmodel_2}{t}}{\Box B}$ implies $\xforces{\wmodel_1}{\pair{\kmodel_1}{s}}{\Box B}$, is established by an analogous argument, this time applying the ($\Fsymb$-zig) and ($\R$-zig) conditions in place of ($\Fsymb$-zag) and ($\R$-zag), respectively.
+\end{proof}
+
+%%%% GENERATED WEAVED model
+
+\begin{definition}\label[definition]{def:gen:wmodel}
+    Let $\wmodel$ be a weaved model.
+	For any $\kmodel \in \Kwm$, define the \defn{restriction} of $\wmodel$ to $\kmodel$ as a pair $\rwmodel = \tuple{\Krwm, \Srwm}$ where:
+    \begin{enumerate}[leftmargin=\parindent]
+        \setlength{\itemsep}{0pt}
+        \item $\Krwm = \setof{\kmodel'}{\mbox{there is } {\Sim \colon \kmodel \fsim \kmodel'} \in \Swm}$; and
+        \item $\Srwm = \Swm \cap (\Krwm \times \Krwm)$
+    \end{enumerate}
+    We also call $\rwmodel$ the \defn{$\kmodel$-generated weaved submodel} of $\wmodel$, or simply a generated weaved submodel if $\wmodel$ and $\kmodel$ are understood from the context.
+\end{definition}
+
+\begin{proposition}\label[proposition]{prop:bisim:rwmodel}
+	Let $\wmodel$ be a weaved model.
+	For all $\kmodel \in \Kwm$, the relation $Z = \setof{\pair {\pair {\kmodel'} s} {\pair {\kmodel'} s}}{ {\pair {\kmodel'} s} \in \Qof{\rwmodel}}$ is a bisimulation between $\rwmodel$ and $\wmodel$.
+\end{proposition}
+
+\begin{corollary}\label[corollary]{prop:rwmodel}
+    For all formulas $A$, we have $\wforces{\pair \kmodel s}{A} \mbox{ iff } \xforces{\rwmodel}{\pair \kmodel s}{A}$.
+\end{corollary}
+
+%%%% UNRAVELING WEAVED model
+
+\begin{definition}\label[definition]{def:unraveling}
+	Let $\wmodel$ be a weaved model and let $\kmodel \in \Kwm$.
+	To properly define the unraveling of $\wmodel$ around $\kmodel$, we first need to introduce a few preliminary notions.
+        \lutz{that's not a definition} \lutz{and never write a definition that spans more than a page}
+
+	\medskip
+	\noindent
+	By a \defn{simulation thread} starting at $\kmodel$ we mean a finite sequence $\pi = \Sim_1 \dots \Sim_n$ of simulations in $\Swm$ such that: $\dom(\Sim_1) = \kmodel$, and the composition ${\Sim_1 \dots \Sim_n \in \Swm}$.
+	We take the empty sequence, denoted by $\varepsilon$, to stand for the starting model $\kmodel$.
+	We use $|\pi|$ to indicate the length of a thread $\pi$.
+	For each $i \in [1{:}|\pi|]$, we let $\pi_i$ be the codomain of the $i$-th simulation in $\pi$, that is, $\pi_i = \cod(\Sim_i) = \kmodel_i$, with the convention $\pi_0 = \kmodel$.
+	We write $\pi[{:}i]$ to denote the initial segment of $\pi$ up to the $i$-th simulation, that is, $\pi[{:}i] = \Sim_1 \dots \Sim_i$, with the convention $\pi[{:}0] = \varepsilon = \kmodel$.
+	Finally, we use $\Pi$ to denote the collection of all such simulation threads in $\wmodel$.
+	Intuitively, simulation threads make paths in the weaved model explicit: they record step by step how one moves through the model. As we will show below, simulation threads provide the fundamental building blocks for the unraveling construction.
+	
+	\medskip
+	\noindent
+	To transform abstract simulation threads into concrete components of the unraveling, we tie each thread to a unique copy of the Kripke model it reaches. To achieve this, we associate to a each $\pi \in \Pi$ a set $\Qof{\pi} = \setof{s_{\pi}}{s \in \Qof{\pi_{|\pi|}}}$ and a bijection $f_{\pi}\colon {\Qof{\pi_{|\pi|}} \bsym \Qof{\pi}}$ such that $f_{\pi}(s) = s_\pi$.
+	This definition of $f_{\pi}$ provides us with a systematic way of generating the unique Kripke models that will play the role of the nodes of tree-like model characteristic of unravelings.
+
+	\medskip
+	\noindent
+	Concretely, every $f_{\pi}$ yields a Kripke model $\kmodel_{\pi} = \tuple{\Qof{\pi}, \Rof{\pi}, \Vof{\pi}}$ where:
+	\begin{enumerate}[leftmargin=\parindent,resume]
+        \setlength{\itemsep}{0pt}
+		% \item $\Qof{\pi} = \cod(f_{\pi})$;
+		\item $\Rof{\pi} = \setof{\pair {s_\pi} {t_\pi}}{ s \Rof{\pi_{|\pi|}} t}$; and
+		\item for all $s_{\pi} \in \Qof{\pi}$, $\Vof{\pi}(s_{\pi}) = \Vof{\pi_{|\pi|}}(s)$.
+	\end{enumerate}
+	It is immediate from the definition of $f_{\pi}$ that each $\kmodel_{\pi}$ is indeed a unique isomorphic copy of $\pi_{|\pi|}$.
+
+	\medskip
+	\noindent
+	Having identified the Kripke models that will appear in the unraveling, we turn to defining the simulations that will connect these models together. Intuitively, these simulations must branch in a disciplined manner so that, taken as a whole, they generate the tree-like shape characteristic of unravelings.
+	The key lies in the notion of an extension of a simulation thread.
+	
+	\medskip
+	\noindent
+	We say that a simulation thread $\pi'$ is an \defn{extension} of a simulation thread $\pi$ iff $\pi = \pi'[{:}|\pi|]$. We write $\pi\pi'$ if $\pi'$ is an extension of $\pi$. Extensions provide the natural mechanism for controlling how simulations branch in the unraveling.
+
+	\medskip
+	\noindent
+	Concretely, for every pair $\pi\pi'$ with $\pi' = \Sim_1 \dots \Sim_{|\pi|} \Sim_{(|\pi|+1)} \dots \Sim_{|\pi'|}$, we define
+	\begin{enumerate}[leftmargin=\parindent,resume]
+        \setlength{\itemsep}{0pt}
+		\item $\Sim_{\pi\pi'} = f_{\pi}^{-1} \Sim_{(|\pi|+1)} \dots \Sim_{|\pi'|} f_{\pi'}$.
+	\end{enumerate}
+	It follows directly from the definition that $\Sim_{\pi\pi'}$ is a simulation from $\kmodel_{\pi}$ to $\kmodel_{\pi'}$.
+	Composition of these simulations is defined in the natural way: for any $\pi, \pi', \pi'' \in \Pi$, we set $\Sim_{\pi\pi'}\Sim_{\pi'\pi''} = \Sim_{\pi\pi''}$. This composition is clearly well-defined.
+	In addition, for every $\pi \in \Pi$, there exists a simulation $\Sim_{\pi\pi}$ that behaves as an identity: for all $\pi' \in \Pi$, if $\pi'$ is an extension of $\pi$, then, $\Sim_{\pi\pi}\Sim_{\pi\pi'} = \Sim_{\pi\pi'}$; and if $\pi$ is an extension of $\pi'$, then, $\Sim_{\pi'\pi}\Sim_{\pi\pi} = \Sim_{\pi'\pi}$.
+	Thus, $\Sim_{\pi\pi}$ serves as the identity simulation for $\kmodel_{\pi}$.
+
+	\medskip
+	\noindent
+	Having set up the necessary definitions, we can now put them together into the unraveling of $\wmodel$ around $\kmodel$. This construction turns the abstract machinery developed above into a tree-like model that makes explicit how simulation threads unfold.
+	Precisely, we define the \defn{unraveling} of $\wmodel$ around $\kmodel$ as a pair $\uwmodel = \tuple{\Kuwm, \Suwm}$ where:
+	\begin{enumerate}[leftmargin=\parindent,resume]
+        \setlength{\itemsep}{0pt}
+		\item $\Kuwm = \setof{\kmodel_\pi}{\pi \in \Pi}$;
+		\item $\Suwm = \setof{\Sim_{\pi\pi'}}{\pi,\pi' \in \Pi \mbox{ and } \pi' \mbox{ is an extension of } \pi}$.
+	\end{enumerate}
+\end{definition}
+
+\begin{proposition}
+	The unraveling of a weaved model $\wmodel$ around a Kripke model $\kmodel \in \Kwm$ is a weaved model.
+\end{proposition}
+% \begin{proof}
+% 	\setcounter{ieqnnum}{0}
+% 	By construction, each $\kmodel_\pi \in \Kuwm$ is a Kripke model.
+% 	The non-trivial part is to prove that each $\Sim^i_\pi \in \Suwm$ is a seesaw simulation from $\kmodel_{\pi[i]}$ to $\kmodel_\pi$. %, i.e., $\Sim^i_\pi \colon \kmodel_{\pi[i]} \fsim \kmodel_\pi$.
+% 	To establish this, we must verify:
+% 	\ieqn{\Sim^i_\pi \subseteq \Qof{\pi[i]} \times \Qof{\pi}}; and
+% 	\ieqn{\Sim^i_\pi} satisfies conditions (add), (see), and (saw) of seesaw simulations.
+% 	Condition \ieqnref{-1} follows directly from the definition of $\Sim^i_\pi$.
+% 	We establish $\Sim^i_\pi$ is a simulation below.
+
+% 	\medskip
+% 	\noindent
+% 	To simplify notation, let
+% 		\ieqn{\pi = \kmodel_1 \Sim_1 \dots \Sim_{(n-1)} \kmodel_n}.
+% 	Moreover, let
+% 		\ieqn{\Sim = (\Sim_i \fcomp \dots \Sim_n)\colon \kmodel_i \fsim \kmodel_n \in \Swm}.
+
+% 	\medskip
+% 	\noindent
+% 	For (add), choose an arbitrary $s \Sim^i_\pi t$.
+% 	We must prove $\Vof{\pi[i]}(s) \subseteq \Vof{\pi}(t)$.
+% 	By definition $\Vof{\pi[i]}(s) = \Vkm[i](s)$, and $\Vof{\pi}(t) = \Vkm[n](t)$.
+% 	The result follows directly from the (add) condition in \ieqnref0.
+	
+% 	\medskip
+% 	\noindent
+% 	For (see), again choose an arbitrary $s \Sim^i_\pi t$.
+% 	By definition, from \ieqnref0, we have $s_i \Sim t_n$.
+% 	Take $u \in \Qof{\pi[i]}$ such that $s \Rof{\pi[i]} u$.
+% 	This scenario is best illustrated by the following arrow-chasing diagram, which displays how the prefix $\pi[i]$ aligns with the full thread $\pi$ via the simulations~in~$\Sim$:
+% 	\[
+% 		\begin{tikzcd}
+% 			s_1
+% 				\arrow[r,dotted, "\Sim_1"]
+% 				\arrow[d, swap, "{\Rkm[1]}" {yshift=1pt}]
+% 			% &
+% 			% s_2
+% 			% 	\arrow[r,dotted, "\Sim_2" {xshift=-2pt}]
+% 			% 	\arrow[d, "\Rof{\pi_2}" {yshift=1pt}]
+% 			&
+% 			\dots
+% 				\arrow[r,dotted, "\Sim_{(i-1)}" {xshift=-2pt}]
+% 			&
+% 			s_i
+% 				\arrow[r,dotted, "\Sim_i"]
+% 				\arrow[rr, bend left=35,dotted, "\Sim"]
+% 				\arrow[d, swap, "{\Rkm[i]}" {yshift=1pt}]
+% 			% &
+% 			% s_{(i+1)}
+% 			% 	\arrow[r,dotted, "\Sim_{(i+1)}" {xshift=-2pt}]
+% 			% 	\arrow[d, "\Rof{\pi_{(i+1)}}" {yshift=1pt}]
+% 			&
+% 			\dots
+% 				\arrow[r,dotted, "\Sim_{(n-1)}" {xshift=-2pt}]
+% 			&
+% 			t_{n}
+% 				\arrow[d, "{\Rkm[n]}" {yshift=1pt}]
+% 			\\
+% 			u_1
+% 				\arrow[r, swap, dotted, "\Sim_1"]
+% 			% &
+% 			% u_2
+% 			% 	\arrow[r, swap, dotted]{}{\Sim_2}
+% 			&
+% 			\dots
+% 				\arrow[r, swap, dotted, "\Sim_{(i-1)}" {xshift=-2pt}]
+% 			&
+% 			u_i
+% 				\arrow[r, swap, dotted, "\Sim_i"]
+% 				\arrow[rr, bend left=35,dotted, "\Sim"]
+% 			% &
+% 			% u_{(i+1)}
+% 			% 	\arrow[r, swap, dotted]{}{\Sim_{(i+1)}}
+% 			&
+% 			\dots
+% 				\arrow[r, swap, dotted, "\Sim_{(n-1)}" {xshift=-2pt}]
+% 			&
+% 			u_{n}
+% 		\end{tikzcd}
+% 	\]
+% 	Formally, $s \Rof{\pi[i]} u$ ensures that the tuple $s_1,\dots,s_i$ is linked step by step to $u_1,\dots,u_i$ through the chain of simulations.
+% 	Then, $s \Sim^i_\pi t$ implies, using the (see) condition for $\Sim$, that the tuple $s_1,\dots,s_i,\dots,s_n$ extends coherently along the entire thread, yielding the sequence $v = u_1 \dots u_n \in \Qof{\pi}$.
+% 	Consequently, we obtain both $t \Rof{\pi} v$ and $u \Sim^i_\pi v$, exactly as required for condition (see).
+% 	The argument for (saw) is entirely analogous using the (saw) condition in $\Sim$ instead of (see) in $\Sim$.
+
+% 	\medskip
+% 	\noindent
+% 	To conclude the proof we must prove that $\Suwm$ is closed under identities and composition.
+% 	It is clear that $\Sim^1_\pi \in \Suwm$ acts as the identity on $\kmodel_\pi$.
+% 	For composition, we note that $\Sim^i_{\pi}\colon \kmodel_{\pi[i]} \fsim \kmodel_{\pi}$ and $\Tim^j_{\pi'}\colon \kmodel_{\pi'[j]} \fsim \kmodel_{\pi'}$ can be composed only if $\pi = \pi'[j]$.
+% 	Then, we define $s (\Sim^i_{\pi} \fcomp \Tim^j_{\pi'}) t$ iff the following conditions are met:
+% 	\begin{enumerate}[leftmargin=\parindent,label=(\alph*)]
+%         \setlength{\itemsep}{0pt}
+% 		\item $s \in \Qof{\pi[i]}$;
+% 		\item $t \in \Qof{\pi'}$; and
+% 		\item exists $u \in \Qof{\pi}$ such that $s_i (\Sim_i \fcomp \dots \fcomp \Sim_{(|\pi|-1)}) u_{|\pi|} (\Tim_j \fcomp \dots \fcomp \Tim_{|\pi'|}) t_{|\pi'|}$.
+% 	\end{enumerate}
+% \end{proof}
+
+\begin{proposition}\label[proposition]{prop:bisim:uwmodel}
+	Let $\rwmodel$ be a $\kmodel$-generated weaved model.
+	Then, for all
+		$\pair {\kmodel'} s \in \Qof{\rwmodel}$ and all
+		$\pair {\kmodel_\pi} t \in \Qof{\uwmodel}$,
+	define
+		\[
+			{{\pair {\kmodel'} s} Z {\pair {\kmodel_{\pi}} {s_{\pi}}}}
+			\quad
+			\mbox{iff}
+			\quad
+			{\kmodel' = \pi_{|\pi|}}
+		\]
+	It follows that $Z$ is a bisimulation between $\rwmodel$ and $\uwmodel$.
+\end{proposition}
+\begin{proof}
+	The key observation is that $Z$ provides a pointwise correspondence between the Kripke models in the generated weaved model and their isomorphic copies in the unraveling. This correspondence immediately guarantees the ($\R$-zig) and ($\R$-zag) conditions of a bisimulation.
+
+	\medskip
+	\noindent
+	In turn, consider ${\Sim \colon \kmodel' \fsim \kmodel''} \in \Srwm$. Then, extending $\pi$ by $\Sim$ yields a simulation thread $\pi' = \pi\Sim \in \Pi$. This extension ensures the unraveling includes the simulation ${\Sim_{\pi\pi'} \colon \kmodel_\pi \fsim \kmodel_{\pi'}} \in \Suwm$, which guarantees ($\Fsymb$-zig).
+
+	\medskip
+	\noindent
+	Conversely, given ${\Tim \colon \kmodel_{\pi'} \fsim \kmodel_{\pi''}} \in \Suwm$, we can move back to the weaved model: the bijections $f_{\pi'}$ and $f_{\pi''}$ ensure the existence of the simulation ${\Sim = f_{\pi'} \Tim f_{\pi''}^{-1} \colon \kmodel' \fsim \pi''_{|\pi''|}} \in \Srwm$, which provides ($\Fsymb$-zag).
+\end{proof}
+
+\begin{corollary}\label[corollary]{prop:uwmodel}
+	For all formulas $A$, $\xforces{\rwmodel}{\pair \kmodel s}{A}$ iff $\xforces{\uwmodel}{\pair {\kmodel_{\varepsilon}} {s_{\varepsilon}}}{A}$.
+\end{corollary}
+
+\begin{definition}\label[definition]{def:idepth}
+	The \defn{intuitionistic degree} of a formula $A$ is defined as:
+	\begin{align*}
+		\ideg(p) & = 0 \\
+		\ideg(\bot) & = 0 \\
+		\ideg(B \lor C) &= \max(\ideg(B),\ideg(C)) \\
+		\ideg(B \land C) &= \max(\ideg(B),\ideg(C)) \\
+		\ideg(B \to C) &= 1+\max(\ideg(B),\ideg(C)) \\
+		\ideg(\Diamond B) &= \ideg(B) \\
+		\ideg(\Box B) &= 1+ \ideg(B)
+	\end{align*}
+\end{definition}
+
+\begin{definition}\label[definition]{def:nbisimulation}
+	Let $\wmodel_1$ and $\wmodel_2$ be weaved models.
+	Suppose we are given a finite sequence of non-empty relations $Z^n \subseteq Z^{(n-1)} \subseteq \dots \subseteq Z^0$ on $\Qwm[1] \times \Qwm[2]$, where each $Z^i$ satisfies the conditions (harmony), ($\R$-zig), and ($\R$-zag) from \Cref{def:wbisim}.
+	We say that $Z^n$ is an \defn{$n$-bisimulation} between $\wmodel_1$ and $\wmodel_2$, and write $Z^n \colon \wmodel_1 \bisim^n \wmodel_2$, iff for all $i \in [1{:}n]$, and all ${\pair {\kmodel_1} s} \in \Qwm[1]$ and ${\pair {\kmodel_2} t} \in \Qwm[2]$ with ${\pair {\kmodel_1} s} Z^i {\pair {\kmodel_2} t}$, the following holds:
+	\begin{description}
+        \setlength{\itemsep}{0pt}
+		\item[\textnormal{($\Fsymb^i$-zig)}]
+			If there are ${\pair {\kmodel_3} u} \in \Qwm[1]$ and ${\Sim\colon \kmodel_1 \fsim \kmodel_3} \in \Swm[1]$ with $s \Sim u$, then,
+				exist ${\pair {\kmodel_4} v} \in \Qwm[2]$ and ${\Tim\colon \kmodel_2 \fsim \kmodel_4} \in \Swm[2]$ with $t \Tim v$ and ${\pair {\kmodel_3} u} Z^{(i-1)} {\pair {\kmodel_4} v}$.
+		\item[\textnormal{($\Fsymb^i$-zag)}]
+			If there are ${\pair {\kmodel_4} v} \in \Qwm[2]$ and ${\Tim\colon \kmodel_2 \fsim \kmodel_4} \in \Swm[2]$ with $t \Tim v$, then,
+				exist ${\pair {\kmodel_2} u} \in \Qwm[1]$ and ${\Sim\colon \kmodel_1 \fsim \kmodel_3} \in \Swm[1]$ with $s \Sim u$ and ${\pair {\kmodel_3} u} Z^{(i-1)} {\pair {\kmodel_4} v}$.
+	\end{description}
+\end{definition}
+
+\begin{theorem}[$n$-invariance]\label[theorem]{prop:ninv}
+	If $Z^n \colon \wmodel_1 \bisim^n \wmodel_2$ and ${\pair {\kmodel_1} s} Z^n {\pair {\kmodel_2} t}$, then, for all formulas $A$ with $\ideg(A) \leq n$, we have $\xforces {\wmodel_1} {\pair {\kmodel_1} s} A$ iff $\xforces {\wmodel_2} {\pair {\kmodel_1} s} A$.
+\end{theorem}
+\begin{proof}
+    \setcounter{ieqnnum}{0}
+    The proof is by induction on two measures: the degree and the size of the formula $A$.
+	Precisely, we associate with each formula $A$ a complexity pair $\pair {\deg(A)} {\size(A)}$, the proof is by strong induction on the lexicographic order on such pairs.
+
+    \medskip
+    \noindent
+    For the base case we need to establish $\xforces {\wmodel_1} {\pair {\kmodel_1} s} p$ iff $\xforces {\wmodel_2} {\pair {\kmodel_2} t} p$.
+	This follows directly from the (harmony) condition in $Z^0$, which guarantees that $\Vkm[1](s) = \Vkm[2](t)$, meaning $s$ and $t$ assign the same truth values to all proposition symbols.
+
+    \medskip
+    \noindent
+    For the inductive step, we choose a pair ${\pair {\kmodel_1} s} Z^{(i+1)} {\pair {\kmodel_2} t}$, and a formula $A$ with complexity $(i+1,j)$. The inductive hypothesis tells us that the result holds for all pairs ${\pair {\kmodel_3} u} Z^i {\pair {\kmodel_4} v}$ and all formulas with complexity $(k,\ell) < (i+1,j)$. We are required to prove that the result holds for $A$. We proceed with a case analysis.
+
+	\medskip
+    \noindent
+    For conjunctions, we prove $\xforces{\wmodel_1}{\pair{\kmodel_1}{s}}{B \land C}$ implies $\xforces{\wmodel_2}{\pair{\kmodel_2}{t}}{B \land C}$.
+	Suppose $\xforces{\wmodel_1}{\pair{\kmodel_1}{s}}{B \land C}$.
+	By the semantics of conjunction, this means that $\xforces{\wmodel_1}{\pair{\kmodel_1}{s}}{B}$ and $\xforces{\wmodel_1}{\pair{\kmodel_1}{s}}{C}$.
+	The complexity pairs associated with $B$ and $C$ both precede $(i+1,j)$ in the lexicographic order.
+	Therefore, by the inductive hypothesis, we obtain $\xforces{\wmodel_2}{\pair{\kmodel_2}{t}}{B}$ and $\xforces{\wmodel_2}{\pair{\kmodel_2}{t}}{C}$. Together, these yield $\xforces{\wmodel_2}{\pair{\kmodel_2}{t}}{B \land C}$.
+	The converse direction, $\xforces{\wmodel_2}{\pair{\kmodel_2}{t}}{B \land C}$ implies $\xforces{\wmodel_1}{\pair{\kmodel_1}{s}}{B \land C}$, follows by an entirely symmetric argument.
+	The case for disjunctions proceeds in exactly the same way.
+
+	\medskip
+    \noindent
+    For diamonds, we prove $\xforces {\wmodel_1} {\pair {\kmodel_1} s} {\Diamond B}$ implies $\xforces {\wmodel_2} {\pair {\kmodel_2} t} {\Diamond B}$.
+    Suppose $\xforces {\wmodel_1} {\pair {\kmodel_1} s} {\Diamond B}$.
+    There is $u \in \Wkm[1]$ with \ieqn{s \Rkm[1] u} such that \ieqn{\xforces {\wmodel_1} {\pair {\kmodel_1} u} B}.
+	Given \ieqnref{-1}, using the ($\R$-zig) condition in $Z^{(i+1)}$, we know that there is \ieqn{v \in \Wkm[2]} with \ieqn{t \Rkm[2] v} such that ${\pair {\kmodel_1} u} Z^{(i+1)} {\pair {\kmodel_2} v}$.
+	Now, the complexity pair associated with $B$ precedes $(i+1,j)$ in the lexicographic order.
+	Therefore, by the induction hypothesis, \ieqn{\xforces {\wmodel_2} {\pair {\kmodel_2} v} B}.
+	Taken together, \ieqnref{-2}--\ieqnref0 imply $\xforces {\wmodel_2} {\pair {\kmodel_2} t} {\Diamond B}$ as required.
+	The converse direction, $\xforces{\wmodel_2}{\pair{\kmodel_2}{t}}{\Diamond B}$ implies $\xforces{\wmodel_1}{\pair{\kmodel_1}{s}}{\Diamond B}$, is established by an analogous argument, this time using ($\R$-zag) in place of ($\R$-zig).
+
+    \medskip
+    \noindent
+    For boxes, instead of proving $\xforces {\wmodel_1} {\pair {\kmodel_1} s} {\Box B}$ implies $\xforces {\wmodel_2} {\pair {\kmodel_2} t} {\Box B}$, we prove the contrapositive $\nxforces {\wmodel_2} {\pair {\kmodel_2} t} {\Box B}$ implies $\nxforces {\wmodel_1} {\pair {\kmodel_1} s} {\Box B}$.
+    Suppose $\nxforces {\wmodel_2} {\pair {\kmodel_2} t} {\Box B}$.
+    There are
+		${\pair {\kmodel_4} u} \in \Qwm[2]$ with
+			\ieqn{{\pair {\kmodel_2} t} \Fwm[2] {\pair {\kmodel_4} u}}, and
+		$v \in \Wkm[4]$ with
+			\ieqn{u \Rkm[4] v} 
+		such that
+			\ieqn{\nxforces {\wmodel_2} {\pair {\kmodel_4} v} B}.
+	From \ieqnref{-2}, exists $\Tim\colon\kmodel_2 \fsim \kmodel_4 \in \wmodel_2$ such that $t \Tim u$.
+	Since ${\pair {\kmodel_1} s} Z^{(i+1)} {\pair {\kmodel_2} t}$, the ($\Fsymb^{(i+1)}$-zag) condition ensures there are
+		${\pair {\kmodel_3} w} \in \Qwm[1]$ and
+		$\Sim\colon\kmodel_1 \fsim \kmodel_3 \in \wmodel_1$
+		such that
+			\ieqn{s \Sim w} and
+			\ieqn{{\pair {\kmodel_3} w} Z^i {\pair {\kmodel_4} u}}.
+	Now, \ieqnref{-3} and \ieqnref0 imply, by the ($\R$-zag) condition in $Z^i$,
+		there are
+			$x \in \Wkm[3]$
+			such that
+				\ieqn{w \Rkm[3] x} and
+				\ieqn{{\pair {\kmodel_3} x} Z^i {\pair {\kmodel_4} v}}.
+	Since $\ideg(B) = i$, by the induction hypothesis, we obtain
+		\ieqn{\nxforces{\wmodel_1}{\pair {\kmodel_3} {x}}{B}}.
+	Taken together, \ieqnref{-4}, \ieqnref{-2}, and \ieqnref0, imply $\nxforces {\wmodel_1} {\pair {\kmodel_1} s} {\Box B}$ as required.
+    The converse direction, $\xforces{\wmodel_2}{\pair{\kmodel_2}{t}}{\Box B}$ implies $\xforces{\wmodel_1}{\pair{\kmodel_1}{s}}{\Box B}$, is established by an analogous argument, this time applying the ($\Fsymb$-zig) and ($\R$-zig) conditions in place of ($\Fsymb$-zag) and ($\R$-zag), respectively.
+\end{proof}
+
+\begin{definition}\label[definition]{def:prunning}
+	Let $\uwmodel$ be the unraveling of a weaved model $\wmodel$ around a Kripke model $\kmodel \in \Kwm$.
+	The \defn{prunning} of $\uwmodel$ at height $n$ is a weaved model $\pwmodel = \tuple{\Kpwm, \Spwm}$ where:
+	\begin{enumerate}[leftmargin=\parindent]
+		\setlength{\itemsep}{0pt}
+		\item For all $\kmodel_{\pi} \in \Kuwm$, $|\pi| \leq n$ implies $\kmodel_{\pi} \in \Kpwm$;
+		\item For all $\Sim\colon\kmodel_{\pi}\fsim\kmodel_{\pi'} \in \Suwm$, if $\kmodel_{\pi},\kmodel_{\pi'} \in \Kpwm$, then, $\Sim \in \Sbwm$.
+	\end{enumerate}
+\end{definition}
+
+\begin{proposition}\label[proposition]{prop:bounded:height}
+	Let $\uwmodel$ be the unraveling of a weaved model $\wmodel$ around a Kripke model $\kmodel \in \Kwm$.
+	For all $i \in [0{:}n]$, define 
+	\[ Z^i = \setof{\pair {\pair {\kmodel_{\pi}} s} {\pair {\kmodel_{\pi}} s}}{ \kmodel_{\pi} \in \Kuwm \mbox{ and } |\pi| \leq (n-i)} \]
+	It follows that:
+	\begin{enumerate}[leftmargin=\parindent]
+		\setlength{\itemsep}{0pt}
+		\item $Z^{n} \subseteq Z^{(n-1)} \subseteq \dots \subseteq Z^0$ is a finite sequence of non-empty relations on $\Qof{\uwmodel} \times \Qof{\pwmodel}$ each of which satisfies the conditions (harmony), ($\R$-zig), and ($\R$-zag) in \Cref{def:wbisim};
+		\item $Z^n \colon \uwmodel \bisim^n \pwmodel$; and
+		\item ${\pair {\kmodel_{\pi}} s} Z^k {\pair {\kmodel_{\pi}} s}$ where $k = n - |\pi|$.
+	\end{enumerate}
+\end{proposition}
+
+\lutz{it's not really clear what the motivation for this unravelling is}
+
+\begin{corollary}\label[corollary]{prop:pwmodel}
+	For all formulas $A$, if $\ideg(A) \leq n$, then, $\xforces{\uwmodel}{\pair {\kmodel_{\varepsilon}} {s_{\varepsilon}}}{A}$ iff $\xforces{\pwmodel}{\pair {\kmodel_{\varepsilon}} {s_{\varepsilon}}}{A}$.
+\end{corollary}
